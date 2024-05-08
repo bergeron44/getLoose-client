@@ -1,0 +1,128 @@
+*{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+}
+.body{
+    font-family: Helvetica;
+    -webkit-font-smoothing: antialiased;
+    background: rgb(161, 173, 186);
+}
+.h2{
+    text-align: center;
+    font-size: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgb(83, 172, 133);
+    padding: 30px 0;
+}
+
+/* Table Styles */
+
+.tableWrapper{
+    margin: 10px 70px 70px;
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
+}
+
+.flTable {
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: normal;
+    border: none;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+    white-space: nowrap;
+    background-color: white;
+}
+
+.flTable td, .fl-table th {
+    text-align: center;
+    padding: 8px;
+}
+
+.flTable td {
+    border-right: 1px solid #d69e9e;
+    font-size: 12px;
+}
+
+.flTable thead th {
+    color: #bc6363;
+    background: #4FC3A1;
+}
+
+
+.flTable thead th:nth-child(odd) {
+    color: #ffffff;
+    background: #324960;
+}
+
+.flTable tr:nth-child(even) {
+    background: #5c3f3f;
+}
+
+/* Responsive */
+
+@media (max-width: 767px) {
+    .flTable {
+        display: block;
+        width: 100%;
+    }
+    .tableWrapper:before{
+        content: "Scroll horizontally >";
+        display: block;
+        text-align: right;
+        font-size: 11px;
+        color: rgb(114, 75, 75);
+        padding: 0 0 10px;
+    }
+    .flTable thead, .fl-table tbody, .fl-table thead th {
+        display: block;
+    }
+    .flTable thead th:last-child{
+        border-bottom: none;
+    }
+    .flTable thead {
+        float: left;
+    }
+    .flTable tbody {
+        width: auto;
+        position: relative;
+        overflow-x: auto;
+    }
+    .flTable td, .fl-table th {
+        padding: 20px .625em .625em .625em;
+        height: 60px;
+        vertical-align: middle;
+        box-sizing: border-box;
+        overflow-x: hidden;
+        overflow-y: auto;
+        width: 120px;
+        font-size: 13px;
+        text-overflow: ellipsis;
+    }
+    .flTable thead th {
+        text-align: left;
+        border-bottom: 1px solid #f7f7f9;
+    }
+    .flTable tbody tr {
+        display: table-cell;
+    }
+    .flTable tbody tr:nth-child(odd) {
+        background: none;
+    }
+    .flTable tr:nth-child(even) {
+        background: transparent;
+    }
+    .flTable tr td:nth-child(odd) {
+        background: #F8F8F8;
+        border-right: 3px solid #1f1818;
+    }
+    .flTable tr td:nth-child(even) {
+        border-right: 1px solid #E6E4E4;
+    }
+    .flTable tbody td {
+        display: block;
+        text-align: center;
+    }
+}
