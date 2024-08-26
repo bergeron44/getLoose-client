@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk'; // Use the 'thunk' import
+import { thunk } from 'redux-thunk'; // Use the named export
 
 import suggestionReducer from './reducers/suggestion';
 import theGameReducer from './reducers/theGame';

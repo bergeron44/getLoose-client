@@ -3,27 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.11.0",
-    "@testing-library/jest-dom": "^5.18.0",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^14.0.0",
-    "axios": "^0.27.0",
-    "bootstrap": "^5.3.2",
-    "dayjs": "^1.12.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-redux": "^8.0.0",
-    "react-responsive-carousel": "^3.3.0",
-    "react-router-dom": "^6.5.0",
-    "react-scripts": "5.0.2",
-    "react-slick": "^0.30.0",
-    "redux": "^5.0.0",
-    "redux-thunk": "^2.5.0",
-    "slick-carousel": "^1.8.2",
-    "web-vitals": "^2.2.0"
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/user-event": "^14.5.2",
+    "axios": "^1.7.5",
+    "bootstrap": "^5.3.3",
+    "dayjs": "^1.11.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-redux": "^9.1.2",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.26.1",
+    "react-scripts": "^5.0.1",
+    "react-slick": "^0.30.2",
+    "redux": "^5.0.1",
+    "redux-thunk": "^3.1.0",
+    "slick-carousel": "^1.8.1",
+    "web-vitals": "^4.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -48,5 +48,8 @@
       "last 2 firefox versions",
       "last 2 safari versions"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
