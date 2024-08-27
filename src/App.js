@@ -1,20 +1,22 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePageForDates from './pages/HomePageForDates';
-import HomePageForFrindes from './pages/HomePageForFrindes';
+import HomePageForFriends from './pages/HomePageForFrindes'; 
 import FirstPageDateOrFrinde from './pages/FirstPageDateOrFrinde';
-
-// All other imports...
+import './App.css';
 
 function App() {
   return (
     <Router>
       <div className="App">
+        <h1 className="graffiti-headline">Get Loose</h1>
         <Routes>
           <Route path="/" element={<FirstPageDateOrFrinde />} />
           <Route path="/HomePageForDates" element={<HomePageForDates />} />
-          <Route path="/HomePageForFrindes" element={<HomePageForFrindes />} />
-          {/* Add other routes here */}
+          <Route path="/HomePageForFriends" element={<HomePageForFriends />} />
+          <Route path="/page1" element={<FirstPageDateOrFrinde />} />
+          <Route path="/page2" element={<FirstPageDateOrFrinde />} />
+          <Route path="/page3" element={<FirstPageDateOrFrinde />} />
         </Routes>
       </div>
     </Router>

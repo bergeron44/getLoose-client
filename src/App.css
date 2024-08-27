@@ -8,22 +8,34 @@ html, body {
 .App {
   height: 100vh; /* Make the App container fill the viewport height */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden; /* Ensure no overflow is visible */
   background-color: pink; /* Set background color */
 }
 
+.graffiti-headline {
+  font-family: 'Permanent Marker', cursive;
+  font-size: 4rem;
+  color: #ff4c4c;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  margin-bottom: 20px;
+}
+
+/* Add other styles as needed */
+
+
 .App > div {
   flex: 1;
-  background-color: #ffc0cb; /* Pink background */
+  background-color: #ffc0cb; 
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-/* Logo Styles */
+/*
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,7 +47,7 @@ html, body {
   }
 }
 
-/* Header Styles */
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -60,13 +72,13 @@ html, body {
   }
 }
 
-/* Gallery Styles */
+
 .gallery-container {
   position: relative;
-  width: 80vw; /* Adjust width as needed */
-  height: 60vh; /* Adjust height as needed */
+  width: 80vw; 
+  height: 60vh; 
   overflow: hidden;
-  perspective: 1500px; /* Add perspective for 3D effect */
+  perspective: 1500px; 
 }
 
 .gallery {
@@ -76,13 +88,13 @@ html, body {
   left: 50%;
   transform: translate(-50%, -50%);
   transform-style: preserve-3d;
-  transition: transform 1s; /* Smooth transition for rotation */
+  transition: transform 1s; 
 }
 
 .gallery-item {
   position: absolute;
-  width: 200px; /* Adjust width as needed */
-  height: 200px; /* Adjust height as needed */
+  width: 200px; 
+  height: 200px; 
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,12 +111,12 @@ html, body {
 
 .gallery-item.active {
   z-index: 1;
-  transform: scale(1.2); /* Scale up the active image */
+  transform: scale(1.2); 
 }
 
 .gallery-item.next, .gallery-item.prev {
   z-index: 0;
-  transform: scale(0.8); /* Scale down the images on either side */
+  transform: scale(0.8); 
 }
 
 .gallery-button {
@@ -127,7 +139,7 @@ html, body {
   right: 10px;
 }
 
-/* Additional Styles */
+
 .rotating-container {
   display: flex;
   justify-content: center;
@@ -146,4 +158,4 @@ html, body {
   to {
     transform: rotate(360deg);
   }
-}
+}*/
