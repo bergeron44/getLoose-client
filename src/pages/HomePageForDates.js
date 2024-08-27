@@ -33,7 +33,7 @@ const HomePageForDates = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-      <Link to="/page1" style={cardStyle}>
+      <Link to="/LogoPage" style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p1.jpg" alt="Page 1" style={imgStyle} />
           <div style={captionStyle}>הוראות</div>

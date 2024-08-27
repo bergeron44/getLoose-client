@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { setAllCategoryName } from '../store/actions/categories';
 
+// Define your images array with URLs and titles
 const images = [
   {
     url: '/images/pick1.jpeg',
@@ -20,10 +21,11 @@ const images = [
   },
 ];
 
+// Styled component for TriangleButton
 const TriangleButton = styled(ButtonBase)(({ theme, triangle }) => ({
   position: 'absolute',
   width: '50%',
-  height: '100%',
+  height: '50%', // Ensure each button covers half of the screen
   clipPath: triangle,
   overflow: 'hidden',
   '&:hover, &.Mui-focusVisible': {
@@ -40,6 +42,7 @@ const TriangleButton = styled(ButtonBase)(({ theme, triangle }) => ({
   },
 }));
 
+// Styled component for ImageSrc
 const ImageSrc = styled('span')({
   position: 'absolute',
   left: 0,
@@ -51,6 +54,7 @@ const ImageSrc = styled('span')({
   backgroundRepeat: 'no-repeat',
 });
 
+// Styled component for ImageBackdrop
 const ImageBackdrop = styled('span')(({ theme }) => ({
   position: 'absolute',
   left: 0,
@@ -62,6 +66,7 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
+// Styled component for ImageMarked
 const ImageMarked = styled('span')(({ theme }) => ({
   height: 3,
   width: 18,
@@ -72,6 +77,7 @@ const ImageMarked = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
+// Styled component for Caption
 const Caption = styled(Typography)(({ theme, position }) => ({
   position: 'absolute',
   width: '100%',
@@ -90,7 +96,7 @@ export default function TrianglePage() {
   const navigate = useNavigate();
 
   return (
-    <Box sx={{ position: 'relative', width: '100%', height: '100vh', overflow: 'hidden' }}>
+    <Box sx={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
       {images.map((image, index) => (
         <TriangleButton
           key={image.title}
@@ -99,6 +105,13 @@ export default function TrianglePage() {
           onClick={() => {
             dispatch(setAllCategoryName());
             navigate(image.link);
+          }}
+          sx={{
+            top: index === 0 ? 0 : '50%',
+            left: index === 0 ? 0 : '50%',
+            transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
+            width: '100%', // Adjust to make sure it fills half of the screen
+            height: '100%', // Adjust to make sure it fills half of the screen
           }}
         >
           <ImageBackdrop className="MuiImageBackdrop-root" />

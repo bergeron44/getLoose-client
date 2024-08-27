@@ -1,0 +1,64 @@
+/* Base Styles */
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Page container */
+.logo-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw; /* Full viewport width */
+  margin: 0; /* Remove any default margin */
+  background-color: #282c34; /* Background color of the page */
+}
+
+/* Logo container */
+.logo-container {
+  margin-bottom: 50px; /* Space between logo and headline */
+}
+
+/* Logo animation */
+/* Logo container */
+.logo {
+  width: 350px; /* Adjust size as needed */
+  height: 350px;
+  animation: pulse 6s ease-in-out infinite; /* Pulsing animation */
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent background for blending */
+  border-radius: 50%; /* Rounded edges for a circular logo */
+  overflow: hidden; /* Hide overflow to maintain circular shape */
+  display: flex;
+  align-items: center; /* Center the image vertically */
+  justify-content: center; /* Center the image horizontally */
+}
+
+/* Ensure the image fills the logo container properly */
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit:fill; /* Ensure the image covers the circle */
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1); /* Start at normal size */
+  }
+  50% {
+    transform: scale(2); /* Scale up to 150% of original size */
+  }
+  100% {
+    transform: scale(1); /* Return to normal size */
+  }
+}
+
+/* Headline styling */
+.graffiti-headline {
+  color: #ff6347; /* Headline color */
+  font-size: 3rem;
+  font-family: 'Roboto', sans-serif; /* Ensure this matches your app's font */
+}

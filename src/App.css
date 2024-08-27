@@ -1,161 +1,87 @@
 /* Base Styles */
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+/* Ensure App container takes full height */
 .App {
-  height: 100vh; /* Make the App container fill the viewport height */
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* Ensure no overflow is visible */
-  background-color: pink; /* Set background color */
+  height: 100vh; /* Full viewport height */
 }
 
+/* Center the headline at the top */
 .graffiti-headline {
-  font-family: 'Permanent Marker', cursive;
-  font-size: 4rem;
-  color: #ff4c4c;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-  margin-bottom: 20px;
+  text-align: center;
+  color: #ff6347; /* Headline color */
+  font-size: 3rem;
+  font-family: 'Permanent Marker', cursive; /* Graffiti font */
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Enhanced shadow for better readability */
+  margin: 0; /* Remove default margin */
+  position: absolute; /* Position absolutely to ensure centering */
+  top: 20px; /* Adjust as needed for spacing from top */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center using transform */
 }
 
-/* Add other styles as needed */
-
-
-.App > div {
-  flex: 1;
-  background-color: #ffc0cb; 
+/* Page container to fill remaining space */
+.page-content {
+  flex: 1; /* Take up remaining space */
   display: flex;
-  align-items: center;
   justify-content: center;
-  overflow: hidden;
+  align-items: center;
+  background: linear-gradient(135deg, #ff6f61, #ffd700); /* Gradient background */
 }
 
-/*
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Page container */
+.logo-page {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-
-.gallery-container {
-  position: relative;
-  width: 80vw; 
-  height: 60vh; 
-  overflow: hidden;
-  perspective: 1500px; 
-}
-
-.gallery {
-  display: flex;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transform-style: preserve-3d;
-  transition: transform 1s; 
-}
-
-.gallery-item {
-  position: absolute;
-  width: 200px; 
-  height: 200px; 
-  display: flex;
   justify-content: center;
   align-items: center;
-  backface-visibility: hidden;
-  transition: transform 0.5s, opacity 0.5s;
+  height: 100vh; /* Full viewport height */
+  margin: 0; /* Remove any default margin */
+  background: linear-gradient(135deg, #ff6f61, #ffd700); /* Gradient background */
 }
 
-.gallery-item img {
+/* Logo container */
+.logo-container {
+  position: relative; /* Ensure positioning context for absolute children */
+}
+
+/* Logo animation */
+/* Logo container */
+.logo {
+  width: 350px; /* Adjust size as needed */
+  height: 350px;
+  animation: pulse 6s ease-in-out infinite; /* Pulsing animation */
+  background: rgba(255, 255, 255, 0.2); /* Semi-transparent background for blending */
+  border-radius: 50%; /* Rounded edges for a circular logo */
+  overflow: hidden; /* Hide overflow to maintain circular shape */
+  display: flex;
+  align-items: center; /* Center the image vertically */
+  justify-content: center; /* Center the image horizontally */
+}
+
+/* Ensure the image fills the logo container properly */
+.logo img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  border: 2px solid white;
+  object-fit:inherit; /* Ensure the image covers the circle */
 }
 
-.gallery-item.active {
-  z-index: 1;
-  transform: scale(1.2); 
-}
-
-.gallery-item.next, .gallery-item.prev {
-  z-index: 0;
-  transform: scale(0.8); 
-}
-
-.gallery-button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 2;
-}
-
-.gallery-button.prev {
-  left: 10px;
-}
-
-.gallery-button.next {
-  right: 10px;
-}
-
-
-.rotating-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: rotate 20s linear infinite;
-}
-
-.rotating-item {
-  margin: 0 20px;
-}
-
-@keyframes rotate {
-  from {
-    transform: rotate(0deg);
+/* Keyframes for pulsing effect */
+@keyframes pulse {
+  0% {
+    transform: scale(1); /* Start at normal size */
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: scale(2); /* Scale up to 120% of original size */
   }
-}*/
+  100% {
+    transform: scale(1); /* Return to normal size */
+  }
+}
