@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import classes from './AddQuestionPage.module.css'
-import Card from '../components/UI/Card';
-import Button from '../components/UI/Button';
+import Card from './UI/Card';
+import Button from './UI/Button';
 import { useDispatch } from 'react-redux';
 import { addCategory, addQuestion } from '../store/actions/postFunction';
 import { json } from 'react-router';

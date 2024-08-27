@@ -1,13 +1,13 @@
 //שתי קומפוננתות אחד משוב חיובי אחד שלילי
 import React from 'react'
-import WrongComp from '../components/WrongComp'
-import RightComp from '../components/RightComp'
+import WrongComp from './WrongComp'
+import RightComp from './RightComp'
 import {useNavigate} from 'react-router'
 import { useDispatch, useSelector } from 'react-redux'
 import { addNumOfQuestion } from '../store/actions/theGame'
-import Card from '../components/UI/Card'
-import Button from '../components/UI/Button'
-import TimeCompOld from '../components/TimeCompOld'
+import Card from './UI/Card'
+import Button from './UI/Button'
+import TimeCompOld from './TimeCompOld'
 
 const FeedbackPage = () => {
   const dispatch=useDispatch();

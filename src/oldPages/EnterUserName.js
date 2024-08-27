@@ -1,13 +1,13 @@
 import React, { useState,useEffect } from 'react'
 import {useNavigate} from 'react-router'
-import Button from '../components/UI/Button';
+import Button from './UI/Button';
 import classes from '../components/LoginComp.module.css'
 import { setLastUser } from '../store/actions/user';
 import { createCreator } from '../store/actions/table';
 import {useDispatch, useSelector} from 'react-redux';
 ///ניסוי
 import axios from 'axios'
-import CardTry from '../components/UI/CardTry';
+import CardTry from './UI/CardTry';
 
   const EnterUserName = () => {
     const navigate = useNavigate();

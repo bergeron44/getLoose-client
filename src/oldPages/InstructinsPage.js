@@ -1,6 +1,6 @@
 import React from 'react'
-import IconButton from '../components/UI/IconButton'
-import Carousel from '../components/Carousel';
+import IconButton from './UI/IconButton'
+import Carousel from './Carousel';
 import './InstructinsPage.module.css';
 import SwipeIcon from '@mui/icons-material/Swipe';
 

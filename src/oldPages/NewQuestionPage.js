@@ -1,9 +1,9 @@
 import React from 'react'
-import AnswerComp from '../components/AnswerComp'
-import QuestionComp from '../components/QuestionComp'
-import CardTwo from './../components/UI/CardTwo'
+import AnswerComp from './AnswerComp'
+import QuestionComp from './QuestionComp'
+import CardTwo from './UI/CardTwo'
 import Classes from './QuestionPage.module.css'
-import TimeComp from '../components/TimeComp'
+import TimeComp from './TimeComp'
 import {useDispatch, useSelector} from 'react-redux';
 import { setGameId } from '../store/actions/theGame'
 import { editCategory } from '../store/actions/postFunction'
