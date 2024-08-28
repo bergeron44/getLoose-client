@@ -1,13 +1,12 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { setAllCategoryName } from '../store/actions/categories';
+import { setBarName } from '../store/actions/barsActions'; // Ensure this is correct
 
-// Define your images array with URLs and titles
 const images = [
   {
     url: '/images/pick1.jpeg',
@@ -21,11 +20,10 @@ const images = [
   },
 ];
 
-// Styled component for TriangleButton
 const TriangleButton = styled(ButtonBase)(({ theme, triangle }) => ({
   position: 'absolute',
-  width: '50%',
-  height: '50%', // Ensure each button covers half of the screen
+  width: '100%',
+  height: '100%',
   clipPath: triangle,
   overflow: 'hidden',
   '&:hover, &.Mui-focusVisible': {
@@ -42,7 +40,6 @@ const TriangleButton = styled(ButtonBase)(({ theme, triangle }) => ({
   },
 }));
 
-// Styled component for ImageSrc
 const ImageSrc = styled('span')({
   position: 'absolute',
   left: 0,
@@ -54,7 +51,6 @@ const ImageSrc = styled('span')({
   backgroundRepeat: 'no-repeat',
 });
 
-// Styled component for ImageBackdrop
 const ImageBackdrop = styled('span')(({ theme }) => ({
   position: 'absolute',
   left: 0,
@@ -66,7 +62,6 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-// Styled component for ImageMarked
 const ImageMarked = styled('span')(({ theme }) => ({
   height: 3,
   width: 18,
@@ -77,7 +72,6 @@ const ImageMarked = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-// Styled component for Caption
 const Caption = styled(Typography)(({ theme, position }) => ({
   position: 'absolute',
   width: '100%',
@@ -95,25 +89,49 @@ export default function TrianglePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    // Get user's location when the component mounts
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+       
+        // Make an API call to get the nearest bar by location
+        try {
+          const response = await fetch(`/api/bars/nearest?lat=${latitude}&lng=${longitude}`);
+          const nearestBar = await response.json();
+
+          // Dispatch the action to update the bar name in the store
+          dispatch(setBarName(nearestBar.barName));
+        } catch (error) {
+          console.error('Error fetching nearest bar:', error);
+        }
+      },
+      (error) => {
+        console.error('Error getting location:', error);
+      }
+    );
+  }, [dispatch]);
+
+  const handleClick = (link) => {
+    navigate(link);
+  };
+
   return (
     <Box sx={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
       {images.map((image, index) => (
-        <TriangleButton
-          key={image.title}
-          triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
-          style={{ backgroundImage: `url(${image.url})` }}
-          onClick={() => {
-            dispatch(setAllCategoryName());
-            navigate(image.link);
-          }}
-          sx={{
-            top: index === 0 ? 0 : '50%',
-            left: index === 0 ? 0 : '50%',
-            transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
-            width: '100%', // Adjust to make sure it fills half of the screen
-            height: '100%', // Adjust to make sure it fills half of the screen
-          }}
-        >
+       <TriangleButton
+       key={image.title}
+       triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
+       style={{ backgroundImage: `url(${image.url})` }}
+       onClick={() => handleClick(image.link)}
+       sx={{
+         top: index === 0 ? 0 : '50%',
+         left: index === 0 ? 0 : '50%',
+         transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
+         width: '90%', // Adjust the width percentage
+         height: '90%', // Adjust the height percentage
+       }}
+     >
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <ImageSrc />
           <Caption

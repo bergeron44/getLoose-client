@@ -33,13 +33,13 @@ const HomePageForFriends = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-      <Link to="/page1" style={cardStyle}>
+      <Link to="/LogoPage" style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p6.jpeg" alt="Page 1" style={imgStyle} />
           <div style={captionStyle}>הוראות</div>
         </div>
       </Link>
-      <Link to="/LogoPage" style={cardStyle}>
+      <Link to="/page2" style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p4.jpeg" alt="Page 2" style={imgStyle} />
           <div style={captionStyle}>התחל משחק</div>

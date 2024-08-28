@@ -1,7 +1,8 @@
-// store.js
+// src/store/store.js
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk'; // Make sure thunk is imported correctly
+import { composeWithDevTools } from '@redux-devtools/extension'; // Updated package
+
 import packagesReducer from './reducers/packagesReducer';
 import barsReducer from './reducers/barsReducer';
 import liveGameReducer from './reducers/liveGameReducer';
@@ -14,7 +15,7 @@ const rootReducer = combineReducers({
 
 const store = createStore(
     rootReducer,
-    composeWithDevTools(applyMiddleware(thunk))
+    composeWithDevTools(applyMiddleware(thunk)) // Use thunk directly
 );
 
 export default store;

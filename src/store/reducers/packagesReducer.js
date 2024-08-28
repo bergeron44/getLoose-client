@@ -1,5 +1,7 @@
 // packagesReducer.js
-import { FETCH_PACKAGES, CREATE_PACKAGE, UPDATE_PACKAGE, DELETE_PACKAGE } from './actions';
+import { FETCH_PACKAGES, CREATE_PACKAGE, UPDATE_PACKAGE, DELETE_PACKAGE } from '../actionTypes'; 
+
+// Your reducer code here
 
 const initialState = [];
 

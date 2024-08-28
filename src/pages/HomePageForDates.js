@@ -39,7 +39,7 @@ const HomePageForDates = () => {
           <div style={captionStyle}>הוראות</div>
         </div>
       </Link>
-      <Link to="/page2" style={cardStyle}>
+      <Link to="/ChooseDate" style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p2.jpeg" alt="Page 2" style={imgStyle} />
           <div style={captionStyle}>התחל משחק</div>
