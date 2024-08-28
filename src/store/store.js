@@ -1,24 +1,20 @@
+// store.js
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { thunk } from 'redux-thunk'; // Use the named export
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import packagesReducer from './reducers/packagesReducer';
+import barsReducer from './reducers/barsReducer';
+import liveGameReducer from './reducers/liveGameReducer';
 
-import suggestionReducer from './reducers/suggestion';
-import theGameReducer from './reducers/theGame';
-import categoriesReducer from './reducers/categories';
-import usersReducer from './reducers/users';
-import tableReducer from './reducers/table';
-import companiesReducer from './reducers/companies';
-
-// Combine all reducers
 const rootReducer = combineReducers({
-    suggestion: suggestionReducer,
-    theGame: theGameReducer,
-    categories: categoriesReducer,
-    users: usersReducer,
-    table: tableReducer,
-    companies: companiesReducer,
+    packages: packagesReducer,
+    bars: barsReducer,
+    liveGames: liveGameReducer,
 });
 
-// Create the Redux store with thunk middleware
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+    rootReducer,
+    composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default store;
