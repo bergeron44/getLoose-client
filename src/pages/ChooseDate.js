@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createLiveGame } from '../store/actions/liveGameActions'; // Assuming these actions are defined
-import { fetchBarPackages } from '../store/actions/barsActions'; // Assuming these actions are defined
+import { createLiveGame } from '../store/actions/liveGameActions';
+import { fetchBarPackages } from '../store/actions/barsActions';
 import { TextField, Button, Box, Typography, Card, CardContent } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ChooseDate = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [playerName, setPlayerName] = useState('');
   const [selectedPackage, setSelectedPackage] = useState(null);
-  const barPackages = useSelector(state => state.bars.barPackages); // Assuming you store packages in state.bars.barPackages
+
+  // Retrieve necessary data from the store
+  const barPackages = useSelector(state => state.bars.barPackages);
+  const currentBarId = useSelector(state => state.bars.currentBarId);
+  const tableName = useSelector(state => state.liveGame.currentTableName); // Assuming you have this in your store
+  const tableNumber = useSelector(state => state.liveGame.currentTableNumber); // Assuming you have this in your store
 
   // Fetch bar packages when the component mounts
   useEffect(() => {
-    const fetchPackages = async () => {
-      const barId = 'current-bar-id'; // Replace with logic to get current bar ID
-      dispatch(fetchBarPackages(barId));
-    };
-
-    fetchPackages();
-  }, [dispatch]);
+    if (currentBarId) {
+      dispatch(fetchBarPackages(currentBarId));
+    }
+  }, [dispatch, currentBarId]);
 
   const handleNameChange = (event) => {
     setPlayerName(event.target.value);
@@ -29,24 +33,24 @@ const ChooseDate = () => {
   };
 
   const handleCreateLiveGame = () => {
-    if (selectedPackage) {
+    if (selectedPackage && playerName) {
       const liveGame = {
-        gameType: 'Date', // Adjust as needed
-        bar: 'current-bar-id', // Replace with actual bar ID
-        tableName: 'Table Name', // Replace with actual table name or allow user input
-        tableNumber: 1, // Replace with actual table number or allow user input
+        gameType: 'Date',
+        bar: currentBarId,
+        tableName: tableName, // Retrieved from the store
+        tableNumber: tableNumber, // Retrieved from the store
         package: selectedPackage._id,
-        playersNames: [playerName]
+        playersNames: [playerName],
       };
 
       dispatch(createLiveGame(liveGame));
+      navigate('/logo'); // Redirect to the logo page
     }
   };
 
   return (
     <div>
       <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        {/* Top Half: Input for Player Name and Button */}
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
           <Typography variant="h4" gutterBottom>
             Enter Player Name
@@ -62,15 +66,21 @@ const ChooseDate = () => {
             variant="contained"
             color="primary"
             onClick={handleCreateLiveGame}
+            disabled={!selectedPackage || !playerName} // Disable if no package or name
           >
             Create Live Game
           </Button>
         </Box>
 
-        {/* Bottom Half: Gallery of Packages */}
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, padding: 2 }}>
           {barPackages.map(pkg => (
-            <Card key={pkg._id} sx={{ maxWidth: 345 }}>
+            <Card
+              key={pkg._id}
+              sx={{
+                maxWidth: 345,
+                border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid blue' : 'none'
+              }}
+            >
               <CardContent>
                 <Typography variant="h6" component="div">
                   {pkg.price}
@@ -78,7 +88,9 @@ const ChooseDate = () => {
                 <Typography variant="body2" color="text.secondary">
                   {pkg.packagesContant} {/* Adjust according to your package schema */}
                 </Typography>
-                <Button onClick={() => handlePackageClick(pkg)}>Select</Button>
+                <Button onClick={() => handlePackageClick(pkg)}>
+                  Select
+                </Button>
               </CardContent>
             </Card>
           ))}

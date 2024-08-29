@@ -10,7 +10,7 @@ import {
   setTableNumber, 
   setPackage, 
   setPlayersNames 
-} from '../actions/currentGameActions';
+} from '../store/actions/liveGameActions';
 
 const BackToGame = () => {
   const dispatch = useDispatch();
@@ -43,6 +43,7 @@ const BackToGame = () => {
 
       // Redirect to the game page with the game ID
       navigate(`/game/${matchingGame.id}`);
+      //פה צריך להתאים לאיפה נירצה להחזיר אותו בהתאם למשחק שלו
     } else {
       alert('You are not registered for any game.');
     }

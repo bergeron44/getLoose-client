@@ -6,6 +6,7 @@ import FirstPageDateOrFrinde from './pages/FirstPageDateOrFrinde';
 import ChooseDate from './pages/ChooseDate';
 import ChooseFrindes from './pages/ChooseFrindes' ;
 import AnimatedLogo from './components/AnimatedLogo';  // Import the AnimatedLogo component
+import BackToGame from './components/BackToGame'; 
 import './App.css';
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Routes>
             <Route path="/" element={<FirstPageDateOrFrinde />} />
             <Route path="/LogoPage" element={<AnimatedLogo />} />
+            <Route path="/BackToGame" element={<BackToGame />} />
             <Route path="/HomePageForDates" element={<HomePageForDates />} />
             <Route path="/HomePageForFriends" element={<HomePageForFriends />} />
             <Route path="/ChooseDate" element={<ChooseDate />} />
