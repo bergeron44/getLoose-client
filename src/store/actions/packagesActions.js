@@ -1,12 +1,19 @@
-import { FETCH_PACKAGES, CREATE_PACKAGE, UPDATE_PACKAGE, DELETE_PACKAGE } from '../actionTypes';
+import { FETCH_PACKAGES, CREATE_PACKAGE, UPDATE_PACKAGE, DELETE_PACKAGE, SET_CURRENT_PACKAGE } from '../actionTypes';
 
+// Helper function to handle API responses
+const handleResponse = async (response) => {
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Network response was not ok.');
+    }
+    return response.json();
+};
+
+// Fetch all packages
 export const fetchPackages = () => async (dispatch) => {
     try {
         const response = await fetch('/api/packages');
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
-        }
-        const data = await response.json();
+        const data = await handleResponse(response);
         dispatch({ type: FETCH_PACKAGES, payload: data });
     } catch (error) {
         console.error('Failed to fetch packages:', error);
@@ -14,42 +21,45 @@ export const fetchPackages = () => async (dispatch) => {
     }
 };
 
+// Create a new package
 export const createPackage = (newPackage) => async (dispatch) => {
     try {
         const response = await fetch('/api/packages', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }, // Added headers
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(newPackage),
         });
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
-        }
-        const data = await response.json();
+        const data = await handleResponse(response);
         dispatch({ type: CREATE_PACKAGE, payload: data });
+        dispatch({ type: SET_CURRENT_PACKAGE, payload: data._id }); // Set the newly created package as current
     } catch (error) {
         console.error('Failed to create package:', error);
         // Optionally dispatch an error action here
     }
 };
 
+// Update an existing package
 export const updatePackage = (id, updatedPackage) => async (dispatch) => {
     try {
         const response = await fetch(`/api/packages/${id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' }, // Added headers
+            headers: {
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(updatedPackage),
         });
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
-        }
-        const data = await response.json();
+        const data = await handleResponse(response);
         dispatch({ type: UPDATE_PACKAGE, payload: data });
+        dispatch({ type: SET_CURRENT_PACKAGE, payload: data._id }); // Set the updated package as current
     } catch (error) {
         console.error('Failed to update package:', error);
         // Optionally dispatch an error action here
     }
 };
 
+// Delete a package
 export const deletePackage = (id) => async (dispatch) => {
     try {
         const response = await fetch(`/api/packages/${id}`, { method: 'DELETE' });
@@ -57,6 +67,7 @@ export const deletePackage = (id) => async (dispatch) => {
             throw new Error('Network response was not ok.');
         }
         dispatch({ type: DELETE_PACKAGE, payload: id });
+        dispatch({ type: SET_CURRENT_PACKAGE, payload: null }); // Clear the current package if it was deleted
     } catch (error) {
         console.error('Failed to delete package:', error);
         // Optionally dispatch an error action here

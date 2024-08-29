@@ -1,7 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setGameType } from '../store/actions/liveGameActions';
 
 const HomePageForFriends = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const cardStyle = {
     width: '300px',
     height: '200px',
@@ -31,6 +36,13 @@ const HomePageForFriends = () => {
     borderRadius: '5px',
   };
 
+  const handleChooseFriendsClick = () => {
+    // Dispatch the action to set the game type to "Friends"
+    dispatch(setGameType("Friends"));
+    // Navigate to the corresponding page
+    navigate('/ChooseFrindes');
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
       <Link to="/LogoPage" style={cardStyle}>
@@ -39,12 +51,12 @@ const HomePageForFriends = () => {
           <div style={captionStyle}>הוראות</div>
         </div>
       </Link>
-      <Link to="/page2" style={cardStyle}>
+      <div onClick={handleChooseFriendsClick} style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p4.jpeg" alt="Page 2" style={imgStyle} />
           <div style={captionStyle}>התחל משחק</div>
         </div>
-      </Link>
+      </div>
       <Link to="/page3" style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p5.jpeg" alt="Page 3" style={imgStyle} />

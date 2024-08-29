@@ -21,6 +21,8 @@ const setError = (error) => ({
     type: SET_ERROR,
     payload: error,
 });
+
+// Set the current bar name
 export const setBarName = (name) => ({
     type: SET_BAR_NAME,
     payload: name,

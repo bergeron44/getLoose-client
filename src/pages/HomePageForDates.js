@@ -1,7 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setGameType } from '../store/actions/liveGameActions';
 
 const HomePageForDates = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const cardStyle = {
     width: '300px',
     height: '200px',
@@ -31,6 +36,13 @@ const HomePageForDates = () => {
     borderRadius: '5px',
   };
 
+  const handleChooseDateClick = () => {
+    // Dispatch the action to set the game type to "Date"
+    dispatch(setGameType("Date"));
+    // Navigate to the ChooseDate page
+    navigate('/ChooseDate');
+  };
+
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
       <Link to="/LogoPage" style={cardStyle}>
@@ -39,12 +51,12 @@ const HomePageForDates = () => {
           <div style={captionStyle}>הוראות</div>
         </div>
       </Link>
-      <Link to="/ChooseDate" style={cardStyle}>
+      <div onClick={handleChooseDateClick} style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p2.jpeg" alt="Page 2" style={imgStyle} />
           <div style={captionStyle}>התחל משחק</div>
         </div>
-      </Link>
+      </div>
       <Link to="/page3" style={cardStyle}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p3.jpeg" alt="Page 3" style={imgStyle} />

@@ -73,10 +73,10 @@ const ChooseDate = () => {
             <Card key={pkg._id} sx={{ maxWidth: 345 }}>
               <CardContent>
                 <Typography variant="h6" component="div">
-                  {pkg.name}
+                  {pkg.price}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {pkg.description} {/* Adjust according to your package schema */}
+                  {pkg.packagesContant} {/* Adjust according to your package schema */}
                 </Typography>
                 <Button onClick={() => handlePackageClick(pkg)}>Select</Button>
               </CardContent>

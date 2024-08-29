@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { setBarName } from '../store/actions/barsActions'; // Ensure this is correct
+import { setBar, setPlayersNames } from '../store/actions/liveGameActions'; // Ensure this is correct
+import { setCurrentBar } from '../store/actions/barsActions'; 
 
 const images = [
   {
@@ -88,28 +89,54 @@ const Caption = styled(Typography)(({ theme, position }) => ({
 export default function TrianglePage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Get user's location when the component mounts
-    navigator.geolocation.getCurrentPosition(
-      async (position) => {
-        const { latitude, longitude } = position.coords;
-       
-        // Make an API call to get the nearest bar by location
-        try {
-          const response = await fetch(`/api/bars/nearest?lat=${latitude}&lng=${longitude}`);
-          const nearestBar = await response.json();
+    const fetchQRCodeURL = async () => {
+      const query = new URLSearchParams(window.location.search);
+      const qrUrl = query.get('qrUrl');
 
-          // Dispatch the action to update the bar name in the store
-          dispatch(setBarName(nearestBar.barName));
+      if (qrUrl) {
+        try {
+          // Fetch bar details based on QR URL
+          const response = await fetch(`/api/bars/by-qr-url?url=${encodeURIComponent(qrUrl)}`);
+          if (!response.ok) throw new Error('Failed to fetch bar details');
+          const bar = await response.json();
+
+          if (bar && bar.barName) {
+            dispatch(setBar(bar.barName));
+            dispatch(setCurrentBar(bar));
+            // Get the IP address of the device
+            const ipResponse = await fetch('/api/ip');
+            if (!ipResponse.ok) throw new Error('Failed to fetch IP address');
+            const { ipAddress } = await ipResponse.json();
+
+            if (bar._id && ipAddress) {
+              // Update live game with IP address
+              const updateResponse = await fetch('/api/live-games/update-ip', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ barId: bar._id, ipAddress }),
+              });
+              if (!updateResponse.ok) throw new Error('Failed to update live game IP');
+
+              // Set playersNames in the store to the device IP address
+              dispatch(setPlayersNames(ipAddress));
+            }
+          } else {
+            console.error('Bar not found for the given QR URL');
+          }
         } catch (error) {
-          console.error('Error fetching nearest bar:', error);
+          setError(error.message);
+          console.error('Error fetching bar by QR URL:', error);
+        } finally {
+          setLoading(false);
         }
-      },
-      (error) => {
-        console.error('Error getting location:', error);
       }
-    );
+    };
+
+    fetchQRCodeURL();
   }, [dispatch]);
 
   const handleClick = (link) => {
@@ -118,20 +145,22 @@ export default function TrianglePage() {
 
   return (
     <Box sx={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
+      {loading && <Typography variant="h6" align="center">Loading...</Typography>}
+      {error && <Typography variant="h6" color="error" align="center">Error: {error}</Typography>}
       {images.map((image, index) => (
-       <TriangleButton
-       key={image.title}
-       triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
-       style={{ backgroundImage: `url(${image.url})` }}
-       onClick={() => handleClick(image.link)}
-       sx={{
-         top: index === 0 ? 0 : '50%',
-         left: index === 0 ? 0 : '50%',
-         transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
-         width: '90%', // Adjust the width percentage
-         height: '90%', // Adjust the height percentage
-       }}
-     >
+        <TriangleButton
+          key={image.title}
+          triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
+          style={{ backgroundImage: `url(${image.url})` }}
+          onClick={() => handleClick(image.link)}
+          sx={{
+            top: index === 0 ? 0 : '50%',
+            left: index === 0 ? 0 : '50%',
+            transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
+            width: '90%', // Adjust the width percentage
+            height: '90%', // Adjust the height percentage
+          }}
+        >
           <ImageBackdrop className="MuiImageBackdrop-root" />
           <ImageSrc />
           <Caption

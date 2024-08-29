@@ -1,27 +1,91 @@
-import { FETCH_LIVEGAMES, CREATE_LIVEGAME, UPDATE_LIVEGAME, DELETE_LIVEGAME } from '../actionTypes';
+// reducers/liveGameReducer.js
+import {
+    FETCH_LIVEGAMES,
+    CREATE_LIVEGAME,
+    UPDATE_LIVEGAME,
+    DELETE_LIVEGAME,
+    SET_GAME_TYPE,
+    SET_WAITER_APPROVE,
+    SET_BAR,
+    SET_TABLE_NAME,
+    SET_TABLE_NUMBER,
+    SET_PACKAGE,
+    SET_PLAYERS_NAMES
+} from '../actionTypes';
 
-// Initialize the state as an empty array
-const initialState = [];
+// Initialize the state
+const initialState = {
+    liveGames: [],
+    gameType: "",
+    waiterApprove: false,
+    bar: "",
+    tableName: "",
+    tableNumber: 666,
+    package: [],
+    playersNames: "",
+};
 
 // Reducer function for live games
 const liveGameReducer = (state = initialState, action) => {
     switch (action.type) {
         case FETCH_LIVEGAMES:
-            // Replace the state with the fetched live games
-            return action.payload;
+            return {
+                ...state,
+                liveGames: action.payload,
+            };
         case CREATE_LIVEGAME:
-            // Add the newly created live game to the state
-            return [...state, action.payload];
+            return {
+                ...state,
+                liveGames: [...state.liveGames, action.payload],
+            };
         case UPDATE_LIVEGAME:
-            // Update the live game in the state if its ID matches
-            return state.map(game =>
-                game._id === action.payload._id ? action.payload : game
-            );
+            return {
+                ...state,
+                liveGames: state.liveGames.map(game =>
+                    game._id === action.payload._id ? action.payload : game
+                ),
+            };
         case DELETE_LIVEGAME:
-            // Remove the live game with the given ID from the state
-            return state.filter(game => game._id !== action.payload);
+            return {
+                ...state,
+                liveGames: state.liveGames.filter(game => game._id !== action.payload),
+            };
+        case SET_GAME_TYPE:
+            return {
+                ...state,
+                gameType: action.payload,
+            };
+        case SET_WAITER_APPROVE:
+            return {
+                ...state,
+                waiterApprove: action.payload,
+            };
+        case SET_BAR:
+            return {
+                ...state,
+                bar: action.payload,
+            };
+        case SET_TABLE_NAME:
+            return {
+                ...state,
+                tableName: action.payload,
+            };
+        case SET_TABLE_NUMBER:
+            return {
+                ...state,
+                tableNumber: action.payload,
+            };
+        case SET_PACKAGE:
+            return {
+                ...state,
+                package: action.payload,
+            };
+        case SET_PLAYERS_NAMES:
+            return {
+                ...state,
+                playersNames: action.payload,
+            };
         default:
-            // Return the current state if no action matches
             return state;
     }
 };
