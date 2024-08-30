@@ -9,7 +9,8 @@ import {
     SET_TABLE_NAME,
     SET_TABLE_NUMBER,
     SET_PACKAGE,
-    SET_PLAYERS_NAMES
+    SET_PLAYERS_NAMES,
+    SET_CURRENT_GAME_ID,
 } from '../actionTypes';
 // Helper function to handle API responses
 const handleResponse = async (response) => {
@@ -116,4 +117,8 @@ export const setPackage = (packageData) => ({
 export const setPlayersNames = (playersNames) => ({
     type: SET_PLAYERS_NAMES,
     payload: playersNames,
+});
+export const setCurrentGameId = (gameId) => ({
+    type: SET_CURRENT_GAME_ID,
+    payload: gameId,
 });

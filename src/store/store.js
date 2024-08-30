@@ -6,11 +6,13 @@ import { composeWithDevTools } from '@redux-devtools/extension'; // Updated pack
 import packagesReducer from './reducers/packagesReducer';
 import barsReducer from './reducers/barsReducer';
 import liveGameReducer from './reducers/liveGameReducer';
+import questionsReducer from './reducers/questionsReducer';
 
 const rootReducer = combineReducers({
     packages: packagesReducer,
     bars: barsReducer,
     liveGames: liveGameReducer,
+    questions: questionsReducer,
 });
 
 const store = createStore(

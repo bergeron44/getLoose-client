@@ -10,7 +10,8 @@ import {
     SET_TABLE_NAME,
     SET_TABLE_NUMBER,
     SET_PACKAGE,
-    SET_PLAYERS_NAMES
+    SET_PLAYERS_NAMES,
+    SET_CURRENT_GAME_ID,  // Import the new action type
 } from '../actionTypes';
 
 // Initialize the state
@@ -23,6 +24,7 @@ const initialState = {
     tableNumber: 666,
     package: [],
     playersNames: "",
+    currentGameId: null, // Add this field to store the game ID
 };
 
 // Reducer function for live games
@@ -85,6 +87,11 @@ const liveGameReducer = (state = initialState, action) => {
                 ...state,
                 playersNames: action.payload,
             };
+        case SET_CURRENT_GAME_ID:
+                return {
+                    ...state,
+                    currentGameId: action.payload,
+                };
         default:
             return state;
     }

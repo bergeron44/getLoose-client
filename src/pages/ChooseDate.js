@@ -6,98 +6,105 @@ import { TextField, Button, Box, Typography, Card, CardContent } from '@mui/mate
 import { useNavigate } from 'react-router-dom';
 
 const ChooseDate = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [playerName, setPlayerName] = useState('');
-  const [selectedPackage, setSelectedPackage] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [playerName, setPlayerName] = useState('');
+    const [selectedPackage, setSelectedPackage] = useState(null);
 
-  // Retrieve necessary data from the store
-  const barPackages = useSelector(state => state.bars.barPackages);
-  const currentBarId = useSelector(state => state.bars.currentBarId);
-  const tableName = useSelector(state => state.liveGame.currentTableName); // Assuming you have this in your store
-  const tableNumber = useSelector(state => state.liveGame.currentTableNumber); // Assuming you have this in your store
+    // Retrieve necessary data from the store
+    const barPackages = useSelector(state => state.bars.barPackages);
+    const currentBarId = useSelector(state => state.bars.currentBarId);
+    const tableName = useSelector(state => state.liveGame?.currentTableName || ''); // Fallback to empty string if undefined
+    const tableNumber = useSelector(state => state.liveGame?.currentTableNumber || ''); // Fallback to empty string if undefined
 
-  // Fetch bar packages when the component mounts
-  useEffect(() => {
-    if (currentBarId) {
-      dispatch(fetchBarPackages(currentBarId));
-    }
-  }, [dispatch, currentBarId]);
+    // Fetch bar packages when the component mounts
+    useEffect(() => {
+        if (currentBarId) {
+            dispatch(fetchBarPackages(currentBarId));
+        }
+    }, [dispatch, currentBarId]);
 
-  const handleNameChange = (event) => {
-    setPlayerName(event.target.value);
-  };
+    const handleNameChange = (event) => {
+        setPlayerName(event.target.value);
+    };
 
-  const handlePackageClick = (pkg) => {
-    setSelectedPackage(pkg);
-  };
+    const handlePackageClick = (pkg) => {
+        setSelectedPackage(pkg);
+    };
 
-  const handleCreateLiveGame = () => {
-    if (selectedPackage && playerName) {
-      const liveGame = {
-        gameType: 'Date',
-        bar: currentBarId,
-        tableName: tableName, // Retrieved from the store
-        tableNumber: tableNumber, // Retrieved from the store
-        package: selectedPackage._id,
-        playersNames: [playerName],
-      };
+    const handleCreateLiveGame = () => {
+        if (selectedPackage && playerName) {
+            const liveGame = {
+                gameType: 'Date',
+                bar: currentBarId,
+                tableName: tableName, // Retrieved from the store
+                tableNumber: tableNumber, // Retrieved from the store
+                package: selectedPackage._id,
+                playersNames: [playerName],
+            };
 
-      dispatch(createLiveGame(liveGame));
-      navigate('/logo'); // Redirect to the logo page
-    }
-  };
+            dispatch(createLiveGame(liveGame)).then(action => {
+                // Assuming the action returns the created game's ID
+                const newGameId = action.payload._id;
+                // Set the current game ID in the Redux store
+                dispatch({ type: 'SET_CURRENT_GAME_ID', payload: newGameId });
+                navigate('/WaitingForApproval'); // Redirect to the logo page
+            });
+        }
+    };
 
-  return (
-    <div>
-      <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-          <Typography variant="h4" gutterBottom>
-            Enter Player Name
-          </Typography>
-          <TextField
-            label="Player Name"
-            value={playerName}
-            onChange={handleNameChange}
-            variant="outlined"
-            sx={{ marginBottom: 2 }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateLiveGame}
-            disabled={!selectedPackage || !playerName} // Disable if no package or name
-          >
-            Create Live Game
-          </Button>
-        </Box>
+    return (
+        <div>
+            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <Typography variant="h4" gutterBottom>
+                        Enter Player Name
+                    </Typography>
+                    <TextField
+                        label="Player Name"
+                        value={playerName}
+                        onChange={handleNameChange}
+                        variant="outlined"
+                        sx={{ marginBottom: 2 }}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleCreateLiveGame}
+                        disabled={!selectedPackage || !playerName} // Disable if no package or name
+                    >
+                        Create Live Game
+                    </Button>
+                </Box>
 
-        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, padding: 2 }}>
-          {barPackages.map(pkg => (
-            <Card
-              key={pkg._id}
-              sx={{
-                maxWidth: 345,
-                border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid blue' : 'none'
-              }}
-            >
-              <CardContent>
-                <Typography variant="h6" component="div">
-                  {pkg.price}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {pkg.packagesContant} {/* Adjust according to your package schema */}
-                </Typography>
-                <Button onClick={() => handlePackageClick(pkg)}>
-                  Select
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
-        </Box>
-      </Box>
-    </div>
-  );
+                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, padding: 2 }}>
+                    {barPackages.map(pkg => (
+                        <Card
+                            key={pkg._id}
+                            sx={{
+                                maxWidth: 345,
+                                border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid blue' : 'none'
+                            }}
+                        >
+                            <CardContent>
+                                <Typography variant="h6" component="div">
+                                    {pkg.price}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {pkg.packagesContant} {/* Adjust according to your package schema */}
+                                </Typography>
+                                <Button onClick={() => handlePackageClick(pkg)}>
+                                    Select
+                                </Button>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Box>
+            </Box>
+        </div>
+    );
 };
 
 export default ChooseDate;
+
+// Similar changes should be applied to the ChooseFriends component.

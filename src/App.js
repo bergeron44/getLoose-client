@@ -7,6 +7,7 @@ import ChooseDate from './pages/ChooseDate';
 import ChooseFrindes from './pages/ChooseFrindes' ;
 import AnimatedLogo from './components/AnimatedLogo';  // Import the AnimatedLogo component
 import BackToGame from './components/BackToGame'; 
+import WaitingForApproval from './pages/WaitingForApproval';
 import './App.css';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/ChooseFrindes" element={<ChooseFrindes />} />
             <Route path="/page2" element={<FirstPageDateOrFrinde />} />
             <Route path="/page3" element={<FirstPageDateOrFrinde />} />
+            <Route path="/WaitingForApproval" element={<WaitingForApproval />} />
           </Routes>
         </div>
       </div>

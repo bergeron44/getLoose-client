@@ -29,6 +29,7 @@ export const SET_TABLE_NAME = 'SET_TABLE_NAME';
 export const SET_TABLE_NUMBER = 'SET_TABLE_NUMBER';
 export const SET_PACKAGE = 'SET_PACKAGE';
 export const SET_PLAYERS_NAMES = 'SET_PLAYERS_NAMES';
+export const SET_CURRENT_GAME_ID = 'SET_CURRENT_GAME_ID';
 
 // Additional action types (if needed)
 export const SET_ERROR = 'SET_ERROR'; // Action type for setting errors
