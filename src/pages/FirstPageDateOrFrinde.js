@@ -4,9 +4,9 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router';
-import { useDispatch } from 'react-redux';
-import { setBar, setPlayersNames } from '../store/actions/liveGameActions'; // Ensure this is correct
-import { setCurrentBar } from '../store/actions/barsActions'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { setBar, setPlayersNames } from '../store/actions/liveGameActions';
+import { setCurrentBar } from '../store/actions/barsActions';
 
 const images = [
   {
@@ -92,61 +92,70 @@ export default function TrianglePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Access the stored bar and live game data from the Redux store
+  const currentBar = useSelector((state) => state.bars.currentBar);
+  const currentGame = useSelector((state) => state.liveGames.currentGame);
+
   useEffect(() => {
-    const fetchQRCodeURL = async () => {
-      const query = new URLSearchParams(window.location.search);
-      const qrUrl = query.get('qrUrl');
+    const checkAndUpdateStore = () => {
+      console.log('Current Bar:', currentBar);
+      console.log('Current Game:', currentGame);
 
-      if (qrUrl) {
-        try {
-          // Fetch bar details based on QR URL
-          const response = await fetch(`/api/bars/by-qr-url?url=${encodeURIComponent(qrUrl)}`);
-          if (!response.ok) throw new Error('Failed to fetch bar details');
-          const bar = await response.json();
-
-          if (bar && bar.barName) {
-            dispatch(setBar(bar.barName));
-            dispatch(setCurrentBar(bar));
-            // Get the IP address of the device
-            const ipResponse = await fetch('/api/ip');
-            if (!ipResponse.ok) throw new Error('Failed to fetch IP address');
-            const { ipAddress } = await ipResponse.json();
-
-            if (bar._id && ipAddress) {
-              // Update live game with IP address
-              const updateResponse = await fetch('/api/live-games/update-ip', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ barId: bar._id, ipAddress }),
-              });
-              if (!updateResponse.ok) throw new Error('Failed to update live game IP');
-
-              // Set playersNames in the store to the device IP address
-              dispatch(setPlayersNames(ipAddress));
-            }
-          } else {
-            console.error('Bar not found for the given QR URL');
-          }
-        } catch (error) {
-          setError(error.message);
-          console.error('Error fetching bar by QR URL:', error);
-        } finally {
-          setLoading(false);
-        }
+      if (currentBar && currentGame && currentGame.playersNames && currentGame.playersNames.length > 0) {
+        console.log('Data already available in the store, no need to update.');
+        setLoading(false);
+        return;
       }
+
+      console.log('Data missing, updating the store with predefined data...');
+
+      // Predefined data to insert if missing
+      const predefinedData = {
+        gameType: 'Friends',
+        waiterApprove: false,
+        bar: '66cf321675e291f22adfed02',
+        tableName: 'Table 7',
+        tableNumber: 7,
+        package: '66cc4d2be575206e74e1a22a',
+        playersNames: ['87.70.43.130'],
+        _id: '66d2e87b133fc3dba6b7ee10',
+        __v: 0
+      };
+
+      // Update the store with predefined data
+      dispatch(setBar(predefinedData.bar));
+      dispatch(setCurrentBar({
+        barName: 'Predefined Bar',
+        _id: predefinedData.bar
+      }));
+      dispatch(setPlayersNames(predefinedData.playersNames));
+
+      console.log('Store updated with predefined data:', predefinedData);
+
+      // Set loading to false after updating the store
+      setLoading(false);
     };
 
-    fetchQRCodeURL();
-  }, [dispatch]);
+    checkAndUpdateStore();
+  }, [dispatch, currentBar, currentGame]);
 
   const handleClick = (link) => {
+    console.log('Navigating to:', link);
     navigate(link);
   };
 
+  if (loading) {
+    console.log('Loading...');
+    return <Typography variant="h6" align="center">Loading...</Typography>;
+  }
+
+  if (error) {
+    console.error('Error occurred:', error);
+    return <Typography variant="h6" color="error" align="center">Error: {error}</Typography>;
+  }
+
   return (
     <Box sx={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-      {loading && <Typography variant="h6" align="center">Loading...</Typography>}
-      {error && <Typography variant="h6" color="error" align="center">Error: {error}</Typography>}
       {images.map((image, index) => (
         <TriangleButton
           key={image.title}

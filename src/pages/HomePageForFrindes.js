@@ -16,6 +16,8 @@ const HomePageForFriends = () => {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     textAlign: 'center',
     textDecoration: 'none',
+    position: 'relative',
+    cursor: 'pointer', // Added to indicate clickable elements
   };
 
   const imgStyle = {
@@ -37,15 +39,15 @@ const HomePageForFriends = () => {
   };
 
   const handleChooseFriendsClick = () => {
-    // Dispatch the action to set the game type to "Friends"
+    console.log('Choose Friends button clicked');
+    alert('Starting a new Friends game!');
     dispatch(setGameType("Friends"));
-    // Navigate to the corresponding page
     navigate('/ChooseFrindes');
   };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-      <Link to="/LogoPage" style={cardStyle}>
+      <Link to="/LogoPage" style={cardStyle} onClick={() => console.log('Navigating to LogoPage')}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p6.jpeg" alt="Page 1" style={imgStyle} />
           <div style={captionStyle}>הוראות</div>
@@ -57,7 +59,7 @@ const HomePageForFriends = () => {
           <div style={captionStyle}>התחל משחק</div>
         </div>
       </div>
-      <Link to="/page3" style={cardStyle}>
+      <Link to="/page3" style={cardStyle} onClick={() => console.log('Navigating to page3')}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p5.jpeg" alt="Page 3" style={imgStyle} />
           <div style={captionStyle}>חזור לבית</div>

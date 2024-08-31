@@ -16,6 +16,8 @@ const HomePageForDates = () => {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     textAlign: 'center',
     textDecoration: 'none',
+    position: 'relative', // Ensures the caption is positioned correctly
+    cursor: 'pointer',    // Adds a pointer cursor for clickable elements
   };
 
   const imgStyle = {
@@ -37,15 +39,15 @@ const HomePageForDates = () => {
   };
 
   const handleChooseDateClick = () => {
-    // Dispatch the action to set the game type to "Date"
+    console.log('Choose Date button clicked');
+    alert('Starting a new Date game!');
     dispatch(setGameType("Date"));
-    // Navigate to the ChooseDate page
     navigate('/ChooseDate');
   };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}>
-      <Link to="/LogoPage" style={cardStyle}>
+      <Link to="/LogoPage" style={cardStyle} onClick={() => console.log('Navigating to LogoPage')}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p1.jpg" alt="Page 1" style={imgStyle} />
           <div style={captionStyle}>הוראות</div>
@@ -57,7 +59,7 @@ const HomePageForDates = () => {
           <div style={captionStyle}>התחל משחק</div>
         </div>
       </div>
-      <Link to="/page3" style={cardStyle}>
+      <Link to="/page3" style={cardStyle} onClick={() => console.log('Navigating to page3')}>
         <div style={{ position: 'relative' }}>
           <img src="/images/p3.jpeg" alt="Page 3" style={imgStyle} />
           <div style={captionStyle}>חזור לבית</div>

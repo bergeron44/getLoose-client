@@ -1,4 +1,13 @@
-import { FETCH_PACKAGES, CREATE_PACKAGE, UPDATE_PACKAGE, DELETE_PACKAGE, SET_CURRENT_PACKAGE } from '../actionTypes';
+import {
+    FETCH_PACKAGES,
+    CREATE_PACKAGE,
+    UPDATE_PACKAGE,
+    DELETE_PACKAGE,
+    SET_CURRENT_PACKAGE,
+} from '../actionTypes';
+
+// Define the base URL
+const BASE_URL = 'http://localhost:3001';
 
 // Helper function to handle API responses
 const handleResponse = async (response) => {
@@ -12,7 +21,7 @@ const handleResponse = async (response) => {
 // Fetch all packages
 export const fetchPackages = () => async (dispatch) => {
     try {
-        const response = await fetch('/api/packages');
+        const response = await fetch(`${BASE_URL}/api/packages`);
         const data = await handleResponse(response);
         dispatch({ type: FETCH_PACKAGES, payload: data });
     } catch (error) {
@@ -24,7 +33,7 @@ export const fetchPackages = () => async (dispatch) => {
 // Create a new package
 export const createPackage = (newPackage) => async (dispatch) => {
     try {
-        const response = await fetch('/api/packages', {
+        const response = await fetch(`${BASE_URL}/api/packages`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,7 +52,7 @@ export const createPackage = (newPackage) => async (dispatch) => {
 // Update an existing package
 export const updatePackage = (id, updatedPackage) => async (dispatch) => {
     try {
-        const response = await fetch(`/api/packages/${id}`, {
+        const response = await fetch(`${BASE_URL}/api/packages/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -62,10 +71,8 @@ export const updatePackage = (id, updatedPackage) => async (dispatch) => {
 // Delete a package
 export const deletePackage = (id) => async (dispatch) => {
     try {
-        const response = await fetch(`/api/packages/${id}`, { method: 'DELETE' });
-        if (!response.ok) {
-            throw new Error('Network response was not ok.');
-        }
+        const response = await fetch(`${BASE_URL}/api/packages/${id}`, { method: 'DELETE' });
+        await handleResponse(response);
         dispatch({ type: DELETE_PACKAGE, payload: id });
         dispatch({ type: SET_CURRENT_PACKAGE, payload: null }); // Clear the current package if it was deleted
     } catch (error) {

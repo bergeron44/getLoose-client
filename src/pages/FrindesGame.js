@@ -12,17 +12,21 @@ const FriendsGame = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch questions of type 'Friends' from the database
-    axios.get('/api/questions', { params: { type: 'Friends' } })
+    // Fetch questions of type 'Friends' from the local API
+    axios.get('http://localhost:3001/api/questions', { params: { type: 'Friends' } })
       .then(response => {
+        console.log('Questions fetched successfully:', response.data); // Debugging
         setQuestions(response.data);
       })
       .catch(error => {
-        console.error('Error fetching questions:', error);
+        console.error('Error fetching questions:', error); // Debugging
+        setMessage('Failed to load questions. Please try again later.');
+        setShowMessage(true);
       });
   }, []);
 
   const handleSwipe = (direction) => {
+    console.log(`Swiped ${direction} on question index: ${currentIndex}`); // Debugging
     if (direction === 'right') {
       setMessage('Congratulations! You have swiped right.');
       setShowMessage(true);
@@ -30,8 +34,10 @@ const FriendsGame = () => {
         setMessage('');
         setShowMessage(false);
         setCurrentIndex(prevIndex => prevIndex + 1);
+        console.log('Moved to next question, new index:', currentIndex + 1); // Debugging
       }, 2000); // Display the message for 2 seconds
     } else if (direction === 'left') {
+      console.log('Swiped left, navigating to loser page'); // Debugging
       navigate('/loser');
     }
   };

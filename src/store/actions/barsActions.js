@@ -10,6 +10,9 @@ import {
     SET_BAR_NAME
 } from '../actionTypes';
 
+// Define the base URL
+const BASE_URL = 'http://localhost:3001';
+
 // Set loading state
 const setLoading = (isLoading) => ({
     type: SET_LOADING,
@@ -32,7 +35,7 @@ export const setBarName = (name) => ({
 export const fetchBars = () => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch('/api/bars');
+        const response = await fetch(`${BASE_URL}/api/bars`);
         if (!response.ok) throw new Error('Failed to fetch bars');
         const data = await response.json();
         dispatch({ type: FETCH_BARS, payload: data });
@@ -47,7 +50,7 @@ export const fetchBars = () => async (dispatch) => {
 export const createBar = (newBar) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch('/api/bar/create', {
+        const response = await fetch(`${BASE_URL}/api/bars`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newBar),
@@ -66,8 +69,8 @@ export const createBar = (newBar) => async (dispatch) => {
 export const updateBar = (id, updatedBar) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch(`/api/bar/${id}/edit`, {
-            method: 'POST',
+        const response = await fetch(`${BASE_URL}/api/bars/${id}`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedBar),
         });
@@ -85,7 +88,7 @@ export const updateBar = (id, updatedBar) => async (dispatch) => {
 export const deleteBar = (id) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch(`/api/bar/${id}/delete`, {
+        const response = await fetch(`${BASE_URL}/api/bars/${id}`, {
             method: 'DELETE',
         });
         if (!response.ok) throw new Error('Failed to delete bar');
@@ -101,7 +104,7 @@ export const deleteBar = (id) => async (dispatch) => {
 export const fetchBarPackages = (barId) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch(`/api/bar/${barId}/packages`);
+        const response = await fetch(`${BASE_URL}/api/bars/${barId}/packages`);
         if (!response.ok) throw new Error('Failed to fetch bar packages');
         const data = await response.json();
         

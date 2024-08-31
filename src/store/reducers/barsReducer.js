@@ -3,7 +3,7 @@ import { FETCH_BARS, CREATE_BAR, UPDATE_BAR, DELETE_BAR, SET_CURRENT_BAR } from 
 const initialState = {
     bars: [], // List of all bars
     barPackages: [],       
-    currentBar: null, // Field to track the currently selected or active bar
+    currentBar: {}, // Field to track the currently selected or active bar
 };
 
 const barsReducer = (state = initialState, action) => {

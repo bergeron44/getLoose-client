@@ -11,7 +11,9 @@ import {
     SET_TABLE_NUMBER,
     SET_PACKAGE,
     SET_PLAYERS_NAMES,
-    SET_CURRENT_GAME_ID,  // Import the new action type
+    SET_CURRENT_GAME_ID, 
+    UPDATE_APPROVAL_SUCCESS,
+    UPDATE_APPROVAL_FAILURE
 } from '../actionTypes';
 
 // Initialize the state
@@ -23,7 +25,7 @@ const initialState = {
     tableName: "",
     tableNumber: 666,
     package: [],
-    playersNames: "",
+    playersNames: [],
     currentGameId: null, // Add this field to store the game ID
 };
 
@@ -92,6 +94,15 @@ const liveGameReducer = (state = initialState, action) => {
                     ...state,
                     currentGameId: action.payload,
                 };
+         case UPDATE_APPROVAL_SUCCESS:
+            return {
+                ...state,
+                liveGames: state.liveGames.map(game =>
+                    game._id === action.payload.gameId ? { ...game, waiterApprove: action.payload.approved } : game
+                ),
+            };
+        case UPDATE_APPROVAL_FAILURE:
+            return { ...state, error: action.payload };
         default:
             return state;
     }
