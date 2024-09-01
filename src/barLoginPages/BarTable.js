@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLiveGames, fetchLiveGamesFromSameBar, updateApprovalStatus } from '../store/actions/liveGameActions'; // Update with correct path to your actions
+import { fetchLiveGames, fetchLiveGamesFromSameBar, updateApprovalStatus, updateLiveGame } from '../store/actions/liveGameActions'; // Update with correct path to your actions
 import { fetchBars } from '../store/actions/barsActions';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert, Select, MenuItem } from '@mui/material';
 
@@ -32,7 +32,10 @@ const BarTable = () => {
     };
 
     const handleApprovalToggle = (gameId, currentStatus) => {
-        dispatch(updateApprovalStatus(gameId, !currentStatus));
+         var bool=(!currentStatus);
+        console.log(bool)
+        const updatedLiveGame = { waiterApprove: bool };
+        dispatch(updateLiveGame(gameId, updatedLiveGame));
     };
 
     return (
@@ -79,7 +82,7 @@ const BarTable = () => {
                                 <TableCell>{game.tableName}</TableCell>
                                 <TableCell>{game.tableNumber}</TableCell>
                                 <TableCell>{game.playersNames.join(', ')}</TableCell>
-                                <TableCell>{game.waiterApprove ? 'Yes' : 'No'}</TableCell>
+                                <TableCell>{game.waiterApprove ? 'true' : 'false'}</TableCell>
                                 <TableCell>
                                     <Button
                                         variant="contained"

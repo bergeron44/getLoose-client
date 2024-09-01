@@ -12,7 +12,8 @@ import {
     SET_PLAYERS_NAMES,
     SET_CURRENT_GAME_ID,
     UPDATE_APPROVAL_SUCCESS,
-    UPDATE_APPROVAL_FAILURE
+    UPDATE_APPROVAL_FAILURE,
+    UPDATE_LIVEGAME_FAILURE
 } from '../actionTypes';
 
 // Define the base URL
@@ -86,6 +87,8 @@ export const createLiveGame = (newLiveGame) => async (dispatch) => {
 // Update an existing live game
 export const updateLiveGame = (id, updatedLiveGame) => async (dispatch) => {
     try {
+        console.log("insid:"+id);
+        console.log("insid:"+updatedLiveGame);
         const response = await fetch(`${BASE_URL}/api/livegame/${id}`, {
             method: 'PUT',
             headers: {
@@ -93,12 +96,14 @@ export const updateLiveGame = (id, updatedLiveGame) => async (dispatch) => {
             },
             body: JSON.stringify(updatedLiveGame),
         });
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const data = await handleResponse(response);
         dispatch({ type: UPDATE_LIVEGAME, payload: data });
     } catch (error) {
         console.error('Failed to update live game:', error);
-        // Optionally dispatch an error action here
-        // dispatch({ type: UPDATE_LIVEGAME_FAILURE, payload: error.message });
+        dispatch({ type: UPDATE_LIVEGAME_FAILURE, payload: error.message });
     }
 };
 
@@ -166,7 +171,9 @@ export const setCurrentGameId = (gameId) => ({
 // Update approval status
 export const updateApprovalStatus = (gameId, approved) => async (dispatch) => {
     try {
-        const updatedLiveGame = { waiterApprove: true };
+        console.log(approved);
+        console.log(gameId)
+        const updatedLiveGame = { waiterApprove: approved };
         await updateLiveGame(gameId, updatedLiveGame);
         dispatch({ type: UPDATE_APPROVAL_SUCCESS, payload: { gameId, approved } });
     } catch (error) {

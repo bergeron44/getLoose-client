@@ -12,7 +12,8 @@ import {
     SET_PLAYERS_NAMES,
     SET_CURRENT_GAME_ID,
     UPDATE_APPROVAL_SUCCESS,
-    UPDATE_APPROVAL_FAILURE
+    UPDATE_APPROVAL_FAILURE,
+    UPDATE_LIVEGAME_FAILURE
 } from '../actionTypes';
 
 // Initialize the state
@@ -49,6 +50,11 @@ const liveGameReducer = (state = initialState, action) => {
                     game._id === action.payload._id ? action.payload : game
                 ),
             };
+        case UPDATE_LIVEGAME_FAILURE:
+                return {
+                    ...state,
+                    error: action.payload
+                };
         case DELETE_LIVEGAME:
             return {
                 ...state,
