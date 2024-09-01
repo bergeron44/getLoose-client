@@ -121,7 +121,7 @@ export const updateQuestionUse = (questionId, succeed) => async (dispatch) => {
 // Fetch questions by date (if needed)
 export const fetchDateQuestions = () => async (dispatch) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/questions/date`);
+        const response = await axios.get(`${BASE_URL}/api/questions`);
         dispatch({
             type: FETCH_DATE_QUESTIONS_SUCCESS,
             payload: response.data,

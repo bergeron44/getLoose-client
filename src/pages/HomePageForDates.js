@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setGameType } from '../store/actions/liveGameActions';
 
 const HomePageForDates = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const currentGameType = useSelector((state) => state.liveGames.gameType); // Directly access the gameType from the store
 
   const cardStyle = {
     width: '300px',
@@ -16,8 +17,8 @@ const HomePageForDates = () => {
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     textAlign: 'center',
     textDecoration: 'none',
-    position: 'relative', // Ensures the caption is positioned correctly
-    cursor: 'pointer',    // Adds a pointer cursor for clickable elements
+    position: 'relative',
+    cursor: 'pointer',
   };
 
   const imgStyle = {
@@ -40,8 +41,13 @@ const HomePageForDates = () => {
 
   const handleChooseDateClick = () => {
     console.log('Choose Date button clicked');
-    alert('Starting a new Date game!');
-    dispatch(setGameType("Date"));
+    if (currentGameType === 'Date') {
+      alert('Starting a new Date game!');
+      
+    } else {
+      dispatch(setGameType('Date'));
+      alert('Current game type is not Date. i fix it');
+    }
     navigate('/ChooseDate');
   };
 

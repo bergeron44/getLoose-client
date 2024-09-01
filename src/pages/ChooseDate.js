@@ -1,87 +1,84 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createLiveGame } from '../store/actions/liveGameActions';
-import { fetchBarPackages } from '../store/actions/barsActions';
-import { fetchDateQuestions } from '../store/actions/questionsActions'; // Import the action
-import { TextField, Button, Box, Typography, Card, CardContent, CircularProgress, Alert } from '@mui/material';
+import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActions';
+import { TextField, Button, Box, Typography, Card, CardContent, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ChooseDate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [playerName, setPlayerName] = useState('');
-    const [selectedPackage, setSelectedPackage] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [tableName, setTableName] = useState('');
+    const [selectedPackage, setSelectedPackage] = useState(null); // Only one selected package
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
+    const [fullPackages, setFullPackages] = useState([]);
 
-    // Retrieve necessary data from the store
-    const barPackages = useSelector(state => state.bars.barPackages);
-    const currentBarId = useSelector(state => state.bars.currentBarId);
-    const dateQuestions = useSelector(state => state.questions.dateQuestions); // Get date questions from store
-    const tableName = useSelector(state => state.liveGame?.currentTableName || '');
-    const tableNumber = useSelector(state => state.liveGame?.currentTableNumber || '');
+    const currentBar = useSelector(state => state.bars.currentBar);
+    const barPackageIds = currentBar?.barPackages || [];
+    const playersNames = useSelector(state => state.liveGames.playersNames || []);
+    const tableNumber = useSelector(state => state.liveGames.tableNumber || 0);
 
-    console.log('barPackages:', barPackages);
-    console.log('currentBarId:', currentBarId);
-    console.log('dateQuestions:', dateQuestions); // Log date questions
-    console.log('tableName:', tableName);
-    console.log('tableNumber:', tableNumber);
-
-    // Fetch bar packages and date questions when the component mounts
     useEffect(() => {
-        if (currentBarId) {
-            dispatch(fetchBarPackages(currentBarId))
-                .then(() => {
-                    setLoading(false);
-                    console.log('Fetched bar packages successfully');
-                })
-                .catch((err) => {
-                    setError('Failed to load packages');
-                    setLoading(false);
-                    console.error('Error fetching bar packages:', err);
-                });
-        }
+        const fetchPackages = async () => {
+            try {
+                const fetchedPackages = await Promise.all(
+                    barPackageIds.map(async (pkgId) => {
+                        const response = await axios.get(`http://localhost:3001/api/package/${pkgId}`);
+                        return response.data;
+                    })
+                );
+                setFullPackages(fetchedPackages);
+            } catch (err) {
+                setError('Failed to fetch packages');
+                console.error('Error fetching packages:', err);
+            }
+        };
 
-        dispatch(fetchDateQuestions())
-            .then(() => {
-                console.log('Fetched date questions successfully');
-            })
-            .catch((err) => {
-                setError('Failed to load questions');
-                console.error('Error fetching date questions:', err);
-            });
-    }, [dispatch, currentBarId]);
+        if (barPackageIds.length > 0) {
+            fetchPackages();
+        }
+    }, [barPackageIds]);
 
     const handleNameChange = (event) => {
-        setPlayerName(event.target.value);
-        console.log('Player name updated:', event.target.value);
+        setTableName(event.target.value);
     };
 
-    const handlePackageClick = (pkg) => {
-        setSelectedPackage(pkg);
-        console.log('Package selected:', pkg);
+    const handlePackageChange = (pkg) => {
+        // Toggle the selected package; deselect if clicked again
+        setSelectedPackage(prevPackage => 
+            prevPackage && prevPackage._id === pkg._id ? null : pkg
+        );
     };
 
     const handleCreateLiveGame = () => {
-        if (selectedPackage && playerName) {
-            console.log('Creating live game with:', { selectedPackage, playerName, tableName, tableNumber });
+        if (selectedPackage && tableName) {
             const liveGame = {
                 gameType: 'Date',
-                bar: currentBarId,
+                bar: currentBar._id,
                 tableName: tableName,
                 tableNumber: tableNumber,
                 package: selectedPackage._id,
-                playersNames: [playerName],
+                playersNames: playersNames,
             };
-
+    
+            console.log('Creating Live Game with:', liveGame);
+    
             dispatch(createLiveGame(liveGame))
-                .then(action => {
-                    const newGameId = action.payload._id;
-                    console.log('Live game created successfully with ID:', newGameId);
-                    dispatch({ type: 'SET_CURRENT_GAME_ID', payload: newGameId });
-                    setSuccessMessage('Live game created successfully!');
-                    navigate('/WaitingForApproval');
+                .then(response => {
+                    alert(response._id)
+                    // Assuming response.data contains the live game object
+                    const liveGameResponse = response || {};
+                    const newGameId = liveGameResponse._id;
+    
+                    if (newGameId) {
+                        dispatch(setCurrentGameId(newGameId));
+                        setSuccessMessage('Live game created successfully!');
+                        navigate('/WaitingForApproval');
+                    } else {
+                        setError('Unexpected response format.');
+                        console.error('Unexpected response format:', liveGameResponse);
+                    }
                 })
                 .catch((err) => {
                     setError('Failed to create live game');
@@ -89,62 +86,89 @@ const ChooseDate = () => {
                 });
         } else {
             setError('Please select a package and enter a player name.');
-            console.warn('Attempted to create live game without selecting a package or entering a name');
         }
     };
 
     return (
         <div>
-            {loading && <CircularProgress />}
             {error && <Alert severity="error">{error}</Alert>}
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
 
-            <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                    <Typography variant="h4" gutterBottom>
-                        Enter Player Name
-                    </Typography>
-                    <TextField
-                        label="Player Name"
-                        value={playerName}
-                        onChange={handleNameChange}
-                        variant="outlined"
-                        sx={{ marginBottom: 2 }}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCreateLiveGame}
-                        disabled={!selectedPackage || !playerName} // Disable if no package or name
-                    >
-                        Create Live Game
-                    </Button>
-                </Box>
+            {!currentBar?._id ? (
+                <Typography>No bar selected or data unavailable</Typography>
+            ) : (
+                <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: 2 }}>
+                    <Box sx={{ marginBottom: 3 }}>
+                        <Typography variant="h4" gutterBottom>
+                            Enter Table Name
+                        </Typography>
+                        <TextField
+                            label="Table Name"
+                            value={tableName || ''}  // Ensure value is always a string
+                            onChange={handleNameChange}
+                            variant="outlined"
+                            sx={{ marginBottom: 2 }}
+                        />
+                    </Box>
 
-                <Box sx={{ flex: 1, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 2, padding: 2 }}>
-                    {barPackages.map(pkg => (
-                        <Card
-                            key={pkg._id}
-                            sx={{
-                                maxWidth: 345,
-                                border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid blue' : 'none'
-                            }}
+                    {fullPackages.length > 0 ? (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                            <Typography variant="h6" gutterBottom>
+                                Select a Package
+                            </Typography>
+                            {fullPackages.map(pkg => (
+                                <Card
+                                    key={pkg._id}  // Add the key prop here
+                                    sx={{
+                                        maxWidth: 345,
+                                        border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid blue' : '1px solid #ccc',
+                                        borderRadius: 2,
+                                        boxShadow: 3,
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        padding: 2,
+                                        backgroundColor: '#f5f5f5'
+                                    }}
+                                >
+                                    <CardContent sx={{ flex: 1 }}>
+                                        <Typography variant="h6" component="div" gutterBottom>
+                                            ${pkg.price}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {pkg.packagesContant}
+                                        </Typography>
+                                    </CardContent>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                checked={selectedPackage && selectedPackage._id === pkg._id}
+                                                onChange={() => handlePackageChange(pkg)}
+                                                sx={{ padding: 0 }}
+                                            />
+                                        }
+                                        label="Select"
+                                        sx={{ marginLeft: 2 }}
+                                    />
+                                </Card>
+                            ))}
+                        </Box>
+                    ) : (
+                        <Typography>No packages available for this bar</Typography>
+                    )}
+
+                    <Box sx={{ marginTop: 3, display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleCreateLiveGame}
+                            disabled={!selectedPackage || !tableName}
                         >
-                            <CardContent>
-                                <Typography variant="h6" component="div">
-                                    {pkg.price}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {pkg.packagesContant} {/* Adjust according to your package schema */}
-                                </Typography>
-                                <Button onClick={() => handlePackageClick(pkg)}>
-                                    Select
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    ))}
+                            Create Live Game
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
+            )}
         </div>
     );
 };

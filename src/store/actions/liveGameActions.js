@@ -30,7 +30,7 @@ const handleResponse = async (response) => {
 // Fetch all live games
 export const fetchLiveGames = () => async (dispatch) => {
     try {
-        const response = await fetch(`${BASE_URL}/api/livegames`);
+        const response = await fetch(`${BASE_URL}/api/livegame`);
         const data = await handleResponse(response);
         dispatch({ type: FETCH_LIVEGAMES, payload: data });
     } catch (error) {
@@ -40,10 +40,32 @@ export const fetchLiveGames = () => async (dispatch) => {
     }
 };
 
+// Fetch all live games
+export const fetchLiveGamesFromSameBar = (BarId) => async (dispatch) => {
+    try {
+        const response = await fetch(`${BASE_URL}/api/livegame`);
+        const data = await handleResponse(response);
+        console.log(data)
+        const filteredLiveGames = [];
+           for (let i = 0; i < data.length; i++) {
+             const liveGame = data[i];
+                if (liveGame.bar=== BarId) {
+                    filteredLiveGames.push(liveGame);
+                 }
+              }
+        dispatch({ type: FETCH_LIVEGAMES, payload: filteredLiveGames });
+    } catch (error) {
+        console.error('Failed to fetch live games:', error);
+        // Optionally dispatch an error action here
+        // dispatch({ type: FETCH_LIVEGAMES_FAILURE, payload: error.message });
+    }
+};
+
+
 // Create a new live game
 export const createLiveGame = (newLiveGame) => async (dispatch) => {
     try {
-        const response = await fetch(`${BASE_URL}/api/livegames`, {
+        const response = await fetch(`${BASE_URL}/api/livegame`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -52,17 +74,19 @@ export const createLiveGame = (newLiveGame) => async (dispatch) => {
         });
         const data = await handleResponse(response);
         dispatch({ type: CREATE_LIVEGAME, payload: data });
+        return data; // Return data for further processing
     } catch (error) {
         console.error('Failed to create live game:', error);
         // Optionally dispatch an error action here
         // dispatch({ type: CREATE_LIVEGAME_FAILURE, payload: error.message });
+        throw error; // Re-throw error to be handled in the component
     }
 };
 
 // Update an existing live game
 export const updateLiveGame = (id, updatedLiveGame) => async (dispatch) => {
     try {
-        const response = await fetch(`${BASE_URL}/api/livegames/${id}`, {
+        const response = await fetch(`${BASE_URL}/api/livegame/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -138,9 +162,11 @@ export const setCurrentGameId = (gameId) => ({
     type: SET_CURRENT_GAME_ID,
     payload: gameId,
 });
+
+// Update approval status
 export const updateApprovalStatus = (gameId, approved) => async (dispatch) => {
     try {
-        const updatedLiveGame = { waiterApprove: approved };
+        const updatedLiveGame = { waiterApprove: true };
         await updateLiveGame(gameId, updatedLiveGame);
         dispatch({ type: UPDATE_APPROVAL_SUCCESS, payload: { gameId, approved } });
     } catch (error) {

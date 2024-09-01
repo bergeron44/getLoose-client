@@ -5,8 +5,10 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
-import { setBar, setPlayersNames } from '../store/actions/liveGameActions';
+import { setBar, setGameType, setPlayersNames } from '../store/actions/liveGameActions';
 import { setCurrentBar } from '../store/actions/barsActions';
+
+const BASE_URL = 'http://localhost:3001';
 
 const images = [
   {
@@ -92,16 +94,15 @@ export default function TrianglePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Access the stored bar and live game data from the Redux store
-  const currentBar = useSelector((state) => state.bars.currentBar);
-  const currentGame = useSelector((state) => state.liveGames.currentGame);
+  const currentBar = useSelector((state) => state.liveGames.bar);
+  const currentPlayer = useSelector((state) => state.liveGames.playersNames);
 
   useEffect(() => {
     const checkAndUpdateStore = () => {
       console.log('Current Bar:', currentBar);
-      console.log('Current Game:', currentGame);
+      console.log('Current Game:', currentPlayer);
 
-      if (currentBar && currentGame && currentGame.playersNames && currentGame.playersNames.length > 0) {
+      if (currentBar !== "" && currentPlayer.length > 0) {
         console.log('Data already available in the store, no need to update.');
         setLoading(false);
         return;
@@ -109,7 +110,6 @@ export default function TrianglePage() {
 
       console.log('Data missing, updating the store with predefined data...');
 
-      // Predefined data to insert if missing
       const predefinedData = {
         gameType: 'Friends',
         waiterApprove: false,
@@ -119,28 +119,64 @@ export default function TrianglePage() {
         package: '66cc4d2be575206e74e1a22a',
         playersNames: ['87.70.43.130'],
         _id: '66d2e87b133fc3dba6b7ee10',
-        __v: 0
+        __v: 0,
       };
 
-      // Update the store with predefined data
       dispatch(setBar(predefinedData.bar));
       dispatch(setCurrentBar({
         barName: 'Predefined Bar',
-        _id: predefinedData.bar
+        _id: predefinedData.bar,
       }));
       dispatch(setPlayersNames(predefinedData.playersNames));
 
       console.log('Store updated with predefined data:', predefinedData);
-
-      // Set loading to false after updating the store
       setLoading(false);
     };
 
     checkAndUpdateStore();
-  }, [dispatch, currentBar, currentGame]);
+  }, [dispatch, currentBar, currentPlayer]);
 
-  const handleClick = (link) => {
+  const handleClick = async (link, title) => {
     console.log('Navigating to:', link);
+    alert(currentBar);
+    let barName=currentBar;
+  
+    try {
+      // Replace with your actual API call or database query
+      const response = await fetch(`${BASE_URL}/api/bar/${barName}`); // Example API call
+      if (!response.ok) {
+        throw new Error('Bar not found');
+      }
+      
+      const barData = await response.json();
+
+      // Extract bar properties
+      const { _id, barName: name, location, capacity, barPackages, qrUrl } = barData;
+      // Dispatch actions to update the store
+      dispatch(setBar(_id));
+      dispatch(setCurrentBar({
+        _id,
+        barName: name,
+        location,
+        capacity,
+        barPackages,
+        qrUrl,
+      }));
+      
+      console.log('Store updated with bar data:', barData);
+    } catch (error) {
+      console.error('Failed to fetch bar data:', error);
+      setError(error.message);
+    }
+
+    // Set the game type in the store
+    if (link=='/HomePageForFriends') {
+      dispatch(setGameType("Friends"));
+    } else {
+      dispatch(setGameType("Date"));
+    }
+
+    // Navigate to the selected page
     navigate(link);
   };
 
@@ -161,13 +197,13 @@ export default function TrianglePage() {
           key={image.title}
           triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
           style={{ backgroundImage: `url(${image.url})` }}
-          onClick={() => handleClick(image.link)}
+          onClick={() => handleClick(image.link, image.title)}
           sx={{
             top: index === 0 ? 0 : '50%',
             left: index === 0 ? 0 : '50%',
             transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
-            width: '90%', // Adjust the width percentage
-            height: '90%', // Adjust the height percentage
+            width: '90%',
+            height: '90%',
           }}
         >
           <ImageBackdrop className="MuiImageBackdrop-root" />

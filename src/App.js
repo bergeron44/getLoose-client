@@ -10,6 +10,7 @@ import BackToGame from './components/BackToGame';
 import WaitingForApproval from './pages/WaitingForApproval';
 import './App.css';
 //bar pages implement
+import BarTable from './barLoginPages/BarTable';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
 //end bar pages 
 
@@ -21,6 +22,7 @@ function App() {
         <div className="page-content">
           <Routes>
             <Route path="/" element={<FirstPageDateOrFrinde />} />
+            <Route path="/BarTable" element={<BarTable />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
             <Route path="/LogoPage" element={<AnimatedLogo />} />
             <Route path="/BackToGame" element={<BackToGame />} />

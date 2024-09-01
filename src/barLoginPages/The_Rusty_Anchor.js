@@ -32,7 +32,7 @@ const TheRustyAnchor = () => {
 
                 // Dispatch the bar information to the Redux store
                 dispatch(setCurrentBar(barInfo));
-                dispatch(setBarName(barInfo.name));
+                dispatch(setBarName(barInfo.barName));
                 console.log('Dispatched bar information to store:', barInfo);
 
                 // Fetch the device's IP address
@@ -45,12 +45,12 @@ const TheRustyAnchor = () => {
 
                 // Set up the live game with the bar name and device ID
                 const liveGame = {
-                    bar: barInfo.name,
+                    bar: barInfo.barName,
                     playersNames: [deviceId],  // Using the IP address as the device ID
                 };
                 console.log('Setting up live game:', liveGame);
 
-                dispatch(setBar(barInfo.name));
+                dispatch(setBar(barInfo.barName));
                 dispatch(setPlayersNames([deviceId]));
                 dispatch(setCurrentGameId(null)); // If you want to set a new game ID, fetch it from the backend or generate it
 

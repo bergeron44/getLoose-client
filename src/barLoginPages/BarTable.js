@@ -1,20 +1,35 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLiveGames, updateApprovalStatus } from '../store/actions/liveGameActions';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert } from '@mui/material';
+import { fetchLiveGames, fetchLiveGamesFromSameBar, updateApprovalStatus } from '../store/actions/liveGameActions'; // Update with correct path to your actions
+import { fetchBars } from '../store/actions/barsActions';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert, Select, MenuItem } from '@mui/material';
 
 const BarTable = () => {
     const dispatch = useDispatch();
-    const liveGames = useSelector(state => state.liveGame.liveGames);
-    const loading = useSelector(state => state.liveGame.loading);
-    const error = useSelector(state => state.liveGame.error);
-    const currentBarId = useSelector(state => state.bars.currentBarId); // Assuming you have the currentBarId in your Redux store
+    const [selectedBarId, setSelectedBarId] = useState('');
+    const [bars, setBars] = useState([]);
+
+    // Redux state
+    const liveGames = useSelector(state => state.liveGames.liveGames);
+    const loading = useSelector(state => state.liveGames.loading);
+    const error = useSelector(state => state.liveGames.error);
+    const barsData = useSelector(state => state.bars.bars); // Assuming bars are stored in Redux store
 
     useEffect(() => {
-        if (currentBarId) {
-            dispatch(fetchLiveGames(currentBarId));
+        // Fetch all bars on component mount
+        dispatch(fetchBars());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (selectedBarId) {
+            dispatch(fetchLiveGamesFromSameBar(selectedBarId));  
+            //dispatch(fetchLiveGames(selectedBarId));
         }
-    }, [dispatch, currentBarId]);
+    }, [dispatch, selectedBarId]);
+
+    const handleBarChange = (event) => {
+        setSelectedBarId(event.target.value);
+    };
 
     const handleApprovalToggle = (gameId, currentStatus) => {
         dispatch(updateApprovalStatus(gameId, !currentStatus));
@@ -24,10 +39,24 @@ const BarTable = () => {
         <div>
             {loading && <CircularProgress />}
             {error && <Alert severity="error">{error}</Alert>}
-
+            
             <Typography variant="h4" gutterBottom>
-                Live Games for the Bar
+                Live Games for the Selected Bar
             </Typography>
+
+            <Select
+                value={selectedBarId}
+                onChange={handleBarChange}
+                displayEmpty
+                sx={{ marginBottom: 2 }}
+            >
+                <MenuItem value="" disabled>Select a Bar</MenuItem>
+                {barsData.map(bar => (
+                    <MenuItem key={bar._id} value={bar._id}>
+                        {bar.barName}
+                    </MenuItem>
+                ))}
+            </Select>
 
             <TableContainer component={Paper}>
                 <Table>

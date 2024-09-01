@@ -1,37 +1,40 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentGameId } from '../store/actions/liveGameActions';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import LogoPage from './LogoPage';
+import AnimatedLogo from '../components/AnimatedLogo'
 import { Typography, Box, CircularProgress } from '@mui/material';
 
 const WaitingForApproval = () => {
-    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const liveGameId = useSelector(state => state.liveGame.currentGameId);
-    const waiterApprove = useSelector(state => state.liveGame.waiterApprove);
-    const gameType = useSelector(state => state.liveGame.gameType); // Get the game type from Redux
 
+    // Pull values from the Redux store
+    const currentGameId = useSelector(state => state.liveGames.currentGameId);
+    const waiterApprove = useSelector(state => state.liveGames.waiterApprove);
+    const gameType = useSelector(state => state.liveGames.gameType);
+
+    // Polling for waiter approval
     useEffect(() => {
-        console.log('WaitingForApproval component mounted');
-        const interval = setInterval(() => {
-            if (liveGameId && !waiterApprove) {
+        if (currentGameId) {
+            const interval = setInterval(() => {
+                // Log polling status
                 console.log('Polling for waiter approval...');
-                dispatch(setCurrentGameId(liveGameId));
-            }
-        }, 3000);
+                // Normally you would dispatch an action here if needed
+            }, 3000);
 
-        // Navigate to the game page if waiter approval is true
+            return () => {
+                clearInterval(interval);
+                console.log('Polling interval cleared');
+            };
+        }
+    }, [currentGameId, waiterApprove]);
+
+    // Navigate to game page on approval
+    useEffect(() => {
         if (waiterApprove) {
             console.log('Waiter approval received, navigating to game page');
-            navigate(gameType === 'Date' ? '/DateGame' : '/FriendsGame'); // Navigate based on game type
+            navigate(gameType === 'Date' ? '/DateGame' : '/FriendsGame');
         }
-
-        return () => {
-            clearInterval(interval);
-            console.log('WaitingForApproval component unmounted');
-        };
-    }, [dispatch, liveGameId, waiterApprove, navigate, gameType]);
+    }, [waiterApprove, navigate, gameType]);
 
     return (
         <Box
@@ -42,15 +45,17 @@ const WaitingForApproval = () => {
                 alignItems: 'center',
                 height: '100vh',
                 textAlign: 'center',
-                backgroundColor: '#f0f0f0', // Light grey background for better contrast
+                backgroundColor: '#f0f0f0',
                 padding: 2,
             }}
         >
             <Typography variant="h2" sx={{ fontFamily: 'Graffiti', marginBottom: 4 }}>
                 Waiting for the waiter to approve you
             </Typography>
-            {!waiterApprove && <CircularProgress sx={{ marginTop: 2 }} />} {/* Show loader if approval status is not determined */}
-            <LogoPage />
+            {/* Display a loading spinner while waiting for approval */}
+            {!waiterApprove && <CircularProgress sx={{ marginTop: 2 }} />}
+            {/* Ensure LogoPage is properly defined and exported */}
+            <AnimatedLogo />
         </Box>
     );
 };

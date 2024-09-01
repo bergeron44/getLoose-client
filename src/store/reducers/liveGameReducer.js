@@ -1,4 +1,3 @@
-// reducers/liveGameReducer.js
 import {
     FETCH_LIVEGAMES,
     CREATE_LIVEGAME,
@@ -11,7 +10,7 @@ import {
     SET_TABLE_NUMBER,
     SET_PACKAGE,
     SET_PLAYERS_NAMES,
-    SET_CURRENT_GAME_ID, 
+    SET_CURRENT_GAME_ID,
     UPDATE_APPROVAL_SUCCESS,
     UPDATE_APPROVAL_FAILURE
 } from '../actionTypes';
@@ -23,10 +22,11 @@ const initialState = {
     waiterApprove: false,
     bar: "",
     tableName: "",
-    tableNumber: 666,
+    tableNumber: "", // Updated to be an empty string for consistency
     package: [],
     playersNames: [],
-    currentGameId: null, // Add this field to store the game ID
+    currentGameId: null,
+    error: null // Added for handling errors
 };
 
 // Reducer function for live games
@@ -90,11 +90,11 @@ const liveGameReducer = (state = initialState, action) => {
                 playersNames: action.payload,
             };
         case SET_CURRENT_GAME_ID:
-                return {
-                    ...state,
-                    currentGameId: action.payload,
-                };
-         case UPDATE_APPROVAL_SUCCESS:
+            return {
+                ...state,
+                currentGameId: action.payload,
+            };
+        case UPDATE_APPROVAL_SUCCESS:
             return {
                 ...state,
                 liveGames: state.liveGames.map(game =>
@@ -102,7 +102,10 @@ const liveGameReducer = (state = initialState, action) => {
                 ),
             };
         case UPDATE_APPROVAL_FAILURE:
-            return { ...state, error: action.payload };
+            return {
+                ...state,
+                error: action.payload,
+            };
         default:
             return state;
     }

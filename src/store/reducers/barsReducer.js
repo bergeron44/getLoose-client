@@ -22,12 +22,12 @@ const barsReducer = (state = initialState, action) => {
                 ...state, 
                 bars: state.bars.filter(bar => bar._id !== action.payload) // Remove a bar from the list
             };
-        case SET_CURRENT_BAR:
-            return { 
-                ...state, 
-                currentBar: state.bars.find(bar => bar._id === action.payload) || null // Set the current bar based on payload
-            };
-        case 'FETCH_BAR_PACKAGES_SUCCESS':
+            case SET_CURRENT_BAR:
+                return { 
+                    ...state, 
+                    currentBar: action.payload // Directly set the currentBar from payload
+                };
+         case 'FETCH_BAR_PACKAGES_SUCCESS':
             return {
                 ...state,
                 barPackages: action.payload,
