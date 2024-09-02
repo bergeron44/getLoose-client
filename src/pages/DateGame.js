@@ -41,7 +41,7 @@ const DateGame = () => {
     const swiped = (direction, question) => {
         console.log(`Swiped ${direction} on: ${question}`);
         setSwipeHistory([...swipeHistory, { question, direction }]);
-        setCurrentIndex(currentIndex + 1);
+        setCurrentIndex(prevIndex => prevIndex + 1);
     };
 
     const handleRetry = () => {
@@ -49,16 +49,17 @@ const DateGame = () => {
         setSwipeHistory([]);
     };
 
-    const progress = (currentIndex / dateQuestions.length) * 100;
+    const progress = dateQuestions.length ? (currentIndex / dateQuestions.length) * 100 : 0;
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh', backgroundColor: '#f2f2f2' }}>
             <Box sx={{ width: '100%', marginBottom: 2 }}>
                 <LinearProgress variant="determinate" value={progress} />
             </Box>
-            {currentIndex < dateQuestions.length ? (
+            {dateQuestions.length > 0 && currentIndex < dateQuestions.length ? (
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative' }}>
                     <TinderCard
+                        key={dateQuestions[currentIndex].content}
                         onSwipe={(dir) => swiped(dir, dateQuestions[currentIndex].content)}
                         preventSwipe={['up', 'down']}
                         className="swipe"

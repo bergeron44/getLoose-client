@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import AnimatedLogo from '../components/AnimatedLogo'
+import AnimatedLogo from '../components/AnimatedLogo';
 import { Typography, Box, CircularProgress } from '@mui/material';
+import { updateLiveGame } from '../store/actions/liveGameActions'; // Import your update action
 
 const WaitingForApproval = () => {
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const BASE_URL = 'http://localhost:3001';
 
     // Pull values from the Redux store
     const currentGameId = useSelector(state => state.liveGames.currentGameId);
@@ -15,10 +18,20 @@ const WaitingForApproval = () => {
     // Polling for waiter approval
     useEffect(() => {
         if (currentGameId) {
-            const interval = setInterval(() => {
-                // Log polling status
-                console.log('Polling for waiter approval...');
-                // Normally you would dispatch an action here if needed
+            const interval = setInterval(async () => {
+                try {
+                    const response = await fetch(`${BASE_URL}/api/livegame/id/${currentGameId}`);
+                    const data = await response.json();
+
+                    if (data.waiterApprove) {
+                        // If approval is true, update the store and navigate
+                        dispatch(updateLiveGame(currentGameId, { waiterApprove: true }));
+                        navigate(gameType === 'Date' ? '/DateGame' : '/FriendsGame');
+                        clearInterval(interval); // Stop polling once approved
+                    }
+                } catch (error) {
+                    console.error('Error fetching waiter approval status:', error);
+                }
             }, 3000);
 
             return () => {
@@ -26,15 +39,7 @@ const WaitingForApproval = () => {
                 console.log('Polling interval cleared');
             };
         }
-    }, [currentGameId, waiterApprove]);
-
-    // Navigate to game page on approval
-    useEffect(() => {
-        if (waiterApprove) {
-            console.log('Waiter approval received, navigating to game page');
-            navigate(gameType === 'Date' ? '/DateGame' : '/FriendsGame');
-        }
-    }, [waiterApprove, navigate, gameType]);
+    }, [currentGameId, waiterApprove, gameType, dispatch, navigate]);
 
     return (
         <Box
@@ -54,7 +59,7 @@ const WaitingForApproval = () => {
             </Typography>
             {/* Display a loading spinner while waiting for approval */}
             {!waiterApprove && <CircularProgress sx={{ marginTop: 2 }} />}
-            {/* Ensure LogoPage is properly defined and exported */}
+            {/* Ensure AnimatedLogo is properly defined and exported */}
             <AnimatedLogo />
         </Box>
     );

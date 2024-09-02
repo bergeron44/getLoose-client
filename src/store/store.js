@@ -1,6 +1,6 @@
 // src/store/store.js
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk'; // Make sure thunk is imported correctly
+import { thunk } from 'redux-thunk';// Make sure thunk is imported correctly
 import { composeWithDevTools } from '@redux-devtools/extension'; // Updated package
 
 import packagesReducer from './reducers/packagesReducer';
