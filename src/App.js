@@ -4,7 +4,7 @@ import HomePageForDates from './pages/HomePageForDates';
 import HomePageForFriends from './pages/HomePageForFrindes'; 
 import FirstPageDateOrFrinde from './pages/FirstPageDateOrFrinde';
 import ChooseDate from './pages/ChooseDate';
-import ChooseFrindes from './pages/ChooseFrindes' ;
+import ChooseFrindes from './pages/ChooseFriends' ;
 import AnimatedLogo from './components/AnimatedLogo';  // Import the AnimatedLogo component
 import BackToGame from './components/BackToGame'; 
 import WaitingForApproval from './pages/WaitingForApproval';
@@ -14,6 +14,11 @@ import './App.css';
 import BarTable from './barLoginPages/BarTable';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
 //end bar pages 
+//add to data base pages
+import  AddQuestion  from './pages/DataBaseUiConection/AddQuestion';
+import  AddBar  from './pages/DataBaseUiConection/AddBar';
+import  AddPackage  from './pages/DataBaseUiConection/AddPackage';
+//end add to data base pages
 
 function App() {
   return (
@@ -34,6 +39,9 @@ function App() {
             <Route path="/DateGame" element={<DateGame />} />
             <Route path="/page3" element={<FirstPageDateOrFrinde />} />
             <Route path="/WaitingForApproval" element={<WaitingForApproval />} />
+            <Route path="/AddQuestion" element={<AddQuestion />} />
+            <Route path="/AddBar" element={<AddBar />} />
+            <Route path="/AddPackage" element={<AddPackage />} />
           </Routes>
         </div>
       </div>

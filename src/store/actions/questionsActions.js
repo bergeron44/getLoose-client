@@ -7,7 +7,8 @@ import {
     FETCH_GAME_QUESTIONS_SUCCESS,
     FETCH_CATEGORY_QUESTIONS_SUCCESS,
     FETCH_QUESTIONS_SUCCESS,
-    FETCH_DATE_QUESTIONS_SUCCESS // Ensure this is imported if used
+    FETCH_DATE_QUESTIONS_SUCCESS, // Ensure this is imported if used
+    FETCH_FRIENDS_QUESTIONS_SUCCESS
 } from '../actionTypes';
 
 // Define the base URL
@@ -121,7 +122,8 @@ export const updateQuestionUse = (questionId, succeed) => async (dispatch) => {
 // Fetch questions by date (if needed)
 export const fetchDateQuestions = () => async (dispatch) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/questions`);
+        const response = await axios.get(`${BASE_URL}/api/questions/game/Date`);
+        console.log(response.data)
         dispatch({
             type: FETCH_DATE_QUESTIONS_SUCCESS,
             payload: response.data,
@@ -132,3 +134,18 @@ export const fetchDateQuestions = () => async (dispatch) => {
         // dispatch({ type: SET_ERROR, payload: error.message });
     }
 };
+export const fetchFriendsQuestions = () => async (dispatch) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/questions/game/Frindes`);
+        console.log(response.data)
+        dispatch({
+            type: FETCH_FRIENDS_QUESTIONS_SUCCESS,
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error('Error fetching date questions:', error);
+        // Optionally dispatch an error action
+        // dispatch({ type: SET_ERROR, payload: error.message });
+    }
+};
+

@@ -1,0 +1,80 @@
+/* TrianglePage.css */
+
+.triangle-page-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.triangle-button {
+  position: absolute;
+  width: 90%;
+  height: 90%;
+  clip-path: polygon(0 0, 100% 0, 0 100%); /* Default for the upper triangle */
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: z-index 0.3s ease, opacity 0.3s ease;
+}
+
+.triangle-button.bottom-triangle {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%); /* For the bottom triangle */
+}
+
+.triangle-button:hover,
+.triangle-button.Mui-focusVisible {
+  z-index: 2;
+}
+
+.triangle-button:hover .image-backdrop {
+  opacity: 0.15;
+}
+
+.triangle-button:hover .image-marked {
+  opacity: 0;
+}
+
+.triangle-button:hover .caption {
+  border: 4px solid currentColor;
+}
+
+.image-backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: opacity 0.3s ease;
+}
+
+.image-marked {
+  height: 3px;
+  width: 18px;
+  background-color: #fff;
+  position: absolute;
+  bottom: -2px;
+  left: calc(50% - 9px);
+  transition: opacity 0.3s ease;
+}
+
+.caption {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
+  padding: 8px;
+  transition: border 0.3s ease;
+}
+
+.caption-bottom {
+  bottom: 10%;
+}
+
+.caption-top {
+  top: 10%;
+}

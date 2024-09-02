@@ -33,7 +33,7 @@ export const fetchPackages = () => async (dispatch) => {
 // Create a new package
 export const createPackage = (newPackage) => async (dispatch) => {
     try {
-        const response = await fetch(`${BASE_URL}/api/packages`, {
+        const response = await fetch(`${BASE_URL}/api/package/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

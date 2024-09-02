@@ -4,6 +4,7 @@ import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActio
 import { TextField, Button, Box, Typography, Card, CardContent, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './ChooseDate.css'; // Import the CSS file
 
 const ChooseDate = () => {
     const dispatch = useDispatch();
@@ -25,7 +26,11 @@ const ChooseDate = () => {
                 const fetchedPackages = await Promise.all(
                     barPackageIds.map(async (pkgId) => {
                         const response = await axios.get(`http://localhost:3001/api/package/${pkgId}`);
-                        return response.data;
+                        var DataToReturn={
+                            _id:pkgId,
+                            ...response.data,
+                        }
+                        return DataToReturn;
                     })
                 );
                 setFullPackages(fetchedPackages);
@@ -45,10 +50,21 @@ const ChooseDate = () => {
     };
 
     const handlePackageChange = (pkg) => {
-        // Toggle the selected package; deselect if clicked again
-        setSelectedPackage(prevPackage => 
-            prevPackage && prevPackage._id === pkg._id ? null : pkg
-        );
+        console.log(pkg._id);
+        if(selectedPackage==null)
+            {
+                setSelectedPackage(pkg);
+            }
+       else if(pkg._id===selectedPackage._id)
+            {
+                setSelectedPackage(null);
+            }
+        else
+            {
+                setSelectedPackage(pkg);
+            }
+        // Set the selected package to the clicked package
+        
     };
 
     const handleCreateLiveGame = () => {
@@ -61,16 +77,16 @@ const ChooseDate = () => {
                 package: selectedPackage._id,
                 playersNames: playersNames,
             };
-    
+
             console.log('Creating Live Game with:', liveGame);
-    
+
             dispatch(createLiveGame(liveGame))
                 .then(response => {
-                    alert(response._id)
+                    alert(response._id);
                     // Assuming response.data contains the live game object
                     const liveGameResponse = response || {};
                     const newGameId = liveGameResponse._id;
-    
+
                     if (newGameId) {
                         dispatch(setCurrentGameId(newGameId));
                         setSuccessMessage('Live game created successfully!');
@@ -85,53 +101,52 @@ const ChooseDate = () => {
                     console.error('Error creating live game:', err);
                 });
         } else {
-            setError('Please select a package and enter a player name.');
+            setError('Please select a package and enter a table name.');
         }
     };
 
     return (
-        <div>
-            {error && <Alert severity="error">{error}</Alert>}
-            {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        <div className="choose-date-container">
+        {error && <Alert severity="error">{error}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        
+        {!currentBar?._id ? (
+            <Typography>No bar selected or data unavailable</Typography>
+        ) : (
+            <Box className="choose-date-content">
+                <Box sx={{ marginBottom: 3 }}>
+                    <Typography variant="h4" gutterBottom>
+                        Enter Table Name
+                    </Typography>
+                    <TextField
+                        label="Table Name"
+                        value={tableName || ''}  // Ensure value is always a string
+                        onChange={handleNameChange}
+                        variant="outlined"
+                        sx={{ marginBottom: 2 }}
+                    />
+                </Box>
 
-            {!currentBar?._id ? (
-                <Typography>No bar selected or data unavailable</Typography>
-            ) : (
-                <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh', padding: 2 }}>
-                    <Box sx={{ marginBottom: 3 }}>
-                        <Typography variant="h4" gutterBottom>
-                            Enter Table Name
-                        </Typography>
-                        <TextField
-                            label="Table Name"
-                            value={tableName || ''}  // Ensure value is always a string
-                            onChange={handleNameChange}
-                            variant="outlined"
-                            sx={{ marginBottom: 2 }}
-                        />
-                    </Box>
-
+                <Box className="choose-package-list">
                     {fullPackages.length > 0 ? (
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        <Box className="package-list">
                             <Typography variant="h6" gutterBottom>
                                 Select a Package
                             </Typography>
                             {fullPackages.map(pkg => (
                                 <Card
-                                    key={pkg._id}  // Add the key prop here
+                                    key={pkg._id}
+                                    className={`package-card ${selectedPackage && selectedPackage._id === pkg._id ? 'selected' : ''}`}
+                                    onClick={() => handlePackageChange(pkg)}
                                     sx={{
-                                        maxWidth: 345,
-                                        border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid blue' : '1px solid #ccc',
-                                        borderRadius: 2,
-                                        boxShadow: 3,
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        padding: 2,
-                                        backgroundColor: '#f5f5f5'
+                                        marginBottom: 2, // Space between cards
+                                        cursor: 'pointer', // Pointer cursor on hover
+                                        border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid #1976d2' : '1px solid #ccc', // Highlight selected card
+                                        transition: 'border 0.3s ease', // Smooth transition for border change
+                                        padding: 2 // Ensure padding within card
                                     }}
                                 >
-                                    <CardContent sx={{ flex: 1 }}>
+                                    <CardContent className="package-card-content">
                                         <Typography variant="h6" component="div" gutterBottom>
                                             ${pkg.price}
                                         </Typography>
@@ -139,37 +154,27 @@ const ChooseDate = () => {
                                             {pkg.packagesContant}
                                         </Typography>
                                     </CardContent>
-                                    <FormControlLabel
-                                        control={
-                                            <Checkbox
-                                                checked={selectedPackage && selectedPackage._id === pkg._id}
-                                                onChange={() => handlePackageChange(pkg)}
-                                                sx={{ padding: 0 }}
-                                            />
-                                        }
-                                        label="Select"
-                                        sx={{ marginLeft: 2 }}
-                                    />
                                 </Card>
                             ))}
                         </Box>
                     ) : (
                         <Typography>No packages available for this bar</Typography>
                     )}
-
-                    <Box sx={{ marginTop: 3, display: 'flex', justifyContent: 'center' }}>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={handleCreateLiveGame}
-                            disabled={!selectedPackage || !tableName}
-                        >
-                            Create Live Game
-                        </Button>
-                    </Box>
                 </Box>
-            )}
-        </div>
+
+                <Box className="create-game-button" sx={{ marginTop: 3 }}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleCreateLiveGame}
+                        disabled={!selectedPackage || !tableName}
+                    >
+                        Create Live Game
+                    </Button>
+                </Box>
+            </Box>
+        )}
+    </div>
     );
 };
 

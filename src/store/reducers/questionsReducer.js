@@ -6,7 +6,8 @@ import {
     REMOVE_QUESTION_SUCCESS,
     UPDATE_DIFFICULTY_SUCCESS,
     UPDATE_QUESTION_USE_SUCCESS,
-    FETCH_DATE_QUESTIONS_SUCCESS // Ensure this is imported
+    FETCH_DATE_QUESTIONS_SUCCESS, // Ensure this is imported
+    FETCH_FRIENDS_QUESTIONS_SUCCESS
 } from '../actionTypes';
 
 const initialState = {
@@ -24,6 +25,11 @@ const questionsReducer = (state = initialState, action) => {
                 ...state,
                 dateQuestions: action.payload
             };
+        case FETCH_FRIENDS_QUESTIONS_SUCCESS:
+            return {
+                    ...state,
+                    gameQuestions: action.payload
+                };
         case FETCH_QUESTIONS_SUCCESS:
             return {
                 ...state,

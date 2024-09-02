@@ -50,7 +50,7 @@ export const fetchBars = () => async (dispatch) => {
 export const createBar = (newBar) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch(`${BASE_URL}/api/bars`, {
+        const response = await fetch(`${BASE_URL}/api/bar/create`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(newBar),

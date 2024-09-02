@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBar, setGameType, setPlayersNames } from '../store/actions/liveGameActions';
 import { setCurrentBar } from '../store/actions/barsActions';
+import './FirstPageDateOrFrinde.css'; // Import the CSS file
 
 const BASE_URL = 'http://localhost:3001';
 
@@ -29,18 +30,6 @@ const TriangleButton = styled(ButtonBase)(({ theme, triangle }) => ({
   height: '100%',
   clipPath: triangle,
   overflow: 'hidden',
-  '&:hover, &.Mui-focusVisible': {
-    zIndex: 2,
-    '& .MuiImageBackdrop-root': {
-      opacity: 0.15,
-    },
-    '& .MuiImageMarked-root': {
-      opacity: 0,
-    },
-    '& .MuiTypography-root': {
-      border: '4px solid currentColor',
-    },
-  },
 }));
 
 const ImageSrc = styled('span')({
@@ -53,40 +42,6 @@ const ImageSrc = styled('span')({
   backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
 });
-
-const ImageBackdrop = styled('span')(({ theme }) => ({
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-  backgroundColor: theme.palette.common.black,
-  opacity: 0.4,
-  transition: theme.transitions.create('opacity'),
-}));
-
-const ImageMarked = styled('span')(({ theme }) => ({
-  height: 3,
-  width: 18,
-  backgroundColor: theme.palette.common.white,
-  position: 'absolute',
-  bottom: -2,
-  left: 'calc(50% - 9px)',
-  transition: theme.transitions.create('opacity'),
-}));
-
-const Caption = styled(Typography)(({ theme, position }) => ({
-  position: 'absolute',
-  width: '100%',
-  textAlign: 'center',
-  color: theme.palette.common.white,
-  backgroundColor: theme.palette.common.black,
-  opacity: 0.7,
-  borderRadius: 1,
-  padding: theme.spacing(1),
-  ...(position === 'bottom' && { bottom: '10%' }),
-  ...(position === 'top' && { top: '10%' }),
-}));
 
 export default function TrianglePage() {
   const dispatch = useDispatch();
@@ -139,20 +94,22 @@ export default function TrianglePage() {
   const handleClick = async (link, title) => {
     console.log('Navigating to:', link);
     alert(currentBar);
-    let barName=currentBar;
-  
-    try {
-      // Replace with your actual API call or database query
-      const response = await fetch(`${BASE_URL}/api/bar/${barName}`); // Example API call
-      if (!response.ok) {
-        throw new Error('Bar not found');
-      }
-      
-      const barData = await response.json();
+    let barName = currentBar;
 
-      // Extract bar properties
+    try {
+      var s="";
+      var response = await fetch(`${BASE_URL}/api/bar/${barName}`);
+      if (!response.ok) {
+        response = await fetch(`${BASE_URL}/api/bar/id/${barName}`);
+        if (!response.ok)
+          {
+            throw new Error('Bar not found');
+          }    
+      }
+
+      const barData = await response.json();
       const { _id, barName: name, location, capacity, barPackages, qrUrl } = barData;
-      // Dispatch actions to update the store
+
       dispatch(setBar(_id));
       dispatch(setCurrentBar({
         _id,
@@ -162,60 +119,46 @@ export default function TrianglePage() {
         barPackages,
         qrUrl,
       }));
-      
+
       console.log('Store updated with bar data:', barData);
     } catch (error) {
       console.error('Failed to fetch bar data:', error);
       setError(error.message);
     }
 
-    // Set the game type in the store
-    if (link=='/HomePageForFriends') {
+    if (link === '/HomePageForFriends') {
       dispatch(setGameType("Friends"));
     } else {
       dispatch(setGameType("Date"));
     }
 
-    // Navigate to the selected page
     navigate(link);
   };
 
   if (loading) {
-    console.log('Loading...');
     return <Typography variant="h6" align="center">Loading...</Typography>;
   }
 
   if (error) {
-    console.error('Error occurred:', error);
     return <Typography variant="h6" color="error" align="center">Error: {error}</Typography>;
   }
 
   return (
-    <Box sx={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
+    <Box className="triangle-page-container">
       {images.map((image, index) => (
         <TriangleButton
           key={image.title}
           triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
           style={{ backgroundImage: `url(${image.url})` }}
           onClick={() => handleClick(image.link, image.title)}
-          sx={{
-            top: index === 0 ? 0 : '50%',
-            left: index === 0 ? 0 : '50%',
-            transform: index === 0 ? 'none' : 'translate(-50%, -50%)',
-            width: '90%',
-            height: '90%',
-          }}
+          className={`triangle-button ${index === 1 ? 'bottom-triangle' : ''}`} // Apply bottom-triangle class for the second triangle
         >
-          <ImageBackdrop className="MuiImageBackdrop-root" />
+          <span className="image-backdrop" />
           <ImageSrc />
-          <Caption
-            variant="h4"
-            component="span"
-            position={index === 0 ? 'top' : 'bottom'}
-          >
+          <span className={`caption ${index === 0 ? 'caption-top' : 'caption-bottom'}`}>
             {image.title}
-            <ImageMarked className="MuiImageMarked-root" />
-          </Caption>
+            <span className="image-marked" />
+          </span>
         </TriangleButton>
       ))}
     </Box>

@@ -1,0 +1,34 @@
+/* AddQuestion.css */
+
+.add-question-container {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.add-question-title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+.add-question-error {
+    color: #f44336; /* Red color for error messages */
+    margin-bottom: 16px;
+}
+
+.add-question-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-question-field {
+    margin-bottom: 16px;
+}
+
+.add-question-button {
+    margin-top: 16px;
+}
