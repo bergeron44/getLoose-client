@@ -15,14 +15,14 @@ html, body {
 
 /* Center the headline at the top */
 .graffiti-headline {
-  text-align: center;
+  text-align:right;
   color: #ff6347; /* Headline color */
-  font-size: 3rem;
+  font-size: 2rem;
   font-family: 'Permanent Marker', cursive; /* Graffiti font */
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8); /* Enhanced shadow for better readability */
   margin: 0; /* Remove default margin */
   position: absolute; /* Position absolutely to ensure centering */
-  top: 20px; /* Adjust as needed for spacing from top */
+  top: 5px; /* Adjust as needed for spacing from top */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center using transform */
 }

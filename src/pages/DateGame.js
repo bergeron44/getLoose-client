@@ -6,7 +6,6 @@ import { Box, Typography, IconButton, LinearProgress, Button } from '@mui/materi
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
 import { styled } from '@mui/system';
 import './DateGame.css';
-import AnimatedLogo from '../components/AnimatedLogo';
 
 // Styled component for the card with pink, black, and red stripes
 const StyledCard = styled(Box)(({ theme }) => ({
@@ -102,8 +101,11 @@ const DateGame = () => {
                             className="swipe"
                         >
                             <StyledCard>
+                                <Typography variant="h5" sx={{ color:'yellow', fontWeight: 'bold', fontFamily: 'Arial' }}>
+                                    {dateQuestions[currentIndex].category}
+                                </Typography><br/>
                                 <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial' }}>
-                                    {dateQuestions[currentIndex].question}
+                                    {dateQuestions[currentIndex].question} 
                                 </Typography>
                             </StyledCard>
                         </TinderCard>

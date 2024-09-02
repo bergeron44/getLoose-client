@@ -67,8 +67,13 @@ const AddQuestion = () => {
                     required
                     className="add-question-field"
                 >
-                    <MenuItem value="Date">Date</MenuItem>
-                    <MenuItem value="Friends">Friends</MenuItem>
+                    <MenuItem value="Never-Have-I-Ever ">Never-Have-I-Ever </MenuItem>
+                    <MenuItem value="Tell-Me-A-Secret">Tell-Me-A-Secret</MenuItem>
+                    <MenuItem value="Truth">Truth</MenuItem>
+                    <MenuItem value="Dare">Dare</MenuItem>
+                    <MenuItem value="Csompetitive">Competitive</MenuItem>
+                    <MenuItem value="Pervert">Pervert</MenuItem>
+
                     {/* Add more categories as needed */}
                 </TextField>
                 <TextField

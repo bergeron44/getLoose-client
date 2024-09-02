@@ -26,7 +26,7 @@ const WaitingForApproval = () => {
                     if (data.waiterApprove) {
                         // If approval is true, update the store and navigate
                         dispatch(updateLiveGame(currentGameId, { waiterApprove: true }));
-                        navigate(gameType === 'Date' ? '/DateGame' : '/FriendsGame');
+                        navigate(gameType === 'Date' ? '/DateGame' : '/FrindesGame');
                         clearInterval(interval); // Stop polling once approved
                     }
                 } catch (error) {

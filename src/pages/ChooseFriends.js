@@ -1,132 +1,181 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActions';
-import { fetchBarPackages } from '../store/actions/barsActions';
-import { TextField, Button, Box, Typography, Card, CardContent, CircularProgress, Alert } from '@mui/material';
+import { TextField, Button, Box, Typography, Card, CardContent, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './ChooseFriends.css'; // Import the CSS file
 
-const ChooseFriends = () => {
+const ChooseDate = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [playerName, setPlayerName] = useState('');
-    const [selectedPackage, setSelectedPackage] = useState(null);
+    const [tableName, setTableName] = useState('');
+    const [selectedPackage, setSelectedPackage] = useState(null); // Only one selected package
     const [error, setError] = useState(null);
     const [successMessage, setSuccessMessage] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [fullPackages, setFullPackages] = useState([]);
 
-    // Retrieve necessary data from the store
-    const currentBarIdFromLiveGame = useSelector(state => state.liveGames.bar);
-    const barPackages = useSelector(state => state.bars.barPackages);
-    const currentBarId = useSelector(state => state.bars.currentBarId);
-    const tableName = useSelector(state => state.liveGames.tableName || '');
-    const tableNumber = useSelector(state => state.liveGames.tableNumber || '');
+    const currentBar = useSelector(state => state.bars.currentBar);
+    const barPackageIds = currentBar?.barPackages || [];
+    const playersNames = useSelector(state => state.liveGames.playersNames || []);
+    const tableNumber = useSelector(state => state.liveGames.tableNumber || 0);
 
     useEffect(() => {
-        if (currentBarId||currentBarIdFromLiveGame) {
-            console.log(currentBarIdFromLiveGame);
-            dispatch(fetchBarPackages(currentBarId))
-                .then(() => setLoading(false))
-                .catch((err) => {
-                    setError('Failed to load packages');
-                    setLoading(false);
-                    console.error('Error fetching bar packages:', err);
-                });
+        const fetchPackages = async () => {
+            try {
+                const fetchedPackages = await Promise.all(
+                    barPackageIds.map(async (pkgId) => {
+                        const response = await axios.get(`http://localhost:3001/api/package/${pkgId}`);
+                        var DataToReturn={
+                            _id:pkgId,
+                            ...response.data,
+                        }
+                        return DataToReturn;
+                    })
+                );
+                setFullPackages(fetchedPackages);
+            } catch (err) {
+                setError('Failed to fetch packages');
+                console.error('Error fetching packages:', err);
+            }
+        };
+
+        if (barPackageIds.length > 0) {
+            fetchPackages();
         }
-    }, [dispatch, currentBarId,currentBarIdFromLiveGame]);
+    }, [barPackageIds]);
 
     const handleNameChange = (event) => {
-        setPlayerName(event.target.value);
+        setTableName(event.target.value);
     };
 
-    const handlePackageClick = (pkg) => {
-        setSelectedPackage(pkg);
+    const handlePackageChange = (pkg) => {
+        console.log(pkg._id);
+        if(selectedPackage==null)
+            {
+                setSelectedPackage(pkg);
+            }
+       else if(pkg._id===selectedPackage._id)
+            {
+                setSelectedPackage(null);
+            }
+        else
+            {
+                setSelectedPackage(pkg);
+            }
+        // Set the selected package to the clicked package
+        
     };
 
     const handleCreateLiveGame = () => {
-        if (selectedPackage && playerName) {
+        if (selectedPackage && tableName) {
             const liveGame = {
                 gameType: 'Friends',
-                bar: currentBarId,
+                bar: currentBar._id,
                 tableName: tableName,
                 tableNumber: tableNumber,
                 package: selectedPackage._id,
-                playersNames: [playerName],
+                playersNames: playersNames,
             };
+
+            console.log('Creating Live Game with:', liveGame);
 
             dispatch(createLiveGame(liveGame))
                 .then(response => {
-                    const newGameId = response.payload._id; // Adjust according to your API response
-                    dispatch(setCurrentGameId(newGameId));
-                    setSuccessMessage('Live game created successfully!');
-                    navigate('/WaitingForApproval');
+                    alert(response._id);
+                    // Assuming response.data contains the live game object
+                    const liveGameResponse = response || {};
+                    const newGameId = liveGameResponse._id;
+
+                    if (newGameId) {
+                        dispatch(setCurrentGameId(newGameId));
+                        setSuccessMessage('Live game created successfully!');
+                        navigate('/WaitingForApproval');
+                    } else {
+                        setError('Unexpected response format.');
+                        console.error('Unexpected response format:', liveGameResponse);
+                    }
                 })
                 .catch((err) => {
                     setError('Failed to create live game');
                     console.error('Error creating live game:', err);
                 });
         } else {
-            setError('Please select a package and enter a player name.');
+            setError('Please select a package and enter a table name.');
         }
     };
 
     return (
         <div className="choose-friends-container">
-            {loading && <CircularProgress />}
-            {error && <Alert severity="error">{error}</Alert>}
-            {successMessage && <Alert severity="success">{successMessage}</Alert>}
-
+        {error && <Alert severity="error">{error}</Alert>}
+        {successMessage && <Alert severity="success">{successMessage}</Alert>}
+        
+        {!currentBar?._id ? (
+            <Typography>No bar selected or data unavailable</Typography>
+        ) : (
             <Box className="choose-friends-content">
-                <Box className="name-section">
+                <Box sx={{ marginBottom: 3 }}>
                     <Typography variant="h4" gutterBottom>
-                        Enter Player Name
+                        Enter Table Name
                     </Typography>
                     <TextField
-                        label="Player Name"
-                        value={playerName}
+                        label="Table Name"
+                        value={tableName || ''}  // Ensure value is always a string
                         onChange={handleNameChange}
                         variant="outlined"
-                        className="name-input"
+                        sx={{ marginBottom: 2 }}
                     />
                 </Box>
 
-                <Box className="packages-section">
-                    <Typography variant="h6" gutterBottom>
-                        Select a Package
-                    </Typography>
-                    {barPackages.map(pkg => (
-                        <Card
-                            key={pkg._id}
-                            className={`package-card ${selectedPackage && selectedPackage._id === pkg._id ? 'selected' : ''}`}
-                        >
-                            <CardContent className="package-card-content">
-                                <Typography variant="h6" component="div">
-                                    ${pkg.price}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    {pkg.packagesContant}
-                                </Typography>
-                                <Button onClick={() => handlePackageClick(pkg)} className="package-select-button">
-                                    Select
-                                </Button>
-                            </CardContent>
-                        </Card>
-                    ))}
+                <Box className="choose-package-list">
+                    {fullPackages.length > 0 ? (
+                        <Box className="package-list">
+                            <Typography variant="h6" gutterBottom>
+                                Select a Package
+                            </Typography>
+                            {fullPackages.map(pkg => (
+                                <Card
+                                    key={pkg._id}
+                                    className={`package-card ${selectedPackage && selectedPackage._id === pkg._id ? 'selected' : ''}`}
+                                    onClick={() => handlePackageChange(pkg)}
+                                    sx={{
+                                        marginBottom: 2, // Space between cards
+                                        cursor: 'pointer', // Pointer cursor on hover
+                                        border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid #1976d2' : '1px solid #ccc', // Highlight selected card
+                                        transition: 'border 0.3s ease', // Smooth transition for border change
+                                        padding: 2 // Ensure padding within card
+                                    }}
+                                >
+                                    <CardContent className="package-card-content">
+                                        <Typography variant="h6" component="div" gutterBottom>
+                                            ${pkg.price}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            {pkg.packagesContant}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </Box>
+                    ) : (
+                        <Typography>No packages available for this bar</Typography>
+                    )}
                 </Box>
 
-                <Box className="create-game-button">
+                <Box className="create-game-button" sx={{ marginTop: 3 }}>
                     <Button
                         variant="contained"
                         color="primary"
                         onClick={handleCreateLiveGame}
-                        disabled={!selectedPackage || !playerName}
+                        disabled={!selectedPackage || !tableName}
                     >
                         Create Live Game
                     </Button>
                 </Box>
             </Box>
-        </div>
+        )}
+    </div>
     );
 };
 
-export default ChooseFriends;
+export default ChooseDate;

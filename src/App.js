@@ -9,6 +9,7 @@ import AnimatedLogo from './components/AnimatedLogo';  // Import the AnimatedLog
 import BackToGame from './components/BackToGame'; 
 import WaitingForApproval from './pages/WaitingForApproval';
 import DateGame from './pages/DateGame';
+import FrindesGame from './pages/FrindesGame';
 import './App.css';
 //bar pages implement
 import BarTable from './barLoginPages/BarTable';
@@ -37,6 +38,7 @@ function App() {
             <Route path="/ChooseDate" element={<ChooseDate />} />
             <Route path="/ChooseFrindes" element={<ChooseFrindes />} />
             <Route path="/DateGame" element={<DateGame />} />
+            <Route path="/FrindesGame" element={<FrindesGame/>} />
             <Route path="/page3" element={<FirstPageDateOrFrinde />} />
             <Route path="/WaitingForApproval" element={<WaitingForApproval />} />
             <Route path="/AddQuestion" element={<AddQuestion />} />
