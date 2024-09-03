@@ -15,6 +15,7 @@ import './App.css';
 //bar pages implement
 import BarTable from './barLoginPages/BarTable';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
+import Admin from './barLoginPages/Admin';
 //end bar pages 
 //add to data base pages
 import  AddQuestion  from './pages/DataBaseUiConection/AddQuestion';
@@ -26,12 +27,14 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <h1 className="graffiti-headline">Get Loose</h1>
+        
         <div className="page-content">
           <Routes>
             <Route path="/" element={<FirstPageDateOrFrinde />} />
             <Route path="/BarTable" element={<BarTable />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
+            <Route path="/Admin" element={<Admin />} />
+
             <Route path="/LogoPage" element={<AnimatedLogo />} />
             <Route path="/BackToGame" element={<BackToGame />} />
             <Route path="/HomePageForDates" element={<HomePageForDates />} />
@@ -48,6 +51,7 @@ function App() {
             <Route path="/Instruction" element={<Instruction />} />
           </Routes>
         </div>
+        <h1 className="graffiti-headline">Get Loose</h1>
       </div>
     </Router>
   );

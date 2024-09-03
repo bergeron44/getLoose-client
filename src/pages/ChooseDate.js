@@ -130,9 +130,9 @@ const ChooseDate = () => {
                 <Box className="choose-package-list">
                     {fullPackages.length > 0 ? (
                         <Box className="package-list">
-                            <Typography variant="h6" gutterBottom>
-                                Select a Package
-                            </Typography>
+                            <Typography variant="h6" gutterBottom align='center'>
+                                Select a Package:
+                            </Typography><br/>
                             {fullPackages.map(pkg => (
                                 <Card
                                     key={pkg._id}

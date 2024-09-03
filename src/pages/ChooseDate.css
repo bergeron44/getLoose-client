@@ -1,57 +1,83 @@
+/* Outermost container should take up the entire screen with a border */
 .choose-date-container {
     display: flex;
-    flex-direction:column;
-    height: 90vh;
+    flex-direction: column;
+    height: 100vh;
     padding: 10px;
     background-color: #f0f0f0;
+    border: 2px solid #000; /* Add a border to the entire container */
+    margin-top: 50px; /* Add space between the container and the top edge */
 }
 
+/* Content inside the container, centered vertically and horizontally */
 .choose-date-content {
     display: flex;
     flex-direction: column;
     gap: 16px;
     align-items: center;
-
+    justify-content: center;
+    flex: 1; /* Allow the content to expand to fill available space */
+    width: 100%; /* Ensure the content takes full width */
+    box-sizing: border-box;
 }
 
+/* Package list should fit within the screen width, with a border between the cards */
 .package-list {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap; /* Allow the cards to wrap to the next line on small screens */
+    justify-content: center;
     gap: 16px;
+    width: 100%; /* Make sure the package list takes the full width of the container */
+    box-sizing: border-box;
 }
 
-.package-card.selected {
-    border: 2px solid #007bff; /* Highlight selected package with a blue border */
-}
-
+/* Each card should have a border and adjust to the screen size */
 .package-card {
+    flex: 1 1 calc(50% - 32px); /* Take up half the width minus the gap (16px on each side) */
     max-width: 345px;
-    border: 1px solid #ddd;
+    border: 2px solid #007bff; /* Add a border to each card */
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     padding: 16px;
     background-color: #fff;
-    position: relative;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    transition: transform 0.2s ease; /* Add a small transition effect */
 }
 
+/* Highlight selected package with a different border color */
+.package-card.selected {
+    border: 2px solid #28a745; /* Green border for selected package */
+}
 
+/* Content inside each card */
 .package-card-content {
     flex: 1;
 }
 
+/* Style for the card title */
 .package-card-content h6 {
     margin-bottom: 8px;
 }
 
+/* Adjust checkbox positioning */
 .package-checkbox {
     padding: 0;
     margin-left: 16px;
 }
 
+/* Create game button centered with space on top */
 .create-game-button {
     margin-top: 24px;
     display: flex;
     justify-content: center;
+    width: 100%;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .package-card {
+        flex: 1 1 100%; /* Make each card take full width on smaller screens */
+    }
 }

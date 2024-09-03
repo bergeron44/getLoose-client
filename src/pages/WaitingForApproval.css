@@ -1,0 +1,44 @@
+/* WaitingForApproval.css */
+
+/* Container for the WaitingForApproval component */
+.waiting-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
+    text-align: center;
+    background-color: #f0f0f0;
+    padding: 0 10px; /* Adjust padding to prevent overflow */
+    box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+/* Title styling */
+.waiting-title {
+    font-family: 'Graffiti';
+    margin-bottom: 16px; /* Adjust margin as needed */
+    font-size: calc(1.5rem + 1vw); /* Responsive font size */
+}
+
+
+/* Keyframes for spinner animation */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Parent container CSS example */
+.parent-container {
+    width: 100vw; /* Full viewport width */
+    height: 100vh; /* Full viewport height */
+    display: flex;
+    justify-content: center; /* Center child horizontally */
+    align-items: center; /* Center child vertically */
+    background-color: #282c34; /* Background color (optional) */
+    overflow: hidden; /* Prevent scrolling */
+}

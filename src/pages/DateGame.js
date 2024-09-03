@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDateQuestions } from '../store/actions/questionsActions';
 import TinderCard from 'react-tinder-card';
-import { Box, Typography, IconButton, LinearProgress, Button } from '@mui/material';
+import { Box, Typography, Button, LinearProgress, IconButton } from '@mui/material';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
-import { styled } from '@mui/system';
+import { styled } from '@mui/system'; // Import styled here
 import './DateGame.css';
 
 // Styled component for the card with pink, black, and red stripes
@@ -67,18 +67,12 @@ const DateGame = () => {
     const progress = dateQuestions.length ? (currentIndex / dateQuestions.length) * 100 : 0;
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh', backgroundColor: '#f2f2f2' }}>
-            <Box sx={{ width: '100%', marginBottom: 2 }}>
+        <Box className="dategame-container">
+            <Box className="progress-container">
                 <LinearProgress variant="determinate" value={progress} />
             </Box>
-            <Box sx={{ position: 'absolute', top: 0, width: '100%', textAlign: 'center', padding: '20px' }}>
-                <Typography variant="h3" sx={{ fontWeight: 'bold', fontFamily: 'Arial', color: '#000' }}>
-                    {/* Replace with your logo */}
-                    Get Loose
-                </Typography>
-            </Box>
             {dateQuestions.length > 0 && currentIndex < dateQuestions.length ? (
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', width: '100%', height: 'calc(100vh - 100px)' }}>
+                <Box className="card-container">
                     {showPunishment ? (
                         <StyledCard>
                             <Typography variant="h2" sx={{ marginBottom: '20px', fontWeight: 'bold', fontFamily: 'Cursive', color: 'red' }}>
@@ -89,7 +83,7 @@ const DateGame = () => {
                                     {dateQuestions[currentIndex].punishment}
                                 </Typography>
                             </Box>
-                            <Button variant="contained" color="primary" onClick={handlePunishmentDone} sx={{ mt: 4, backgroundColor: '#ff5722', color: '#fff' }}>
+                            <Button className="button" variant="contained" onClick={handlePunishmentDone}>
                                 I Have Done It
                             </Button>
                         </StyledCard>
@@ -101,11 +95,12 @@ const DateGame = () => {
                             className="swipe"
                         >
                             <StyledCard>
-                                <Typography variant="h5" sx={{ color:'yellow', fontWeight: 'bold', fontFamily: 'Arial' }}>
+                                <Typography className="typography-category">
                                     {dateQuestions[currentIndex].category}
-                                </Typography><br/>
-                                <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial' }}>
-                                    {dateQuestions[currentIndex].question} 
+                                </Typography>
+                                <br />
+                                <Typography className="typography-question">
+                                    {dateQuestions[currentIndex].question}
                                 </Typography>
                             </StyledCard>
                         </TinderCard>
@@ -122,11 +117,11 @@ const DateGame = () => {
                     )}
                 </Box>
             ) : (
-                <Box sx={{ textAlign: 'center', marginTop: '20px' }}>
+                <Box className="no-questions-container">
                     <Typography variant="h4" gutterBottom>
                         No more questions!
                     </Typography>
-                    <Button variant="contained" color="primary" onClick={handleRetry}>
+                    <Button className="button" variant="contained" onClick={handleRetry}>
                         Retry
                     </Button>
                 </Box>
