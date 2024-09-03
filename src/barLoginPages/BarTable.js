@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchLiveGames, fetchLiveGamesFromSameBar, updateApprovalStatus, updateLiveGame } from '../store/actions/liveGameActions'; // Update with correct path to your actions
 import { fetchBars } from '../store/actions/barsActions';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert, Select, MenuItem } from '@mui/material';
+import axios from 'axios';
 
 const BarTable = () => {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const BarTable = () => {
     const loading = useSelector(state => state.liveGames.loading);
     const error = useSelector(state => state.liveGames.error);
     const barsData = useSelector(state => state.bars.bars); // Assuming bars are stored in Redux store
-
+    var response ;
     useEffect(() => {
         // Fetch all bars on component mount
         dispatch(fetchBars());
@@ -23,6 +24,7 @@ const BarTable = () => {
     useEffect(() => {
         if (selectedBarId) {
             dispatch(fetchLiveGamesFromSameBar(selectedBarId));  
+            fetchBarInfoAndSetupGame(selectedBarId);
             //dispatch(fetchLiveGames(selectedBarId));
         }
     }, [dispatch, selectedBarId]);
@@ -30,7 +32,23 @@ const BarTable = () => {
     const handleBarChange = (event) => {
         setSelectedBarId(event.target.value);
     };
+    const fetchBarInfoAndSetupGame = async (barId) => {
+        try {
+            
+            const response = await axios.get(`http://localhost:3001/api/bar/id/${barId}`);
 
+            // Process the response here
+            console.log(response.data); // For debugging
+            if(response.data.barName==="Admin")
+                {
+                    dispatch(fetchLiveGames()); 
+                }
+        } catch (error) {
+            console.error('Error fetching bar information:', error);
+            // Optionally, display a user-friendly message or handle specific error scenarios
+            alert('An error occurred while fetching the bar information. Please try again later.');
+        }
+    };
     const handleApprovalToggle = (gameId, currentStatus) => {
          var bool=(!currentStatus);
         console.log(bool)
