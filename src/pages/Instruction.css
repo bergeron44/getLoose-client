@@ -1,0 +1,99 @@
+/* Background styling with a gradient of green and yellow */
+.instruction-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(45deg, #00ff00, #ffff00);
+}
+
+/* Instruction card styling */
+.instruction-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 90%;
+  width: 100%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+}
+
+/* Graffiti-style caption above the bubble */
+.graffiti-caption {
+  font-family: 'Graffiti', cursive;
+  font-size: 48px;
+  color: #ff5733;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+/* Bubble styling */
+.bubble {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  background-color: #d5fc47;
+  border-radius: 50%;
+  color: #0c0303;
+  font-size: 24px;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  margin: 0 auto;
+  animation: float 3s infinite ease-in-out;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Floating animation for the bubble */
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+/* Bubble hover and active states */
+.bubble:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.bubble:active {
+  animation: explode 0.5s forwards;
+  background-color: transparent;
+  box-shadow: none;
+  transform: scale(0.9);
+}
+
+/* Realistic explosion animation */
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+    background-color: #ff5733;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+    background-color: #ffcc00;
+  }
+}
+
+/* Emoji styling */
+.emoji-container {
+  margin-top: 20px;
+  font-size: 2rem;
+}

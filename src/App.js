@@ -10,6 +10,7 @@ import BackToGame from './components/BackToGame';
 import WaitingForApproval from './pages/WaitingForApproval';
 import DateGame from './pages/DateGame';
 import FrindesGame from './pages/FrindesGame';
+import Instruction from './pages/Instruction';
 import './App.css';
 //bar pages implement
 import BarTable from './barLoginPages/BarTable';
@@ -44,6 +45,7 @@ function App() {
             <Route path="/AddQuestion" element={<AddQuestion />} />
             <Route path="/AddBar" element={<AddBar />} />
             <Route path="/AddPackage" element={<AddPackage />} />
+            <Route path="/Instruction" element={<Instruction />} />
           </Routes>
         </div>
       </div>

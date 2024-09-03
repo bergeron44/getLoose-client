@@ -17,9 +17,9 @@ const HomePageForFriends = () => {
 
   return (
     <div className="home-page-container">
-      <Link to="/LogoPage" className="card-link" onClick={() => console.log('Navigating to LogoPage')}>
+      <Link to="/Instruction" className="card-link" onClick={() => console.log('Navigating to Instruction')}>
         <div className="card">
-          <img src="/images/p6.jpeg" alt="Page 1" className="card-image" />
+          <img src="/images/p6.jpeg" alt="Instruction" className="card-image" />
           <div className="card-caption">הוראות</div>
         </div>
       </Link>
@@ -27,9 +27,9 @@ const HomePageForFriends = () => {
         <img src="/images/p4.jpeg" alt="Page 2" className="card-image" />
         <div className="card-caption">התחל משחק</div>
       </div>
-      <Link to="/page3" className="card-link" onClick={() => console.log('Navigating to page3')}>
+      <Link to="/" className="card-link" onClick={() => console.log('Navigating to home Page')}>
         <div className="card">
-          <img src="/images/p5.jpeg" alt="Page 3" className="card-image" />
+          <img src="/images/p5.jpeg" alt="homePage" className="card-image" />
           <div className="card-caption">חזור לבית</div>
         </div>
       </Link>
