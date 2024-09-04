@@ -13,35 +13,41 @@ const BASE_URL = 'http://localhost:3001';
 
 const images = [
   {
-    url: '/images/pick1.jpeg',
+    url: '/images/p24.webp',
     title: 'Friends',
     link: '/HomePageForFriends',
   },
   {
-    url: '/images/pick3.jpeg',
+    url: '/images/p25.webp',
     title: 'Date',
     link: '/HomePageForDates',
   },
 ];
 
-const TriangleButton = styled(ButtonBase)(({ theme, triangle }) => ({
+const TriangleButton = styled(ButtonBase)(({ triangle }) => ({
   position: 'absolute',
   width: '100%',
   height: '100%',
   clipPath: triangle,
   overflow: 'hidden',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 }));
 
-const ImageSrc = styled('span')({
+const ImageSrc = styled('span')(({ position }) => ({
   position: 'absolute',
   left: 0,
   right: 0,
   top: 0,
   bottom: 0,
   backgroundSize: 'cover',
-  backgroundPosition: 'center',
   backgroundRepeat: 'no-repeat',
-});
+  backgroundPosition: 'center',
+  transform: position === 'upper'
+    ? 'translate(-30%, -30%)'  // Move image slightly left and up for upper triangle
+    : 'translate(30%, 30%)',   // Move image slightly right and down for lower triangle
+}));
 
 export default function TrianglePage() {
   const dispatch = useDispatch();
@@ -69,8 +75,8 @@ export default function TrianglePage() {
         gameType: 'Friends',
         waiterApprove: false,
         bar: '66cf321675e291f22adfed02',
-        tableName: 'Table 7',
-        tableNumber: 7,
+        tableName: 'Table default',
+        tableNumber: 666,
         package: '66cc4d2be575206e74e1a22a',
         playersNames: ['87.70.43.130'],
         _id: '66d2e87b133fc3dba6b7ee10',
@@ -97,7 +103,6 @@ export default function TrianglePage() {
     let barName = currentBar;
 
     try {
-      var s="";
       var response = await fetch(`${BASE_URL}/api/bar/${barName}`);
       if (!response.ok) {
         response = await fetch(`${BASE_URL}/api/bar/id/${barName}`);
@@ -154,7 +159,7 @@ export default function TrianglePage() {
           className={`triangle-button ${index === 1 ? 'bottom-triangle' : ''}`} // Apply bottom-triangle class for the second triangle
         >
           <span className="image-backdrop" />
-          <ImageSrc />
+          <ImageSrc position={index === 0 ? 'upper' : 'lower'} />
           <span className={`caption ${index === 0 ? 'caption-top' : 'caption-bottom'}`}>
             {image.title}
             <span className="image-marked" />
