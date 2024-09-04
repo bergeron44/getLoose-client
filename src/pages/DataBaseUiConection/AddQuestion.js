@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Box, TextField, Button, Typography, MenuItem } from '@mui/material';
 import { addQuestion } from '../../store/actions/questionsActions';
 import './AddQuestion.css'; // Import the CSS file
 
@@ -13,6 +12,7 @@ const AddQuestion = () => {
         question: '',
         questionEnglish:'',
         punishment: '',
+        punishmentEnglish:'',
     });
     const [error, setError] = useState('');
 
@@ -27,8 +27,8 @@ const AddQuestion = () => {
         e.preventDefault();
 
         // Validate all fields are filled
-        const { category, game, difficult, question,questionEnglish, punishment } = questionData;
-        if (!category || !game || !difficult || !question || !questionEnglish|| !punishment) {
+        const { category, game, difficult, question, questionEnglish, punishment, punishmentEnglish } = questionData;
+        if (!category || !game || !difficult || !question || !questionEnglish || !punishment || !punishmentEnglish) {
             setError('Please fill out all fields');
             return;
         }
@@ -47,107 +47,114 @@ const AddQuestion = () => {
             question: '',
             questionEnglish:'',
             punishment: '',
+            punishmentEnglish:'',
         });
     };
 
     return (
-        <Box className="add-question-container">
-            <Typography className="add-question-title" variant="h4" gutterBottom>
-                Add New Question
-            </Typography>
-            {error && <Typography className="add-question-error">{error}</Typography>}
+        <div className="add-question-container">
+            <h1 className="add-question-title">Add New Question</h1>
+            {error && <p className="add-question-error">{error}</p>}
             <form onSubmit={handleSubmit} className="add-question-form">
-                <TextField
-                    label="Category"
+            <button type="submit" className="add-question-button">
+                    Add Question
+                </button>
+                <label htmlFor="category">Category</label>
+                <select
+                    id="category"
                     name="category"
                     value={questionData.category}
                     onChange={handleChange}
-                    fullWidth
-                    select
-                    margin="normal"
-                    variant="outlined"
                     required
-                    className="add-question-field"
+                    className="add-question-field-category"
                 >
-                    <MenuItem value="Never-Have-I-Ever ">Never-Have-I-Ever </MenuItem>
-                    <MenuItem value="Tell-Me-A-Secret">Tell-Me-A-Secret</MenuItem>
-                    <MenuItem value="Truth">Truth</MenuItem>
-                    <MenuItem value="Dare">Dare</MenuItem>
-                    <MenuItem value="Csompetitive">Competitive</MenuItem>
-                    <MenuItem value="Pervert">Pervert</MenuItem>
-
+                    <option value="">Select a category</option>
+                    <option value="Never-Have-I-Ever">Never-Have-I-Ever</option>
+                    <option value="Tell-Me-A-Secret">Tell-Me-A-Secret</option>
+                    <option value="Truth">Truth</option>
+                    <option value="Dare">Dare</option>
+                    <option value="Competitive">Competitive</option>
+                    <option value="Pervert">Pervert</option>
                     {/* Add more categories as needed */}
-                </TextField>
-                <TextField
-                    label="Game"
+                </select>
+                
+                <label htmlFor="game">Game</label>
+                <select
+                    id="game"
                     name="game"
                     value={questionData.game}
                     onChange={handleChange}
-                    fullWidth
-                    select
-                    margin="normal"
-                    variant="outlined"
                     required
-                    className="add-question-field"
+                    className="add-question-field-game"
                 >
-                    <MenuItem value="Date">Date</MenuItem>
-                    <MenuItem value="Friends">Friends</MenuItem>
+                    <option value="">Select a game</option>
+                    <option value="Date">Date</option>
+                    <option value="Friends">Friends</option>
                     {/* Add more game types as needed */}
-                </TextField>
-                <TextField
-                    label="Difficulty"
+                </select>
+                
+                <label htmlFor="difficult">Difficulty</label>
+                <select
+                    id="difficult"
                     name="difficult"
                     value={questionData.difficult}
                     onChange={handleChange}
-                    fullWidth
-                    select
-                    margin="normal"
-                    variant="outlined"
                     required
-                    className="add-question-field"
+                    className="add-question-field-difficult"
                 >
-                    <MenuItem value="Easy">Easy</MenuItem>
-                    <MenuItem value="Medium">Medium</MenuItem>
-                    <MenuItem value="Hard">Hard</MenuItem>
-                </TextField>
-                <TextField
-                    label="Question"
+                    <option value="">Select difficulty</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Hard">Hard</option>
+                </select>
+                
+                <label htmlFor="question">Question</label>
+                <input
+                    id="question"
                     name="question"
+                    type="text"
                     value={questionData.question}
                     onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
                     required
-                    className="add-question-field"
+                    className="add-question-field-question"
                 />
-                 <TextField
-                    label="QuestionEnglish"
+                
+                <label htmlFor="questionEnglish">Question (English)</label>
+                <input
+                    id="questionEnglish"
                     name="questionEnglish"
+                    type="text"
                     value={questionData.questionEnglish}
                     onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
                     required
-                    className="add-question-field"
+                    className="add-question-field-questionEnglish"
                 />
-                <TextField
-                    label="Punishment"
+                
+                <label htmlFor="punishment">Punishment</label>
+                <input
+                    id="punishment"
                     name="punishment"
+                    type="text"
                     value={questionData.punishment}
                     onChange={handleChange}
-                    fullWidth
-                    margin="normal"
-                    variant="outlined"
                     required
-                    className="add-question-field"
+                    className="add-question-field-punishment"
                 />
-                <Button type="submit" variant="contained" color="primary" className="add-question-button">
-                    Add Question
-                </Button>
+                
+                <label htmlFor="punishmentEnglish">Punishment (English)</label>
+                <input
+                    id="punishmentEnglish"
+                    name="punishmentEnglish"
+                    type="text"
+                    value={questionData.punishmentEnglish}
+                    onChange={handleChange}
+                    required
+                    className="add-question-field-punishmentEnglish"
+                />
+                
+                
             </form>
-        </Box>
+        </div>
     );
 };
 

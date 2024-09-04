@@ -25,7 +25,25 @@
     flex-direction: column;
 }
 
-.add-question-field {
+.add-question-field-category {
+    margin-bottom: 16px;
+}
+.add-question-field-game {
+    margin-bottom: 16px;
+}
+.add-question-field-difficult {
+    margin-bottom: 16px;
+}
+.add-question-field-question {
+    margin-bottom: 16px;
+}
+.add-question-field-questionEnglish {
+    margin-bottom: 16px;
+}
+.add-question-field-punishment {
+    margin-bottom: 16px;
+}
+.add-question-field-punishmentEnglish {
     margin-bottom: 16px;
 }
 

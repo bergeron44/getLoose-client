@@ -136,7 +136,7 @@ export const fetchDateQuestions = () => async (dispatch) => {
 };
 export const fetchFriendsQuestions = () => async (dispatch) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/questions/game/Frindes`);
+        const response = await axios.get(`${BASE_URL}/api/questions/game/Friends`);
         console.log(response.data)
         dispatch({
             type: FETCH_FRIENDS_QUESTIONS_SUCCESS,
