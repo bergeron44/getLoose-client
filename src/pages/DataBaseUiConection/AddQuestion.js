@@ -11,6 +11,7 @@ const AddQuestion = () => {
         game: '',
         difficult: '',
         question: '',
+        questionEnglish:'',
         punishment: '',
     });
     const [error, setError] = useState('');
@@ -26,8 +27,8 @@ const AddQuestion = () => {
         e.preventDefault();
 
         // Validate all fields are filled
-        const { category, game, difficult, question, punishment } = questionData;
-        if (!category || !game || !difficult || !question || !punishment) {
+        const { category, game, difficult, question,questionEnglish, punishment } = questionData;
+        if (!category || !game || !difficult || !question || !questionEnglish|| !punishment) {
             setError('Please fill out all fields');
             return;
         }
@@ -44,6 +45,7 @@ const AddQuestion = () => {
             game: '',
             difficult: '',
             question: '',
+            questionEnglish:'',
             punishment: '',
         });
     };
@@ -112,6 +114,17 @@ const AddQuestion = () => {
                     label="Question"
                     name="question"
                     value={questionData.question}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                    variant="outlined"
+                    required
+                    className="add-question-field"
+                />
+                 <TextField
+                    label="QuestionEnglish"
+                    name="questionEnglish"
+                    value={questionData.questionEnglish}
                     onChange={handleChange}
                     fullWidth
                     margin="normal"

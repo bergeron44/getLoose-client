@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLiveGames, fetchLiveGamesFromSameBar, updateApprovalStatus, updateLiveGame } from '../store/actions/liveGameActions'; // Update with correct path to your actions
+import { fetchLiveGames, fetchLiveGamesFromSameBar, updateLiveGame } from '../store/actions/liveGameActions'; // Update with correct path to your actions
 import { fetchBars } from '../store/actions/barsActions';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
@@ -8,14 +8,12 @@ import axios from 'axios';
 const BarTable = () => {
     const dispatch = useDispatch();
     const [selectedBarId, setSelectedBarId] = useState('');
-    const [bars, setBars] = useState([]);
 
     // Redux state
     const liveGames = useSelector(state => state.liveGames.liveGames);
     const loading = useSelector(state => state.liveGames.loading);
     const error = useSelector(state => state.liveGames.error);
     const barsData = useSelector(state => state.bars.bars); // Assuming bars are stored in Redux store
-    var response ;
     useEffect(() => {
         // Fetch all bars on component mount
         dispatch(fetchBars());
