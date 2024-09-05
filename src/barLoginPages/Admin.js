@@ -32,14 +32,14 @@ const Admin = () => {
 
                 // Check if the bar exists
                 try {
-                    barResponse = await axios.get('http://localhost:3001/api/bar/Admin');
+                    barResponse = await axios.get('https://getloose-server.onrender.com/api/bar/Admin');
                     console.log('Bar already exists:', barResponse.data);
                 } catch (error) {
                     if (error.response && error.response.status === 404) {
                         console.log('Bar does not exist. Creating a new bar...');
 
                         // Fetch all packages
-                        const packagesResponse = await axios.get('http://localhost:3001/api/packages');
+                        const packagesResponse = await axios.get('https://getloose-server.onrender.com/api/packages');
                         const allPackages = packagesResponse.data;
                         const packageIds = allPackages.map(pkg => pkg._id);
 
@@ -60,7 +60,7 @@ const Admin = () => {
                         console.log('Creating bar with payload:', newBar);
 
                         // Create the new bar
-                        barResponse = await axios.post('http://localhost:3001/api/bar/create', newBar);
+                        barResponse = await axios.post('https://getloose-server.onrender.com/api/bar/create', newBar);
                         console.log('New bar created:', barResponse.data);
 
                         setBarCreated(true); // Set the flag to prevent re-creation

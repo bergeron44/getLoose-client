@@ -9,7 +9,7 @@ import { setBar, setGameType, setPlayersNames } from '../store/actions/liveGameA
 import { setCurrentBar } from '../store/actions/barsActions';
 import './FirstPageDateOrFrinde.css'; // Import the CSS file
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'http://https://getloose-server.onrender.com';
 
 const images = [
   {

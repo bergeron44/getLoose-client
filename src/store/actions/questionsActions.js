@@ -12,7 +12,7 @@ import {
 } from '../actionTypes';
 
 // Define the base URL
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'https://getloose-server.onrender.com';
 
 // Fetch all questions
 export const fetchQuestions = () => async (dispatch) => {

@@ -26,7 +26,7 @@ const TheRustyAnchor = () => {
         const fetchBarInfoAndSetupGame = async () => {
             try {
                 console.log('Fetching bar information for The Rusty Anchor...');
-                const response = await axios.get('http://localhost:3001/api/bar/The%20Rusty%20Anchor');
+                const response = await axios.get('https://getloose-server.onrender.com/api/bar/The%20Rusty%20Anchor');
                 const barInfo = response.data;
                 console.log('Bar information fetched:', barInfo);
 

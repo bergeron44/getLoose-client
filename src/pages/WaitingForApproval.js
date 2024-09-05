@@ -8,7 +8,7 @@ import AnimatedLogo from '../components/AnimatedLogo';
 const WaitingForApproval = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const BASE_URL = 'http://localhost:3001';
+    const BASE_URL = 'https://getloose-server.onrender.com';
 
     // Pull values from the Redux store
     const currentGameId = useSelector(state => state.liveGames.currentGameId);

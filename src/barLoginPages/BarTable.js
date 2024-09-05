@@ -6,7 +6,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Butto
 import axios from 'axios';
 import './BarTable.css'; // Import the CSS file
 
-const BASE_URL = 'http://localhost:3001';
+const BASE_URL = 'https://getloose-server.onrender.com';
 
 const BarTable = () => {
     const dispatch = useDispatch();

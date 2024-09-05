@@ -26,7 +26,7 @@ const ChooseDate = () => {
             try {
                 const fetchedPackages = await Promise.all(
                     barPackageIds.map(async (pkgId) => {
-                        const response = await axios.get(`http://localhost:3001/api/package/${pkgId}`);
+                        const response = await axios.get(`https://getloose-server.onrender.com/api/package/${pkgId}`);
                         var DataToReturn={
                             _id:pkgId,
                             ...response.data,
