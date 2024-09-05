@@ -12,10 +12,10 @@ const HomePageForDates = () => {
   const handleChooseDateClick = () => {
     console.log('Choose Date button clicked');
     if (currentGameType === 'Date') {
-      alert('Starting a new Date game!');
+      console.log('Starting a new Date game!');
     } else {
       dispatch(setGameType('Date'));
-      alert('Current game type is not Date. Switching to Date.');
+      console.log('Current game type is not Date. Switching to Date.');
     }
     navigate('/ChooseDate');
   };

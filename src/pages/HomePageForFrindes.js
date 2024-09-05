@@ -10,7 +10,7 @@ const HomePageForFriends = () => {
 
   const handleChooseFriendsClick = () => {
     console.log('Choose Friends button clicked');
-    alert('Starting a new Friends game!');
+    console.log('Starting a new Friends game!');
     dispatch(setGameType("Friends"));
     navigate('/ChooseFrindes');
   };

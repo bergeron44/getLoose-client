@@ -14,6 +14,7 @@ import Instruction from './pages/Instruction';
 import './App.css';
 //bar pages implement
 import BarTable from './barLoginPages/BarTable';
+import NotInBar from './barLoginPages/NotInBar';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
 import Admin from './barLoginPages/Admin';
 //end bar pages 
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<FirstPageDateOrFrinde />} />
             <Route path="/BarTable" element={<BarTable />} />
+            <Route path="/NotInBar" element={<NotInBar />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
             <Route path="/Admin" element={<Admin />} />
 

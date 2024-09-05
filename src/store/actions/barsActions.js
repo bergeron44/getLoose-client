@@ -104,7 +104,7 @@ export const deleteBar = (id) => async (dispatch) => {
 export const fetchBarPackages = (barId) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        alert(barId);
+        console.log(barId);
         const response = await fetch(`${BASE_URL}/api/bars/${barId}/packages`);
         if (!response.ok) throw new Error('Failed to fetch bar packages');
         const data = await response.json();

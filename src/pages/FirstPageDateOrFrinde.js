@@ -9,8 +9,7 @@ import { setBar, setGameType, setPlayersNames } from '../store/actions/liveGameA
 import { setCurrentBar } from '../store/actions/barsActions';
 import './FirstPageDateOrFrinde.css'; // Import the CSS file
 
-const BASE_URL = 'http://https://getloose-server.onrender.com';
-
+const BASE_URL = 'https://getloose-server.onrender.com';
 const images = [
   {
     url: '/images/p24.webp',
@@ -45,8 +44,8 @@ const ImageSrc = styled('span')(({ position }) => ({
   backgroundRepeat: 'no-repeat',
   backgroundPosition: 'center',
   transform: position === 'upper'
-    ? 'translate(-30%, -30%)'  // Move image slightly left and up for upper triangle
-    : 'translate(30%, 30%)',   // Move image slightly right and down for lower triangle
+    ? 'translate(-30%, -30%)'
+    : 'translate(30%, 30%)',
 }));
 
 export default function TrianglePage() {
@@ -59,85 +58,60 @@ export default function TrianglePage() {
   const currentPlayer = useSelector((state) => state.liveGames.playersNames);
 
   useEffect(() => {
-    const checkAndUpdateStore = () => {
-      console.log('Current Bar:', currentBar);
-      console.log('Current Game:', currentPlayer);
-
-      if (currentBar !== "" && currentPlayer.length > 0) {
-        console.log('Data already available in the store, no need to update.');
-        setLoading(false);
+    const checkAndRedirect = () => {
+      if (!currentBar || currentPlayer.length === 0) {
+        console.log("im in");
+        // Redirect if currentBar or currentPlayer is missing
+        navigate('/NotInBar'); // Replace with the actual route for connection
         return;
       }
 
-      console.log('Data missing, updating the store with predefined data...');
-
-      const predefinedData = {
-        gameType: 'Friends',
-        waiterApprove: false,
-        bar: '66cf321675e291f22adfed02',
-        tableName: 'Table default',
-        tableNumber: 666,
-        package: '66cc4d2be575206e74e1a22a',
-        playersNames: ['87.70.43.130'],
-        _id: '66d2e87b133fc3dba6b7ee10',
-        __v: 0,
-      };
-
-      dispatch(setBar(predefinedData.bar));
-      dispatch(setCurrentBar({
-        barName: 'Predefined Bar',
-        _id: predefinedData.bar,
-      }));
-      dispatch(setPlayersNames(predefinedData.playersNames));
-
-      console.log('Store updated with predefined data:', predefinedData);
-      setLoading(false);
+      setLoading(false); // Data is valid, no need to load further
     };
 
-    checkAndUpdateStore();
-  }, [dispatch, currentBar, currentPlayer]);
+    checkAndRedirect();
+  }, [currentBar, currentPlayer, navigate]);
 
   const handleClick = async (link, title) => {
-    console.log('Navigating to:', link);
-    alert(currentBar);
-    let barName = currentBar;
+    if (!currentBar) {
+      alert('You are not connected to a specific bar.');
+      navigate('/NotInBar'); // Redirect to connection page if no bar is connected
+      return;
+    }
 
     try {
-      var response = await fetch(`${BASE_URL}/api/bar/${barName}`);
+      const response = await fetch(`${BASE_URL}/api/bar/${currentBar}`);
       if (!response.ok) {
-        response = await fetch(`${BASE_URL}/api/bar/id/${barName}`);
-        if (!response.ok)
-          {
-            throw new Error('Bar not found');
-          }    
+        response = await fetch(`${BASE_URL}/api/bar/id/${currentBar}`);
+        if (!response.ok) {
+          throw new Error('Bar not found');
+        }
       }
 
       const barData = await response.json();
-      const { _id, barName: name, location, capacity, barPackages, qrUrl } = barData;
+      const { _id, barName, location, capacity, barPackages, qrUrl } = barData;
 
       dispatch(setBar(_id));
       dispatch(setCurrentBar({
         _id,
-        barName: name,
+        barName,
         location,
         capacity,
         barPackages,
         qrUrl,
       }));
 
-      console.log('Store updated with bar data:', barData);
+      if (link === '/HomePageForFriends') {
+        dispatch(setGameType("Friends"));
+      } else {
+        dispatch(setGameType("Date"));
+      }
+
+      navigate(link);
     } catch (error) {
       console.error('Failed to fetch bar data:', error);
       setError(error.message);
     }
-
-    if (link === '/HomePageForFriends') {
-      dispatch(setGameType("Friends"));
-    } else {
-      dispatch(setGameType("Date"));
-    }
-
-    navigate(link);
   };
 
   if (loading) {
@@ -156,7 +130,7 @@ export default function TrianglePage() {
           triangle={index === 0 ? 'polygon(0 0, 100% 0, 0 100%)' : 'polygon(100% 0, 100% 100%, 0 100%)'}
           style={{ backgroundImage: `url(${image.url})` }}
           onClick={() => handleClick(image.link, image.title)}
-          className={`triangle-button ${index === 1 ? 'bottom-triangle' : ''}`} // Apply bottom-triangle class for the second triangle
+          className={`triangle-button ${index === 1 ? 'bottom-triangle' : ''}`}
         >
           <span className="image-backdrop" />
           <ImageSrc position={index === 0 ? 'upper' : 'lower'} />

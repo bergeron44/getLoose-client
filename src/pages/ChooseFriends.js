@@ -83,7 +83,7 @@ const ChooseDate = () => {
             dispatch(setPackage(selectedPackage));
             dispatch(createLiveGame(liveGame))
                 .then(response => {
-                    alert(response._id);
+                    console.log(response._id);
                     // Assuming response.data contains the live game object
                     const liveGameResponse = response || {};
                     const newGameId = liveGameResponse._id;
