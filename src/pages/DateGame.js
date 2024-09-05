@@ -106,14 +106,14 @@ const DateGame = () => {
                         </TinderCard>
                     )}
                     {!showPunishment && (
-                        <SwipeButtons>
-                            <IconButton color="error" onClick={() => swiped('left', dateQuestions[currentIndex].question)}>
-                                <ThumbDown fontSize="large" />
-                            </IconButton>
-                            <IconButton color="success" onClick={() => swiped('right', dateQuestions[currentIndex].question)}>
-                                <ThumbUp fontSize="large" />
-                            </IconButton>
-                        </SwipeButtons>
+                        <SwipeButtons className="swipe-buttons">
+                        <IconButton color="error" onClick={() => swiped('left', dateQuestions[currentIndex].question)}>
+                            <ThumbDown fontSize="large" />
+                        </IconButton>
+                        <IconButton color="success" onClick={() => swiped('right', dateQuestions[currentIndex].question)}>
+                            <ThumbUp fontSize="large" />
+                        </IconButton>
+                    </SwipeButtons>
                     )}
                 </Box>
             ) : (

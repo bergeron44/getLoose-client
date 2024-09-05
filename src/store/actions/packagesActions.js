@@ -48,6 +48,14 @@ export const createPackage = (newPackage) => async (dispatch) => {
         // Optionally dispatch an error action here
     }
 };
+export const setPackage = (newPackage) => async (dispatch) => {
+    try {
+        dispatch({ type: SET_CURRENT_PACKAGE, payload: newPackage }); // Set the newly created package as current
+    } catch (error) {
+        console.error('Failed to set package:', error);
+        // Optionally dispatch an error action here
+    }
+};
 
 // Update an existing package
 export const updatePackage = (id, updatedPackage) => async (dispatch) => {

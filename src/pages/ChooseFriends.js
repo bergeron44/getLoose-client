@@ -5,6 +5,7 @@ import { TextField, Button, Box, Typography, Card, CardContent, Alert, Checkbox,
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ChooseFriends.css'; // Import the CSS file
+import { setPackage } from '../store/actions/packagesActions';
 
 const ChooseDate = () => {
     const dispatch = useDispatch();
@@ -79,7 +80,7 @@ const ChooseDate = () => {
             };
 
             console.log('Creating Live Game with:', liveGame);
-
+            dispatch(setPackage(selectedPackage));
             dispatch(createLiveGame(liveGame))
                 .then(response => {
                     alert(response._id);
