@@ -23,6 +23,7 @@ import  AddQuestion  from './pages/DataBaseUiConection/AddQuestion';
 import  AddBar  from './pages/DataBaseUiConection/AddBar';
 import  AddPackage  from './pages/DataBaseUiConection/AddPackage';
 //end add to data base pages
+import DynamicPage from './barLoginPages/DynamicPage'; 
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
         
         <div className="page-content">
           <Routes>
-            <Route path="/" element={<FirstPageDateOrFrinde />} />
+            <Route path="/" element={<DynamicPage />} />
+            <Route path="/FirstPageDateOrFrinde" element={<FirstPageDateOrFrinde />} />
             <Route path="/BarTable" element={<BarTable />} />
             <Route path="/NotInBar" element={<NotInBar />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
