@@ -33,6 +33,7 @@ function App() {
         <div className="page-content">
           <Routes>
             <Route path="/" element={<FirstPageDateOrFrinde />} />
+            <Route path="/:path" element={<DynamicPage />} /> 
             <Route path="/FirstPageDateOrFrinde" element={<FirstPageDateOrFrinde />} />
             <Route path="/BarTable" element={<BarTable />} />
             <Route path="/NotInBar" element={<NotInBar />} />
