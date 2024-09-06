@@ -1,7 +1,5 @@
 services:
   - type: web
     name: getLoose
-    env: static
-    static:
-      directory: ./build
-      cleanUrls: true
+    buildCommand: npm run build
+    staticPublishPath: /build
