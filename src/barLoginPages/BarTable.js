@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchLiveGames, fetchLiveGamesFromSameBar, updateLiveGame } from '../store/actions/liveGameActions';
+import { fetchLiveGames, fetchLiveGamesFromSameBar, updateLiveGame, deleteLiveGames } from '../store/actions/liveGameActions';
 import { fetchBars } from '../store/actions/barsActions';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
@@ -70,6 +70,11 @@ const BarTable = () => {
         });
     }, [liveGames]);
 
+    // Handle delete all live games
+    const handleDeleteAllGames = () => {
+        dispatch(deleteLiveGames());
+    };
+
     return (
         <div className="bar-table-container">
             {loading && <CircularProgress />}
@@ -129,6 +134,14 @@ const BarTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleDeleteAllGames}
+                style={{ margin: '20px 0' }}
+            >
+                Delete All Live Games
+            </Button>
         </div>
     );
 };

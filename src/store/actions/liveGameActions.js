@@ -13,7 +13,10 @@ import {
     SET_CURRENT_GAME_ID,
     UPDATE_APPROVAL_SUCCESS,
     UPDATE_APPROVAL_FAILURE,
-    UPDATE_LIVEGAME_FAILURE
+    UPDATE_LIVEGAME_FAILURE,
+    DELETE_LIVE_GAMES,
+    DELETE_LIVE_GAMES_SUCCESS,
+    DELETE_LIVE_GAMES_FAILURE
 } from '../actionTypes';
 
 // Define the base URL
@@ -178,5 +181,41 @@ export const updateApprovalStatus = (gameId, approved) => async (dispatch) => {
         dispatch({ type: UPDATE_APPROVAL_SUCCESS, payload: { gameId, approved } });
     } catch (error) {
         dispatch({ type: UPDATE_APPROVAL_FAILURE, payload: error.message });
+    }
+};
+
+export const deleteLiveGames = () => async (dispatch, getState) => {
+    // Dispatch action to indicate that deletion has started
+    dispatch({ type: DELETE_LIVE_GAMES });
+
+    try {
+        // Get the current live games from the store
+        const state = getState();
+        const liveGames = state.liveGames.liveGames;
+
+        // Extract the _id values
+        const gameIds = liveGames.map(game => game._id);
+        console.log(gameIds);
+        // Perform the deletion request
+        const response = await fetch(`${BASE_URL}/api/livegame`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "liveGameListNames":gameIds }), // Send the list of game IDs to be deleted
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to delete live games');
+        }
+
+        const data = await response.json();
+        dispatch({ type: DELETE_LIVE_GAMES_SUCCESS, payload: data });
+
+        // Optionally, fetch the updated list of live games if needed
+        dispatch(fetchLiveGames()); 
+
+    } catch (error) {
+        dispatch({ type: DELETE_LIVE_GAMES_FAILURE, payload: error.message });
     }
 };

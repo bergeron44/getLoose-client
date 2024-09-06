@@ -13,7 +13,11 @@ import {
     SET_CURRENT_GAME_ID,
     UPDATE_APPROVAL_SUCCESS,
     UPDATE_APPROVAL_FAILURE,
-    UPDATE_LIVEGAME_FAILURE
+    UPDATE_LIVEGAME_FAILURE,
+    DELETE_LIVE_GAMES_SUCCESS,
+    DELETE_LIVE_GAMES_FAILURE,
+    DELETE_LIVE_GAMES,
+    
 } from '../actionTypes';
 
 // Initialize the state
@@ -112,6 +116,25 @@ const liveGameReducer = (state = initialState, action) => {
                 ...state,
                 error: action.payload,
             };
+            case DELETE_LIVE_GAMES:
+                return {
+                    ...state,
+                    loading: true,
+                    error: null,
+                };
+            case DELETE_LIVE_GAMES_SUCCESS:
+                return {
+                    ...state,
+                    liveGames: [], // Clear all live games
+                    loading: false,
+                    error: null,
+                };
+            case DELETE_LIVE_GAMES_FAILURE:
+                return {
+                    ...state,
+                    loading: false,
+                    error: action.payload,
+                };
         default:
             return state;
     }
