@@ -16,7 +16,7 @@ const BarTable = () => {
     const liveGames = useSelector(state => state.liveGames.liveGames);
     const loading = useSelector(state => state.liveGames.loading);
     const error = useSelector(state => state.liveGames.error);
-    const barsData = useSelector(state => state.bars.bars); 
+    const barsData = useSelector(state => state.bars.bars);
 
     useEffect(() => {
         dispatch(fetchBars());
@@ -24,7 +24,7 @@ const BarTable = () => {
 
     useEffect(() => {
         if (selectedBarId) {
-            dispatch(fetchLiveGamesFromSameBar(selectedBarId));  
+            dispatch(fetchLiveGamesFromSameBar(selectedBarId));
             fetchBarInfoAndSetupGame(selectedBarId);
         }
     }, [dispatch, selectedBarId]);
@@ -37,7 +37,7 @@ const BarTable = () => {
         try {
             const response = await axios.get(`${BASE_URL}/api/bar/id/${barId}`);
             if(response.data.barName === "Admin") {
-                dispatch(fetchLiveGames()); 
+                dispatch(fetchLiveGames());
             }
         } catch (error) {
             console.error('Error fetching bar information:', error);
