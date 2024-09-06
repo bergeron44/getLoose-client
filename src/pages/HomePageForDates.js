@@ -34,7 +34,7 @@ const HomePageForDates = () => {
           <div className="card-caption">התחל משחק</div>
         </div>
       </div>
-      <Link to="/" className="card home-button" onClick={() => console.log('Navigating to home Page')}>
+      <Link to="/FirstPageDateOrFrinde" className="card home-button" onClick={() => console.log('Navigating to home Page')}>
         <div>
           <img src="/images/p3.jpeg" alt="homePage" />
           <div className="card-caption">חזור לבית</div>

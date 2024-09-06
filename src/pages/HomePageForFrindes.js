@@ -27,7 +27,7 @@ const HomePageForFriends = () => {
         <img src="/images/p4.jpeg" alt="Page 2" className="card-image" />
         <div className="card-caption">התחל משחק</div>
       </div>
-      <Link to="/" className="card-link" onClick={() => console.log('Navigating to home Page')}>
+      <Link to="/FirstPageDateOrFrinde" className="card-link" onClick={() => console.log('Navigating to home Page')}>
         <div className="card">
           <img src="/images/p5.jpeg" alt="homePage" className="card-image" />
           <div className="card-caption">חזור לבית</div>
