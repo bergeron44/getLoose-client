@@ -18,8 +18,9 @@ const BackToGame = () => {
   const liveGames = useSelector(state => state.liveGames);
 
   const getDeviceIp = async () => {
-    const response = await fetch('https://api64.ipify.org?format=json');
+    const response = await fetch('https://api.ipify.org/?format=json');
     const data = await response.json();
+    console.log(data);
     return data.ip;
   };
 
@@ -42,7 +43,15 @@ const BackToGame = () => {
       dispatch(setPlayersNames(matchingGame.playersNames));
 
       // Redirect to the game page with the game ID
-      navigate(`/game/${matchingGame.id}`);
+      if(matchingGame.gameType==='Date')
+        {
+          navigate(`/DateGame`);
+        }
+      else
+      {
+        navigate(`/FrindesGame`);
+      }
+   
       //פה צריך להתאים לאיפה נירצה להחזיר אותו בהתאם למשחק שלו
     } else {
       alert('You are not registered for any game.');
