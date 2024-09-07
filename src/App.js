@@ -18,6 +18,7 @@ import BarTable from './barLoginPages/BarTable';
 import NotInBar from './barLoginPages/NotInBar';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
 import Admin from './barLoginPages/Admin';
+import NavigatePage from './barLoginPages/NavigatePage';
 
 // Add to database pages
 import AddQuestion from './pages/DataBaseUiConection/AddQuestion';
@@ -32,7 +33,7 @@ function App() {
       <div className="App">
         <div className="page-content">
           <Routes>
-            <Route path="/" element={<Admin />} />
+            <Route path="/" element={<NavigatePage />} />
             <Route path="/FirstPageDateOrFrinde" element={<FirstPageDateOrFrinde />} />
             <Route path="/Admin" element={<Admin />} />
             <Route path="/BarTable" element={<BarTable />} />

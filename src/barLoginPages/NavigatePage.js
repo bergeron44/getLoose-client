@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const HomePage = () => {
+const NavigatePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -23,4 +23,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default NavigatePage;
