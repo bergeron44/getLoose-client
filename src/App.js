@@ -32,7 +32,7 @@ function App() {
       <div className="App">
         <div className="page-content">
           <Routes>
-            <Route path="/Admin" element={<Admin />} />
+            <Route path="/" element={<Admin />} />
             <Route path="/FirstPageDateOrFrinde" element={<FirstPageDateOrFrinde />} />
             <Route path="/Admin" element={<Admin />} />
             <Route path="/BarTable" element={<BarTable />} />
