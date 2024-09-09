@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActions';
-import { TextField, Button, Box, Typography, Card, CardContent, Alert, Checkbox, FormControlLabel } from '@mui/material';
+import { TextField, Button, Box, Typography, Card, CardContent, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './ChooseFriends.css'; // Import the CSS file
@@ -51,21 +51,13 @@ const ChooseDate = () => {
     };
 
     const handlePackageChange = (pkg) => {
-        console.log(pkg._id);
-        if(selectedPackage==null)
-            {
-                setSelectedPackage(pkg);
-            }
-       else if(pkg._id===selectedPackage._id)
-            {
-                setSelectedPackage(null);
-            }
-        else
-            {
-                setSelectedPackage(pkg);
-            }
-        // Set the selected package to the clicked package
-        
+        if(selectedPackage == null) {
+            setSelectedPackage(pkg);
+        } else if(pkg._id === selectedPackage._id) {
+            setSelectedPackage(null);
+        } else {
+            setSelectedPackage(pkg);
+        }
     };
 
     const handleCreateLiveGame = () => {
@@ -79,12 +71,9 @@ const ChooseDate = () => {
                 playersNames: playersNames,
             };
 
-            console.log('Creating Live Game with:', liveGame);
             dispatch(setPackage(selectedPackage));
             dispatch(createLiveGame(liveGame))
                 .then(response => {
-                    console.log(response._id);
-                    // Assuming response.data contains the live game object
                     const liveGameResponse = response || {};
                     const newGameId = liveGameResponse._id;
 
@@ -108,74 +97,82 @@ const ChooseDate = () => {
 
     return (
         <div className="choose-friends-container">
-        {error && <Alert severity="error">{error}</Alert>}
-        {successMessage && <Alert severity="success">{successMessage}</Alert>}
-        
-        {!currentBar?._id ? (
-            <Typography>No bar selected or data unavailable</Typography>
-        ) : (
-            <Box className="choose-friends-content">
-                <Box sx={{ marginBottom: 3 }}>
-                    <Typography variant="h4" gutterBottom>
-                        Enter Table Name
+            {error && <Alert severity="error">{error}</Alert>}
+            {successMessage && <Alert severity="success">{successMessage}</Alert>}
+            
+            {!currentBar?._id ? (
+                <Typography>No bar selected or data unavailable</Typography>
+            ) : (
+                <Box className="choose-friends-content">
+                    <Typography variant="h4" className="title">
+                        שם שולחן
                     </Typography>
+
                     <TextField
                         label="Table Name"
                         value={tableName || ''}  // Ensure value is always a string
                         onChange={handleNameChange}
                         variant="outlined"
-                        sx={{ marginBottom: 2 }}
+                        sx={{
+                            width: '100%', // Full width input
+                            fontWeight: 'bold', // Bold font
+                            marginBottom: 2,
+                        }}
                     />
-                </Box>
 
-                <Box className="choose-package-list">
-                    {fullPackages.length > 0 ? (
-                        <Box className="package-list">
-                            <Typography variant="h6" gutterBottom>
-                                Select a Package
-                            </Typography>
-                            {fullPackages.map(pkg => (
-                                <Card
-                                    key={pkg._id}
-                                    className={`package-card ${selectedPackage && selectedPackage._id === pkg._id ? 'selected' : ''}`}
-                                    onClick={() => handlePackageChange(pkg)}
-                                    sx={{
-                                        marginBottom: 2, // Space between cards
-                                        cursor: 'pointer', // Pointer cursor on hover
-                                        border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid #1976d2' : '1px solid #ccc', // Highlight selected card
-                                        transition: 'border 0.3s ease', // Smooth transition for border change
-                                        padding: 2 // Ensure padding within card
-                                    }}
-                                >
-                                    <CardContent className="package-card-content">
-                                        <Typography variant="h6" component="div" gutterBottom>
-                                            ${pkg.price}
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {pkg.packagesContant}
-                                        </Typography>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </Box>
-                    ) : (
-                        <Typography>No packages available for this bar</Typography>
-                    )}
-                </Box>
+                    <Box className="package-list">
+                        {fullPackages.length > 0 ? (
+                            <Box className="package-list">
+                                <Typography variant="h6" gutterBottom>
+                                    Select a Package
+                                </Typography>
+                                {fullPackages.map(pkg => (
+                                    <Card
+                                        key={pkg._id}
+                                        className={`package-card ${selectedPackage && selectedPackage._id === pkg._id ? 'selected' : ''}`}
+                                        onClick={() => handlePackageChange(pkg)}
+                                        sx={{
+                                            marginBottom: 2, // Space between cards
+                                            cursor: 'pointer', // Pointer cursor on hover
+                                            border: selectedPackage && selectedPackage._id === pkg._id ? '2px solid #1976d2' : '1px solid #ccc', // Highlight selected card
+                                            transition: 'border 0.3s ease', // Smooth transition for border change
+                                            padding: 2 // Ensure padding within card
+                                        }}
+                                    >
+                                        <CardContent className="package-card-content">
+                                            <Typography variant="h6" component="div" gutterBottom>
+                                                ${pkg.price}
+                                            </Typography>
+                                            <Typography variant="body2" color="text.secondary">
+                                                {pkg.packagesContant}
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </Box>
+                        ) : (
+                            <Typography>No packages available for this bar</Typography>
+                        )}
+                    </Box>
 
-                <Box className="create-game-button" sx={{ marginTop: 3 }}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleCreateLiveGame}
-                        disabled={!selectedPackage || !tableName}
-                    >
-                        Create Live Game
-                    </Button>
+                    <Box className="create-game-button">
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleCreateLiveGame}
+                            disabled={!tableName || !selectedPackage}
+                            sx={{
+                                width: '100%', // Full width button
+                                padding: '12px 24px', // Increase button padding
+                                fontWeight: 'bold', // Bold text
+                            }}
+                        >
+                            Create Game
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
-        )}
-    </div>
+            )}
+        </div>
     );
 };
 

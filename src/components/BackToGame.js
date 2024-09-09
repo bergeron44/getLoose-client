@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchLiveGames } from '../store/actions/liveGameActions';
@@ -15,7 +15,18 @@ import {
 const BackToGame = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const liveGames = useSelector(state => state.liveGames);
+  const AllliveGames = useSelector(state => state.liveGames.liveGames);
+  const [Fill, setFillLiveGame] = useState(false);
+
+  useEffect(() => {
+    if(!Fill)
+      {
+        dispatch(fetchLiveGames());
+        setFillLiveGame(true);
+      }
+    
+    
+  },[AllliveGames]);
 
   const getDeviceIp = async () => {
     const response = await fetch('https://api.ipify.org/?format=json');
@@ -25,12 +36,14 @@ const BackToGame = () => {
   };
 
   const handleBackToGame = async () => {
-    dispatch(fetchLiveGames());
+    
     const deviceIp = await getDeviceIp();
-
-    const matchingGame = liveGames.find(game =>
+    console.log(deviceIp);
+    console.log(AllliveGames);
+    const matchingGame = AllliveGames.find(game =>
       game.playersNames.includes(deviceIp)
     );
+    console.log(matchingGame);
 
     if (matchingGame) {
       // Update all the relevant properties in the store
@@ -55,6 +68,7 @@ const BackToGame = () => {
       //פה צריך להתאים לאיפה נירצה להחזיר אותו בהתאם למשחק שלו
     } else {
       alert('You are not registered for any game.');
+      navigate(`/FirstPageDateOrFrinde`);
     }
   };
 

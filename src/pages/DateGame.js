@@ -4,14 +4,24 @@ import { fetchDateQuestions } from '../store/actions/questionsActions';
 import TinderCard from 'react-tinder-card';
 import { Box, Typography, Button, LinearProgress, IconButton } from '@mui/material';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
-import { styled } from '@mui/system'; // Import styled here
+import { styled } from '@mui/system';
 import './DateGame.css';
+
+// Shuffle function for mixing questions
+const shuffleArray = (array) => {
+    let shuffledArray = array.slice();
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+    }
+    return shuffledArray;
+};
 
 // Styled component for the card with pink, black, and red stripes
 const StyledCard = styled(Box)(({ theme }) => ({
-    width: '100%', // Cover the entire screen
-    height: 'calc(100vh - 100px)', // Leave space for the logo
-    background: 'linear-gradient(45deg, pink, black, red)', // Striped background
+    width: '100%',
+    height: 'calc(100vh - 120px)', // Adjust height to fit header and buttons
+    background: 'linear-gradient(45deg, pink, black, red)',
     padding: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     borderRadius: '10px',
@@ -20,47 +30,61 @@ const StyledCard = styled(Box)(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    transition: 'transform 0.6s ease-in-out',
+    transition: 'transform 0.4s ease-in-out', // Faster swipe movement
     textAlign: 'center',
-    color: '#fff', // White text color for better contrast
+    color: '#fff',
 }));
 
 const SwipeButtons = styled(Box)(({ theme }) => ({
     display: 'flex',
-    justifyContent: 'space-around',
+    flexDirection: 'column', // Arrange emojis and buttons vertically
+    alignItems: 'center',
     marginTop: '20px',
-    width: '300px',
+    width: '80%',
+    maxWidth: '300px',
+    position: 'absolute',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
 }));
 
 const DateGame = () => {
     const dispatch = useDispatch();
     const dateQuestions = useSelector(state => state.questions.dateQuestions);
+    const [shuffledQuestions, setShuffledQuestions] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [swipeHistory, setSwipeHistory] = useState([]);
     const [showPunishment, setShowPunishment] = useState(false);
 
     useEffect(() => {
         dispatch(fetchDateQuestions());
     }, [dispatch]);
 
+    // Shuffle questions only when they are initially fetched
+    useEffect(() => {
+        if (dateQuestions.length) {
+            const shuffledQuestions = shuffleArray(dateQuestions);
+            setShuffledQuestions(shuffledQuestions);
+        }
+    }, [dateQuestions]);
+
     const swiped = (direction, question) => {
         if (direction === 'left') {
             setShowPunishment(true);
         } else {
-            setSwipeHistory([...swipeHistory, { question, direction }]);
+            setShuffledQuestions(prevQuestions => prevQuestions.filter(q => q !== question));
             setCurrentIndex(prevIndex => prevIndex + 1);
         }
     };
 
     const handlePunishmentDone = () => {
         setShowPunishment(false);
-        setSwipeHistory([...swipeHistory, { question: dateQuestions[currentIndex].question, direction: 'left' }]);
         setCurrentIndex(prevIndex => prevIndex + 1);
     };
 
     const handleRetry = () => {
+        dispatch(fetchDateQuestions()); // Re-fetch questions to reshuffle
         setCurrentIndex(0);
-        setSwipeHistory([]);
+        setShuffledQuestions([]);
         setShowPunishment(false);
     };
 
@@ -71,7 +95,7 @@ const DateGame = () => {
             <Box className="progress-container">
                 <LinearProgress variant="determinate" value={progress} />
             </Box>
-            {dateQuestions.length > 0 && currentIndex < dateQuestions.length ? (
+            {shuffledQuestions.length > 0 && currentIndex < shuffledQuestions.length ? (
                 <Box className="card-container">
                     {showPunishment ? (
                         <StyledCard>
@@ -80,7 +104,7 @@ const DateGame = () => {
                             </Typography>
                             <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Typography variant="h4" sx={{ fontWeight: 'bold', fontFamily: 'Arial', color: '#fff' }}>
-                                    {dateQuestions[currentIndex].punishment}
+                                    {shuffledQuestions[currentIndex].punishment}
                                 </Typography>
                             </Box>
                             <Button className="button" variant="contained" onClick={handlePunishmentDone}>
@@ -89,37 +113,41 @@ const DateGame = () => {
                         </StyledCard>
                     ) : (
                         <TinderCard
-                            key={dateQuestions[currentIndex].question}
-                            onSwipe={(dir) => swiped(dir, dateQuestions[currentIndex].question)}
+                            key={shuffledQuestions[currentIndex].question}
+                            onSwipe={(dir) => swiped(dir, shuffledQuestions[currentIndex].question)}
                             preventSwipe={['up', 'down']}
                             className="swipe"
                         >
                             <StyledCard>
                                 <Typography className="typography-category">
-                                    {dateQuestions[currentIndex].category}
+                                    {shuffledQuestions[currentIndex].category}
                                 </Typography>
                                 <br />
                                 <Typography className="typography-question">
-                                    {dateQuestions[currentIndex].question}
+                                    {shuffledQuestions[currentIndex].question}
                                 </Typography>
                             </StyledCard>
                         </TinderCard>
                     )}
                     {!showPunishment && (
                         <SwipeButtons className="swipe-buttons">
-                        <IconButton color="error" onClick={() => swiped('left', dateQuestions[currentIndex].question)}>
-                            <ThumbDown fontSize="large" />
-                        </IconButton>
-                        <IconButton color="success" onClick={() => swiped('right', dateQuestions[currentIndex].question)}>
-                            <ThumbUp fontSize="large" />
-                        </IconButton>
-                    </SwipeButtons>
+                            <Typography sx={{ marginBottom: '10px' }}>👈 👉 </Typography>
+                            <Box>
+                                <IconButton color="error" onClick={() => swiped('left', shuffledQuestions[currentIndex].question)}>
+                                    <ThumbDown fontSize="large" />
+                                </IconButton>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <IconButton color="success" onClick={() => swiped('right', shuffledQuestions[currentIndex].question)}>
+                                    <ThumbUp fontSize="large" />
+                                </IconButton>
+                            </Box>
+                        </SwipeButtons>
                     )}
                 </Box>
             ) : (
                 <Box className="no-questions-container">
-                    <Typography variant="h4" gutterBottom>
-                        No more questions!
+                    <Typography variant="h4">
+                        נגמרו השאלות גם ככה אתם בטח שיכורים
                     </Typography>
                     <Button className="button" variant="contained" onClick={handleRetry}>
                         Retry

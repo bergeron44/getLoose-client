@@ -12,6 +12,8 @@ import DateGame from './pages/DateGame';
 import FrindesGame from './pages/FrindesGame';
 import Instruction from './pages/Instruction';
 import './App.css';
+//try games
+import GuessWhatIAm from './pages/Games/GuessWhatIAm';
 
 // Bar pages
 import BarTable from './barLoginPages/BarTable';
@@ -52,7 +54,7 @@ function App() {
             <Route path="/AddBar" element={<AddBar />} />
             <Route path="/AddPackage" element={<AddPackage />} />
             <Route path="/Instruction" element={<Instruction />} />
-            
+            <Route path="/GuessWhatIAm" element={<GuessWhatIAm />} />
             {/* Catch-all route for dynamic paths */}
             <Route path="*" element={<DynamicPage />} />
           </Routes>

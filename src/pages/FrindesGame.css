@@ -18,18 +18,29 @@ html, body {
 
 /* Styled card for Tinder effect */
 .swipe {
-    position: absolute;
+    position: relative;
     width: 100%;
     height: calc(100vh - 100px); /* Adjust height to fit the screen */
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: transform 0.3s ease-in-out; /* Faster swipe movement */
 }
 
 /* Styled card content */
 .swipe .card {
-    width: 100%;
-    height: 100%;
+    width: 90%; /* Slightly wider card */
+    height: 90%; /* Ensure the card covers most of the screen */
+    background: linear-gradient(45deg, pink, black, red); /* Background with stripes */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* White text color for better contrast */
+    text-align: center;
 }
 
 /* Progress bar styling */
@@ -38,8 +49,23 @@ html, body {
 }
 
 /* Swipe buttons styling */
-.MuiIconButton-root {
-    border-radius: 50%;
+.swipe-buttons {
+    display: flex;
+    justify-content: space-between; /* Make sure buttons are spaced apart */
+    position: absolute;
+    bottom: 20px; /* Position buttons near the bottom */
+    width: 80%; /* Adjust width to be within the screen */
+    max-width: 300px; /* Optional: Limit the maximum width */
+}
+
+/* Swipe emoji styling */
+.swipe-emoji {
+    position: absolute;
+    bottom: 80px; /* Place the emoji above the buttons */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3rem;
+    color: #fff;
 }
 
 /* Responsive adjustments */
@@ -53,6 +79,16 @@ html, body {
     }
 
     .swipe .card {
-        max-width: 90%; /* Allow cards to be nearly full-width on smaller screens */
+        width: 95%; /* Adjust card width for smaller screens */
+        height: 95%; /* Adjust card height for smaller screens */
+    }
+
+    .swipe-buttons {
+        bottom: 10px; /* Adjust position for smaller screens */
+        width: 90%; /* Adjust width for smaller screens */
+    }
+
+    .swipe-emoji {
+        bottom: 70px; /* Adjust emoji position for smaller screens */
     }
 }

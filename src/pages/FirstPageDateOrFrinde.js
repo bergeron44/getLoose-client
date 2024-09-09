@@ -59,6 +59,8 @@ export default function TrianglePage() {
 
   useEffect(() => {
     const checkAndRedirect = () => {
+      console.log(currentBar);
+      console.log(currentPlayer);
       if (!currentBar || currentPlayer.length === 0) {
         console.log("im in");
         // Redirect if currentBar or currentPlayer is missing

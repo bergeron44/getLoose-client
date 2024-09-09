@@ -7,7 +7,8 @@ import {
     UPDATE_DIFFICULTY_SUCCESS,
     UPDATE_QUESTION_USE_SUCCESS,
     FETCH_DATE_QUESTIONS_SUCCESS, // Ensure this is imported
-    FETCH_FRIENDS_QUESTIONS_SUCCESS
+    FETCH_FRIENDS_QUESTIONS_SUCCESS,
+    FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS
 } from '../actionTypes';
 
 const initialState = {
@@ -15,6 +16,8 @@ const initialState = {
     categoryQuestions: [],
     gameQuestions: [],
     dateQuestions: [], // Ensure this state exists
+    friendsQuestions: [],
+    guesswhatiamQuestions: [],
     currentQuestion: null
 };
 
@@ -23,13 +26,21 @@ const questionsReducer = (state = initialState, action) => {
         case FETCH_DATE_QUESTIONS_SUCCESS:
             return {
                 ...state,
-                dateQuestions: action.payload
+                dateQuestions: action.payload,
+                gameQuestions: action.payload,
             };
         case FETCH_FRIENDS_QUESTIONS_SUCCESS:
             return {
                     ...state,
-                    gameQuestions: action.payload
+                    gameQuestions: action.payload,
+                    friendsQuestions: action.payload,
                 };
+        case FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS:
+                    return {
+                            ...state,
+                            gameQuestions: action.payload,
+                            guesswhatiamQuestions: action.payload,
+                        };
         case FETCH_QUESTIONS_SUCCESS:
             return {
                 ...state,

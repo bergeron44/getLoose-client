@@ -1,83 +1,111 @@
-/* Outermost container should take up the entire screen with a border */
-.choose-date-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border: 2px solid #000; /* Add a border to the entire container */
-    margin-top: 50px; /* Add space between the container and the top edge */
-}
-
-/* Content inside the container, centered vertically and horizontally */
-.choose-date-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-    justify-content: center;
-    flex: 1; /* Allow the content to expand to fill available space */
-    width: 100%; /* Ensure the content takes full width */
+/* Base Styles */
+html, body {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* Package list should fit within the screen width, with a border between the cards */
+/* Container for the whole page */
+.choose-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Use full viewport height */
+    padding: 20px; /* Increase padding */
+    background-color: #f0f0f0;
+    overflow: hidden; /* Prevent overflow */
+}
+
+/* Content section */
+.choose-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Increase gap between components */
+    align-items: center;
+    flex: 1; /* Allow this section to grow and take available space */
+    overflow-y: auto; /* Scrollable content if needed */
+    max-width: 800px; /* Limit the width of content */
+    margin: 0 auto; /* Center align content */
+}
+
+/* Title styling */
+.choose-content .title {
+    font-size: 1.5rem; /* Smaller title font size */
+    font-weight: 700; /* Bold title */
+    color: #333; /* Darker color for better visibility */
+    text-align: center; /* Center align title text */
+    margin-bottom: 16px; /* Space below title */
+}
+
+/* Package list to fit in the available space */
 .package-list {
     display: flex;
-    flex-wrap: wrap; /* Allow the cards to wrap to the next line on small screens */
-    justify-content: center;
+    flex-direction: column; /* Stack cards vertically on smaller screens */
     gap: 16px;
-    width: 100%; /* Make sure the package list takes the full width of the container */
-    box-sizing: border-box;
+    overflow-y: auto; /* Scrollable if content overflows */
+    width: 100%; /* Ensure list takes full width */
 }
 
-/* Each card should have a border and adjust to the screen size */
+/* Package card styling */
 .package-card {
-    flex: 1 1 calc(50% - 32px); /* Take up half the width minus the gap (16px on each side) */
-    max-width: 345px;
-    border: 2px solid #007bff; /* Add a border to each card */
+    width: 100%; /* Ensure cards take full width */
+    border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
     padding: 16px;
     background-color: #fff;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-    transition: transform 0.2s ease; /* Add a small transition effect */
+    position: relative;
+    text-align: center; /* Center align text in card */
 }
 
-/* Highlight selected package with a different border color */
+/* Highlight selected package */
 .package-card.selected {
-    border: 2px solid #28a745; /* Green border for selected package */
+    border: 2px solid #1976d2;
 }
 
-/* Content inside each card */
+/* Package card content */
 .package-card-content {
     flex: 1;
 }
 
-/* Style for the card title */
+/* Bold package name */
 .package-card-content h6 {
     margin-bottom: 8px;
+    font-weight: bold; /* Bold package name */
 }
 
-/* Adjust checkbox positioning */
-.package-checkbox {
-    padding: 0;
-    margin-left: 16px;
-}
-
-/* Create game button centered with space on top */
+/* Create game button styling */
 .create-game-button {
     margin-top: 24px;
     display: flex;
     justify-content: center;
-    width: 100%;
+    width: 100%; /* Make button full width */
 }
 
-/* Responsive adjustments for smaller screens */
+/* Responsive adjustments */
 @media (max-width: 768px) {
+    .choose-container {
+        padding: 10px; /* Adjust padding on smaller screens */
+    }
+
+    .choose-content {
+        gap: 16px; /* Adjust gap between elements */
+    }
+
+    .package-list {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+        align-items: center; /* Center items */
+        overflow-y: auto; /* Allow scroll on small screens */
+    }
+
     .package-card {
-        flex: 1 1 100%; /* Make each card take full width on smaller screens */
+        max-width: 90%; /* Allow cards to be nearly full-width on smaller screens */
+        margin-bottom: 16px; /* Space between stacked cards */
+    }
+
+    .create-game-button {
+        margin-top: 16px; /* Adjust margin for smaller screens */
     }
 }

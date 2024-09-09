@@ -13,6 +13,7 @@ const AddQuestion = () => {
         questionEnglish:'',
         punishment: '',
         punishmentEnglish:'',
+        questionImage:'',
     });
     const [error, setError] = useState('');
 
@@ -27,8 +28,8 @@ const AddQuestion = () => {
         e.preventDefault();
 
         // Validate all fields are filled
-        const { category, game, difficult, question, questionEnglish, punishment, punishmentEnglish } = questionData;
-        if (!category || !game || !difficult || !question || !questionEnglish || !punishment || !punishmentEnglish) {
+        const { category, game, difficult, question, questionEnglish, punishment, punishmentEnglish, questionImage } = questionData;
+        if (!category || !game || !difficult || !question || !questionEnglish || !punishment || !punishmentEnglish|| !questionImage) {
             setError('Please fill out all fields');
             return;
         }
@@ -48,6 +49,7 @@ const AddQuestion = () => {
             questionEnglish:'',
             punishment: '',
             punishmentEnglish:'',
+            questionImage:'',
         });
     };
 
@@ -74,7 +76,13 @@ const AddQuestion = () => {
                     <option value="Truth">Truth</option>
                     <option value="Dare">Dare</option>
                     <option value="Competitive">Competitive</option>
-                    <option value="Pervert">Pervert</option>
+                    <option value="movie">movie</option>
+                    <option value="music">music</option>
+                    <option value="sports">sports</option>
+                    <option value="science">science</option>
+                    <option value="politics">politics</option>
+                    <option value="literature">literature</option>
+                    <option value="technology">technology</option>
                     {/* Add more categories as needed */}
                 </select>
                 
@@ -90,6 +98,7 @@ const AddQuestion = () => {
                     <option value="">Select a game</option>
                     <option value="Date">Date</option>
                     <option value="Friends">Friends</option>
+                    <option value="Guess-What-I-Am">Guess-What-I-Am</option>
                     {/* Add more game types as needed */}
                 </select>
                 
@@ -151,7 +160,16 @@ const AddQuestion = () => {
                     required
                     className="add-question-field-punishmentEnglish"
                 />
-                
+                 <label htmlFor="questionImage">question Image</label>
+                <input
+                    id="questionImage"
+                    name="questionImage"
+                    type="text"
+                    value={questionData.questionImage}
+                    onChange={handleChange}
+                    required
+                    className="add-question-field-questionImage"
+                />
                 
             </form>
         </div>

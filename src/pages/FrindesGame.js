@@ -20,7 +20,6 @@ const StyledCard = styled(Box)(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    transition: 'transform 0.6s ease-in-out',
     textAlign: 'center',
     color: '#fff', // White text color for better contrast
 }));
@@ -28,20 +27,50 @@ const StyledCard = styled(Box)(({ theme }) => ({
 const SwipeButtons = styled(Box)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-around',
-    marginTop: '20px',
     width: '300px',
+    position: 'absolute',
+    bottom: '20px', // Position buttons at the bottom
+    left: '50%',
+    transform: 'translateX(-50%)',
 }));
+
+const SwipeEmoji = styled(Box)(({ theme }) => ({
+    position: 'absolute',
+    bottom: '80px', // Place the emoji above the buttons
+    left: '50%',
+    transform: 'translateX(-50%)',
+    fontSize: '3rem',
+    color: '#fff',
+}));
+
+const shuffleArray = (array) => {
+    let currentIndex = array.length, randomIndex;
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+};
 
 const FrindesGame = () => {
     const dispatch = useDispatch();
     const frindesQuestions = useSelector(state => state.questions.gameQuestions);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [shuffledQuestions, setShuffledQuestions] = useState([]);
     const [swipeHistory, setSwipeHistory] = useState([]);
     const [showPunishment, setShowPunishment] = useState(false);
 
     useEffect(() => {
         dispatch(fetchFriendsQuestions());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (frindesQuestions.length > 0) {
+            // Shuffle questions when fetched
+            setShuffledQuestions(shuffleArray([...frindesQuestions]));
+        }
+    }, [frindesQuestions]);
 
     const swiped = (direction, question) => {
         if (direction === 'left') {
@@ -54,7 +83,7 @@ const FrindesGame = () => {
 
     const handlePunishmentDone = () => {
         setShowPunishment(false);
-        setSwipeHistory([...swipeHistory, { question: frindesQuestions[currentIndex].question, direction: 'left' }]);
+        setSwipeHistory([...swipeHistory, { question: shuffledQuestions[currentIndex].question, direction: 'left' }]);
         setCurrentIndex(prevIndex => prevIndex + 1);
     };
 
@@ -64,14 +93,14 @@ const FrindesGame = () => {
         setShowPunishment(false);
     };
 
-    const progress = frindesQuestions.length ? (currentIndex / frindesQuestions.length) * 100 : 0;
+    const progress = shuffledQuestions.length ? (currentIndex / shuffledQuestions.length) * 100 : 0;
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh', backgroundColor: '#f2f2f2', padding: '10px' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh', backgroundColor: '#f2f2f2', padding: '10px', position: 'relative' }}>
             <Box sx={{ width: '100%', marginBottom: 2 }}>
                 <LinearProgress variant="determinate" value={progress} />
             </Box>
-            {frindesQuestions.length > 0 && currentIndex < frindesQuestions.length ? (
+            {shuffledQuestions.length > 0 && currentIndex < shuffledQuestions.length ? (
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', width: '100%', height: 'calc(100vh - 100px)' }}>
                     {showPunishment ? (
                         <StyledCard>
@@ -79,8 +108,8 @@ const FrindesGame = () => {
                                 Loser
                             </Typography>
                             <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="h4" sx={{ fontWeight: 'bold', fontFamily: 'Arial', color: '#fff' }}>
-                                    {frindesQuestions[currentIndex].punishment}
+                                <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial', color: '#fff' }}>
+                                    {shuffledQuestions[currentIndex].punishment}
                                 </Typography>
                             </Box>
                             <Button variant="contained" color="primary" onClick={handlePunishmentDone} sx={{ mt: 4, backgroundColor: '#ff5722', color: '#fff' }}>
@@ -89,24 +118,26 @@ const FrindesGame = () => {
                         </StyledCard>
                     ) : (
                         <TinderCard
-                            key={frindesQuestions[currentIndex].question}
-                            onSwipe={(dir) => swiped(dir, frindesQuestions[currentIndex].question)}
+                            key={shuffledQuestions[currentIndex].question}
+                            onSwipe={(dir) => swiped(dir, shuffledQuestions[currentIndex].question)}
                             preventSwipe={['up', 'down']}
                             className="swipe"
+                            swipeThreshold={0.1} // Increase sensitivity
                         >
                             <StyledCard>
                                 <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial' }}>
-                                    {frindesQuestions[currentIndex].question}
+                                    {shuffledQuestions[currentIndex].question}
                                 </Typography>
                             </StyledCard>
                         </TinderCard>
                     )}
+                    <SwipeEmoji>👈  👉</SwipeEmoji>
                     {!showPunishment && (
                         <SwipeButtons>
-                            <IconButton color="error" onClick={() => swiped('left', frindesQuestions[currentIndex].question)}>
+                            <IconButton color="error" onClick={() => swiped('left', shuffledQuestions[currentIndex].question)}>
                                 <ThumbDown fontSize="large" />
                             </IconButton>
-                            <IconButton color="success" onClick={() => swiped('right', frindesQuestions[currentIndex].question)}>
+                            <IconButton color="success" onClick={() => swiped('right', shuffledQuestions[currentIndex].question)}>
                                 <ThumbUp fontSize="large" />
                             </IconButton>
                         </SwipeButtons>

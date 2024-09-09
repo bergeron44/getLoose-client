@@ -1,64 +1,65 @@
 /* Base Styles */
 html, body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-  }
-  
-  /* Page container */
-  .dategame-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    background-color: #f2f2f2; /* Light background color */
-    position: relative;
-  }
-  
-  /* Progress bar container */
-  .progress-container {
-    width: 100%;
-    margin-bottom: 16px;
-    position: fixed; /* Fixed to always be visible at the top */
-    top: 0;
-    left: 0;
-  }
-  
-  /* Logo section */
-  .logo-section {
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    background-color: #fff; /* Background to separate from other content */
-  }
-  
-  /* Headline styles */
-  .logo-headline {
-    font-weight: bold;
-    font-family: Arial, sans-serif;
-    color: #000; /* Black color for visibility */
-    font-size: 2rem; /* Adjust font size */
-  }
-  
- /* Card container */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+/* Page container */
+.dategame-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: #f2f2f2; /* Light background color */
+  position: relative;
+  padding: 10px;
+}
+
+/* Progress bar container */
+.progress-container {
+  width: 100%;
+  margin-bottom: 16px;
+  position: fixed; /* Fixed to always be visible at the top */
+  top: 0;
+  left: 0;
+}
+
+/* Logo section */
+.logo-section {
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  background-color: #fff; /* Background to separate from other content */
+}
+
+/* Headline styles */
+.logo-headline {
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  color: #000; /* Black color for visibility */
+  font-size: 2rem; /* Adjust font size */
+}
+
+/* Card container */
 .card-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 800%;
-  height: calc(100vh - 100px); /* Leave space for header and footer */
+  width: 100%;
+  height: calc(100vh - 120px); /* Adjust height to fit header and footer */
   padding: 20px;
   position: relative;
   justify-content: center; /* Center the card vertically */
 }
-  
-  /* Styled card with stripes */
+
+/* Styled card with stripes */
 .styled-card {
-  width: 100%;
-  height: 80vh; /* Adjust height so it occupies most of the viewport */
+  width: 90%; /* Adjust width for better fitting */
+  height: 80vh; /* Ensure it occupies most of the viewport */
   max-height: calc(100vh - 150px); /* Ensure it doesn't overlap with the buttons */
   background: linear-gradient(45deg, pink, black, red); /* Striped background */
   padding: 20px;
@@ -69,59 +70,76 @@ html, body {
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: transform 0.6s ease-in-out;
+  transition: transform 0.2s ease-in-out; /* Faster swipe movement */
   text-align: center;
   color: #fff; /* White text color for better contrast */
 }
-  
-  /* Typography styles */
-  .typography-category {
-    color: yellow;
-    font-weight: bold;
-  }
-  
-  .typography-question {
-    font-weight: bold;
-    font-size: 1.5rem; /* Adjust the font size for better visibility */
+
+/* Typography styles */
+.typography-category {
+  color: yellow;
+  font-weight: bold;
 }
-  
- /* Swipe buttons container */
- .swipe-buttons {
+
+.typography-question {
+  font-weight: bold;
+  font-size: 1.5rem; /* Adjust the font size for better visibility */
+}
+
+/* Swipe buttons container */
+.swipe-buttons {
   display: flex;
   justify-content: space-around;
-  width: 300px;
+  width: 80%; /* Adjust width for better fitting */
+  max-width: 300px;
   position: absolute;
-  bottom: 20px;
+  bottom: 20px; /* Position buttons near the bottom */
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
 }
-  
-  /* Button styles */
-  .button {
-    margin-top: 20px;
-    background-color: #ff5722;
-    color: #fff;
-  }
-  
-  /* No more questions container */
-  .no-questions-container {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .logo-headline {
+
+/* Swipe emojis */
+.swipe-emojis {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100px; /* Adjust width to control spacing */
+}
+
+.swipe-emojis span {
+  font-size: 2rem; /* Adjust size as needed */
+}
+
+/* Button styles */
+.button {
+  margin-top: 20px;
+  background-color: #ff5722;
+  color: #fff;
+}
+
+/* No more questions container */
+.no-questions-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo-headline {
       font-size: 1.5rem; /* Adjust font size for smaller screens */
-    }
-  
-    .swipe-buttons {
-      width: 80%; /* Adjust button container width */
-    }
-  
-    .styled-card {
-      height: calc(100vh - 80px); /* Adjust card height */
-    }
   }
-  
+
+  .card-container {
+      height: calc(100vh - 100px); /* Adjust card height for smaller screens */
+  }
+
+  .styled-card {
+      height: calc(100vh - 100px); /* Adjust card height */
+  }
+
+  .swipe-buttons {
+      width: 90%; /* Adjust button container width for smaller screens */
+      bottom: 10px; /* Adjust position for smaller screens */
+  }
+}

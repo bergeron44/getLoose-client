@@ -11,7 +11,7 @@ html, body {
     display: flex;
     flex-direction: column;
     height: 100vh; /* Use full viewport height */
-    padding: 10px;
+    padding: 20px; /* Increase padding */
     background-color: #f0f0f0;
     overflow: hidden; /* Prevent overflow */
 }
@@ -20,25 +20,35 @@ html, body {
 .choose-friends-content {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px; /* Increase gap between components */
     align-items: center;
     flex: 1; /* Allow this section to grow and take available space */
     overflow-y: auto; /* Scrollable content if needed */
+    max-width: 800px; /* Limit the width of content */
+    margin: 0 auto; /* Center align content */
+}
+
+/* Title styling */
+.choose-friends-content h4 {
+    font-size: 1.5rem; /* Smaller title font size */
+    font-weight: 700; /* Bold title */
+    color: #333; /* Darker color for better visibility */
+    text-align: center; /* Center align title text */
+    margin-bottom: 16px; /* Space below title */
 }
 
 /* Package list to fit in the available space */
 .package-list {
     display: flex;
-    flex-direction: row;
+    flex-direction: column; /* Stack cards vertically on smaller screens */
     gap: 16px;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
-    justify-content: center; /* Center items */
     overflow-y: auto; /* Scrollable if content overflows */
+    width: 100%; /* Ensure list takes full width */
 }
 
 /* Package card styling */
 .package-card {
-    max-width: 345px;
+    width: 100%; /* Ensure cards take full width */
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -47,8 +57,8 @@ html, body {
     padding: 16px;
     background-color: #fff;
     position: relative;
-    flex: 1 1 calc(50% - 16px); /* Responsive sizing, two cards per row */
-    min-width: 250px; /* Ensure cards don’t become too narrow */
+    flex: 1; /* Ensure cards take full width */
+    text-align: center; /* Center align text in card */
 }
 
 /* Highlight selected package */
@@ -61,14 +71,10 @@ html, body {
     flex: 1;
 }
 
+/* Bold package name */
 .package-card-content h6 {
     margin-bottom: 8px;
-}
-
-/* Checkbox styling */
-.package-checkbox {
-    padding: 0;
-    margin-left: 16px;
+    font-weight: bold; /* Bold package name */
 }
 
 /* Create game button styling */
@@ -82,17 +88,17 @@ html, body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .choose-friends-container {
-        padding: 5px; /* Adjust padding on smaller screens */
+        padding: 10px; /* Adjust padding on smaller screens */
     }
 
     .choose-friends-content {
-        gap: 12px; /* Adjust gap between elements */
+        gap: 16px; /* Adjust gap between elements */
     }
 
     .package-list {
         flex-direction: column; /* Stack cards vertically on smaller screens */
         align-items: center; /* Center items */
-        overflow-y: hidden; /* Prevent scroll on small screens */
+        overflow-y: auto; /* Allow scroll on small screens */
     }
 
     .package-card {

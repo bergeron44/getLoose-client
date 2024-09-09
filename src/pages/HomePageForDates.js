@@ -8,6 +8,7 @@ const HomePageForDates = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const currentGameType = useSelector((state) => state.liveGames.gameType); // Directly access the gameType from the store
+  const currentBar = useSelector((state) => state.bars.currentBar);
 
   const handleChooseDateClick = () => {
     console.log('Choose Date button clicked');
@@ -18,6 +19,14 @@ const HomePageForDates = () => {
       console.log('Current game type is not Date. Switching to Date.');
     }
     navigate('/ChooseDate');
+  };
+
+  const handleBackHomeClick = () => {
+    console.log('back Home');
+    const barName = currentBar?.barName || 'Admin'; // Use a default value if currentBar or barName is undefined
+    const stringWithoutSpaces = barName.replace(/\s+/g, '');
+    navigate(`/${stringWithoutSpaces}`);
+    dispatch(setGameType(""));
   };
 
   return (
@@ -34,12 +43,10 @@ const HomePageForDates = () => {
           <div className="card-caption">התחל משחק</div>
         </div>
       </div>
-      <Link to="/FirstPageDateOrFrinde" className="card home-button" onClick={() => console.log('Navigating to home Page')}>
-        <div>
-          <img src="/images/p3.jpeg" alt="homePage" />
-          <div className="card-caption">חזור לבית</div>
-        </div>
-      </Link>
+      <div onClick={handleBackHomeClick} className="card">
+        <img src="/images/p5.jpeg" alt="Page 2" className="card-image" />
+        <div className="card-caption">בא לי משחק אחר </div>
+      </div>
     </div>
   );
 };

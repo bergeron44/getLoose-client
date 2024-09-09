@@ -36,11 +36,10 @@ export const fetchLiveGames = () => async (dispatch) => {
     try {
         const response = await fetch(`${BASE_URL}/api/livegame`);
         const data = await handleResponse(response);
+        console.log(data);
         dispatch({ type: FETCH_LIVEGAMES, payload: data });
     } catch (error) {
         console.error('Failed to fetch live games:', error);
-        // Optionally dispatch an error action here
-        // dispatch({ type: FETCH_LIVEGAMES_FAILURE, payload: error.message });
     }
 };
 

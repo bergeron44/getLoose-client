@@ -8,7 +8,8 @@ import {
     FETCH_CATEGORY_QUESTIONS_SUCCESS,
     FETCH_QUESTIONS_SUCCESS,
     FETCH_DATE_QUESTIONS_SUCCESS, // Ensure this is imported if used
-    FETCH_FRIENDS_QUESTIONS_SUCCESS
+    FETCH_FRIENDS_QUESTIONS_SUCCESS,
+    FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS
 } from '../actionTypes';
 
 // Define the base URL
@@ -144,6 +145,24 @@ export const fetchFriendsQuestions = () => async (dispatch) => {
         });
     } catch (error) {
         console.error('Error fetching date questions:', error);
+        // Optionally dispatch an error action
+        // dispatch({ type: SET_ERROR, payload: error.message });
+    }
+};
+export const fetchGuessWhatIAmQuestions = (difficulty) => async (dispatch) => {
+    try {
+        const response = await axios.get(`${BASE_URL}/api/questions/game/Guess-What-I-Am`);
+        console.log(response.data);
+
+        // Filter questions based on the selected difficulty
+        const filteredQuestions = response.data.filter(question => question.difficult === difficulty);
+        console.log(filteredQuestions);
+        dispatch({
+            type: FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS,
+            payload: filteredQuestions, // Dispatch only the filtered questions
+        });
+    } catch (error) {
+        console.error('Error fetching Guess What I Am questions:', error);
         // Optionally dispatch an error action
         // dispatch({ type: SET_ERROR, payload: error.message });
     }
