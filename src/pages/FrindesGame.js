@@ -5,13 +5,13 @@ import TinderCard from 'react-tinder-card';
 import { Box, Typography, IconButton, LinearProgress, Button } from '@mui/material';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
 import { styled } from '@mui/system';
+import Close from '../components/Close'; // Import Close component
 import './FrindesGame.css'; // Import the CSS file
 
-// Styled component for the card with pink, black, and red stripes
 const StyledCard = styled(Box)(({ theme }) => ({
-    width: '100%', // Cover the entire screen
-    height: 'calc(100vh - 100px)', // Leave space for the logo
-    background: 'linear-gradient(45deg, pink, black, red)', // Striped background
+    width: '100%',
+    height: 'calc(100vh - 100px)',
+    background: 'linear-gradient(45deg, pink, black, red)',
     padding: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
     borderRadius: '10px',
@@ -21,7 +21,7 @@ const StyledCard = styled(Box)(({ theme }) => ({
     justifyContent: 'center',
     position: 'relative',
     textAlign: 'center',
-    color: '#fff', // White text color for better contrast
+    color: '#fff',
 }));
 
 const SwipeButtons = styled(Box)(({ theme }) => ({
@@ -29,14 +29,14 @@ const SwipeButtons = styled(Box)(({ theme }) => ({
     justifyContent: 'space-around',
     width: '300px',
     position: 'absolute',
-    bottom: '20px', // Position buttons at the bottom
+    bottom: '20px',
     left: '50%',
     transform: 'translateX(-50%)',
 }));
 
 const SwipeEmoji = styled(Box)(({ theme }) => ({
     position: 'absolute',
-    bottom: '80px', // Place the emoji above the buttons
+    bottom: '80px',
     left: '50%',
     transform: 'translateX(-50%)',
     fontSize: '3rem',
@@ -56,6 +56,7 @@ const shuffleArray = (array) => {
 const FrindesGame = () => {
     const dispatch = useDispatch();
     const frindesQuestions = useSelector(state => state.questions.gameQuestions);
+    const GameId  = useSelector(state => state.liveGames.currentGameId);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [shuffledQuestions, setShuffledQuestions] = useState([]);
     const [swipeHistory, setSwipeHistory] = useState([]);
@@ -67,7 +68,6 @@ const FrindesGame = () => {
 
     useEffect(() => {
         if (frindesQuestions.length > 0) {
-            // Shuffle questions when fetched
             setShuffledQuestions(shuffleArray([...frindesQuestions]));
         }
     }, [frindesQuestions]);
@@ -97,6 +97,7 @@ const FrindesGame = () => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100vh', backgroundColor: '#f2f2f2', padding: '10px', position: 'relative' }}>
+            <Close gameId={GameId} /> {/* Pass the actual game ID */}
             <Box sx={{ width: '100%', marginBottom: 2 }}>
                 <LinearProgress variant="determinate" value={progress} />
             </Box>
@@ -122,7 +123,7 @@ const FrindesGame = () => {
                             onSwipe={(dir) => swiped(dir, shuffledQuestions[currentIndex].question)}
                             preventSwipe={['up', 'down']}
                             className="swipe"
-                            swipeThreshold={0.1} // Increase sensitivity
+                            swipeThreshold={0.1}
                         >
                             <StyledCard>
                                 <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial' }}>

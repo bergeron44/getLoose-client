@@ -1,0 +1,17 @@
+.close-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #ff0000;
+    transition: color 0.3s ease;
+  }
+  
+  .close-button:hover {
+    color: #cc0000;
+  }
+  
+  .close-button:focus {
+    outline: none;
+  }
+  
