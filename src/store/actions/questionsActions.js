@@ -9,7 +9,8 @@ import {
     FETCH_QUESTIONS_SUCCESS,
     FETCH_DATE_QUESTIONS_SUCCESS, // Ensure this is imported if used
     FETCH_FRIENDS_QUESTIONS_SUCCESS,
-    FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS
+    FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS,
+    UPDATE_QUESTION_RATE_SUCCESS
 } from '../actionTypes';
 
 // Define the base URL
@@ -120,6 +121,27 @@ export const updateQuestionUse = (questionId, succeed) => async (dispatch) => {
     }
 };
 
+export const updateQuestionRate = (questionId, rate) => async (dispatch) => {
+    try {
+        console.log("im in action to update");
+        // Make a PUT request with the rate in the request body
+        const response = await axios.put(`${BASE_URL}/api/questions/update/${questionId}`, { rate });
+        console.log(response);
+        // Dispatch success action with the updated question data
+        dispatch({
+            type: UPDATE_QUESTION_RATE_SUCCESS,
+            payload: response.data,
+        });
+    } catch (error) {
+        console.error('Error updating question rate:', error);
+
+        // Dispatch failure action with the error message
+        dispatch({
+            type: UPDATE_QUESTION_RATE_SUCCESS,
+            payload: error.message,
+        });
+    }
+};
 // Fetch questions by date (if needed)
 export const fetchDateQuestions = () => async (dispatch) => {
     try {

@@ -26,7 +26,8 @@ import NavigatePage from './barLoginPages/NavigatePage';
 import AddQuestion from './pages/DataBaseUiConection/AddQuestion';
 import AddBar from './pages/DataBaseUiConection/AddBar';
 import AddPackage from './pages/DataBaseUiConection/AddPackage';
-
+//tests pages
+import TestFeedback from './pages/TestFeedBack';
 import DynamicPage from './barLoginPages/DynamicPage'; 
 
 function App() {
@@ -55,6 +56,7 @@ function App() {
             <Route path="/AddPackage" element={<AddPackage />} />
             <Route path="/Instruction" element={<Instruction />} />
             <Route path="/GuessWhatIAm" element={<GuessWhatIAm />} />
+            <Route path="/TestFeedback" element={<TestFeedback />} />
             {/* Catch-all route for dynamic paths */}
             <Route path="*" element={<DynamicPage />} />
           </Routes>

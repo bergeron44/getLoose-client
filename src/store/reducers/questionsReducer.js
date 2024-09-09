@@ -8,7 +8,8 @@ import {
     UPDATE_QUESTION_USE_SUCCESS,
     FETCH_DATE_QUESTIONS_SUCCESS, // Ensure this is imported
     FETCH_FRIENDS_QUESTIONS_SUCCESS,
-    FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS
+    FETCH_GUESS_WHAT_I_AM_QUESTIONS_SUCCESS,
+    UPDATE_QUESTION_RATE_SUCCESS,
 } from '../actionTypes';
 
 const initialState = {
@@ -80,6 +81,13 @@ const questionsReducer = (state = initialState, action) => {
                     question._id === action.payload._id ? { ...question, usage: action.payload.usage } : question
                 )
             };
+            case UPDATE_QUESTION_RATE_SUCCESS:
+                return {
+                    ...state,
+                    allQuestions: state.allQuestions.map(question =>
+                        question._id === action.payload._id ? { ...question, rate: action.payload.rate } : question
+                    )
+                };   
         default:
             return state;
     }
