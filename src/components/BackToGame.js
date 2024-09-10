@@ -68,7 +68,7 @@ const BackToGame = () => {
       //פה צריך להתאים לאיפה נירצה להחזיר אותו בהתאם למשחק שלו
     } else {
       alert('You are not registered for any game.');
-      navigate(`/FirstPageDateOrFrinde`);
+      navigate(`/NewHomePage`);
     }
   };
 

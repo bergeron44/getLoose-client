@@ -57,7 +57,7 @@ const TheRustyAnchor = () => {
                 console.log('Dispatched live game to store:', liveGame);
 
                 // Redirect to the first page for choosing between Date or Friends
-                navigate('/FirstPageDateOrFrinde');
+                navigate('/NewHomePage');
                 console.log('Navigating to the first page...');
             } catch (error) {
                 console.error('Error fetching bar information:', error);

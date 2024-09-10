@@ -29,6 +29,7 @@ import AddPackage from './pages/DataBaseUiConection/AddPackage';
 //tests pages
 import TestFeedback from './pages/TestFeedBack';
 import DynamicPage from './barLoginPages/DynamicPage'; 
+import NewHomePage from './pages/NewHomePage';
 
 function App() {
   return (
@@ -57,6 +58,7 @@ function App() {
             <Route path="/Instruction" element={<Instruction />} />
             <Route path="/GuessWhatIAm" element={<GuessWhatIAm />} />
             <Route path="/TestFeedback" element={<TestFeedback />} />
+            <Route path="/NewHomePage" element={<NewHomePage />} />
             {/* Catch-all route for dynamic paths */}
             <Route path="*" element={<DynamicPage />} />
           </Routes>

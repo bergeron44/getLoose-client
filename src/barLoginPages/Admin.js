@@ -54,7 +54,7 @@ const Admin = () => {
                             },
                             capacity: 1000,
                             barPackages: packageIds,
-                            qrUrl: "http://localhost:3000/Admin"
+                            qrUrl: "https://getloose.onrender.com/Admin"
                         };
 
                         console.log('Creating bar with payload:', newBar);
@@ -100,7 +100,7 @@ const Admin = () => {
                 console.log('Dispatched live game to store:', liveGame);
 
                 // Redirect to the first page for choosing between Date or Friends
-                navigate('/FirstPageDateOrFrinde');
+                navigate('/NewHomePage');
                 console.log('Navigating to the first page...');
             } catch (error) {
                 console.error('Error fetching bar information:', error);
