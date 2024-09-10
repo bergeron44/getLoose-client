@@ -33,7 +33,7 @@ const TestFeedback = () => {
     const currentQuestion = questions[currentQuestionIndex];
     console.log(currentQuestion);
     var newRating=(rating+currentQuestion.appearance*currentQuestion.rate)/currentQuestion.appearance+1;
-    if(currentQuestion.appearance==0||currentQuestion.appearance==null||5<currentQuestion.rate)
+    if(currentQuestion.appearance===0||currentQuestion.appearance==null||5<currentQuestion.rate)
       {
         newRating= rating;
       }
