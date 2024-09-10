@@ -11,7 +11,8 @@ const TestFeedback = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const dispatch = useDispatch(); // Use Redux dispatch
-
+  var gameName="";
+  
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -30,13 +31,18 @@ const TestFeedback = () => {
 
   const handleRate = (rating) => {
     const currentQuestion = questions[currentQuestionIndex];
-    
+    console.log(currentQuestion);
+    var newRating=(rating+currentQuestion.appearance*currentQuestion.rate)/currentQuestion.appearance+1;
+    if(currentQuestion.appearance==0||currentQuestion.appearance==null||5<currentQuestion.rate)
+      {
+        newRating= rating;
+      }
     // Dispatch the updateQuestionRate action creator
-    dispatch(updateQuestionRate(currentQuestion._id, rating));
+    dispatch(updateQuestionRate(currentQuestion._id, newRating,currentQuestion.appearance+1));
 
     // Update local state
     const updatedQuestions = [...questions];
-    updatedQuestions[currentQuestionIndex].rate = rating;
+    updatedQuestions[currentQuestionIndex].rate = newRating;
     setQuestions(updatedQuestions);
   };
 
@@ -48,10 +54,18 @@ const TestFeedback = () => {
   if (error) return <p>Error: {error}</p>;
 
   const currentQuestion = questions[currentQuestionIndex];
-
+  if(currentQuestion.game==="Date")
+    {
+      gameName="משחק הדייטים";
+    }
+  else
+  {
+    gameName="Do Or Drink ";
+  }
+  
   return (
     <div className="test-feedback">
-      <h1 className="game-title"> :המשחק<br/>{currentQuestion?.game || 'Loading...'}<br/>מה אתם חושבים על השאלה הבאה</h1>
+      <h1 className="game-title"> :המשחק<br/>"{gameName|| 'Loading...'}"<br/><br/>מה אתם חושבים על השאלה הבאה</h1>
       {currentQuestion ? (
         <>
           <Feedback
