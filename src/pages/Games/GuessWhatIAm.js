@@ -15,6 +15,7 @@ const GuessWhatIAm = () => {
   const [showAnswerInput, setShowAnswerInput] = useState(false);
   const [wrongAttempts, setWrongAttempts] = useState(0);
   const [usedQuestions, setUsedQuestions] = useState(new Set());
+  const [showPrompt, setShowPrompt] = useState(true); // New state for the prompt
 
   const guessQuestions = useSelector(state => state.questions.guesswhatiamQuestions);
 
@@ -26,7 +27,6 @@ const GuessWhatIAm = () => {
 
   useEffect(() => {
     if (guessQuestions && guessQuestions.length > 0) {
-      // Initialize game with a new question
       if (currentQuestionIndex === null) {
         selectNextQuestion();
       }
@@ -35,15 +35,26 @@ const GuessWhatIAm = () => {
 
   useEffect(() => {
     let countdown;
-    if (timer > 0 && !showAnswerInput) {
+    if (timer > 0 && !showAnswerInput && !showPrompt) {
       countdown = setInterval(() => {
         setTimer(prev => prev - 1);
       }, 1000);
-    } else if (timer === 0 && !showAnswerInput) {
+    } else if (timer === 0 && !showAnswerInput && !showPrompt) {
       handleTimerEnd();
     }
     return () => clearInterval(countdown);
-  }, [timer, showAnswerInput]);
+  }, [timer, showAnswerInput, showPrompt]);
+
+  useEffect(() => {
+    if (showPrompt) {
+      const promptTimer = setTimeout(() => {
+        setShowPrompt(false);
+        setTimer(10); // Start the timer after the prompt
+      }, 2000); // Show the prompt for 2 seconds
+
+      return () => clearTimeout(promptTimer);
+    }
+  }, [showPrompt]);
 
   const handleTimerEnd = () => {
     setShowAnswerInput(true);
@@ -55,7 +66,7 @@ const GuessWhatIAm = () => {
     if (userGuess.toLowerCase() === currentQuestion.question.toLowerCase()) {
       setMessage('Correct! Well done!');
       setWrongAttempts(0);
-      setTimeout(() => selectNextQuestion(), 2000); // Wait 2 seconds before loading next question
+      setTimeout(() => selectNextQuestion(), 3000); // Wait 2 seconds before loading next question
     } else {
       setMessage(`טעות  ${wrongAttempts >= 4 ? `התשובה הנכונה היא: ${currentQuestion.question}.הורד  ${currentQuestion.punishment} ` : 'ותנסה שוב'}`);
       setLives(prev => prev - 1);
@@ -82,11 +93,10 @@ const GuessWhatIAm = () => {
 
       setCurrentQuestionIndex(selectedIndex);
       setUsedQuestions(prev => new Set(prev).add(selectedIndex));
-      setTimer(10);
+      setShowPrompt(true); // Show prompt for the next question
       setShowAnswerInput(false);
       setMessage('');
     } else {
-      // Reset game state
       setDifficulty(null);
       setLives(5);
       setGameOver(false);
@@ -120,39 +130,48 @@ const GuessWhatIAm = () => {
 
   return (
     <div className="guess-page">
-      {timer > 0 && !showAnswerInput && (
-        <div>
-            <div className="title">{getCurrentQuestion().question}</div>
-          <div className="timer">Time Left: {timer}s</div>
-          <img src={'/images/' + getCurrentQuestion().questionImage} alt="Guess What I Am" />
+      {showPrompt && (
+        <div className="prompt-message">
+          <h2>!תסובב את הטלפון מהר!</h2>
         </div>
       )}
-      {showAnswerInput && (
+      {!showPrompt && (
         <div>
-          <input
-            type="text"
-            value={userGuess}
-            onChange={(e) => setUserGuess(e.target.value)}
-            placeholder="Enter your guess"
-            className="guess-input"
-          />
-          <button onClick={handleGuess} className="submit-button">Submit</button><br/><br/>
-        </div>
-      )}
-      {message && (
-        <div className="result-message">
-          <h2>{message}</h2>
-          {gameOver ? (
-            <button onClick={handleNextQuestion}>Try Again</button>
-          ) : (
-            <button onClick={handleNextQuestion}>🔄</button>
+          {timer > 0 && !showAnswerInput && (
+            <div>
+              <div className="title">{getCurrentQuestion().question}</div>
+              <div className="timer">Time Left: {timer}s</div>
+              <img src={'/images/' + getCurrentQuestion().questionImage} alt="Guess What I Am" />
+            </div>
           )}
-        </div>
-      )}
-      {gameOver && (
-        <div className="game-over">
-          <h2>Game Over</h2>
-          <img src={'/images/p3.jpeg'} alt="Goddess" className="goddess-image" />
+          {showAnswerInput && (
+            <div>
+              <input
+                type="text"
+                value={userGuess}
+                onChange={(e) => setUserGuess(e.target.value)}
+                placeholder="Enter your guess"
+                className="guess-input"
+              />
+              <button onClick={handleGuess} className="submit-button">Submit</button><br/><br/>
+            </div>
+          )}
+          {message && (
+            <div className="result-message">
+              <h2>{message}</h2>
+              {gameOver ? (
+                <button onClick={handleNextQuestion}>Try Again</button>
+              ) : (
+                <button onClick={handleNextQuestion}>🔄</button>
+              )}
+            </div>
+          )}
+          {gameOver && (
+            <div className="game-over">
+              <h2>Game Over</h2>
+              <img src={'/images/p3.jpeg'} alt="Goddess" className="goddess-image" />
+            </div>
+          )}
         </div>
       )}
     </div>
