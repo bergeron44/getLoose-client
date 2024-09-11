@@ -125,8 +125,8 @@ export const updateQuestionRate = (questionId, rate,appearance) => async (dispat
     try {
         console.log("im in action to update");
         // Make a PUT request with the rate in the request body
-        const response = await axios.put(`${BASE_URL}/api/questions/update/${questionId}`, { rate,appearance });
-        console.log(response);
+        const response = await axios.put(`${BASE_URL}/api/questions/update/${questionId}`, {rate,appearance });
+        console.log("this is the update question : "+response);
         // Dispatch success action with the updated question data
         dispatch({
             type: UPDATE_QUESTION_RATE_SUCCESS,
