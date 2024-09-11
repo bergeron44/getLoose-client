@@ -1,88 +1,97 @@
-/* Base styles for the container */
+/* Container */
 .bar-table-container {
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
-/* Styling for the Select component */
-.bar-select {
+/* Title */
+.bar-table-title {
+    font-size: 5vw; /* Scales with the viewport */
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 20px 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+/* Select component */
+.bar-table-select {
+    margin-top: 120px; /* Keeps space for the fixed title */
     margin-bottom: 20px;
-    min-width: 200px;
     width: 100%;
     max-width: 400px;
 }
 
-/* Styling for the table */
-.MuiTable-root {
+/* Table */
+.bar-table {
+    width: 100%;
+    max-width: 100%;
     margin-top: 20px;
-    width: 100%;
-}
-
-/* Make table responsive */
-.MuiTable-root {
     border-collapse: collapse;
-    width: 100%;
 }
 
-.TableCell {
+.bar-table-cell {
     padding: 8px;
     text-align: left;
 }
 
+.bar-table-row {
+    transition: background-color 0.3s ease;
+}
+
+.bar-table-row:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button */
+.bar-table-button {
+    margin: 20px 0;
+    background-color: red;
+}
+
+/* Mobile responsiveness */
 @media (max-width: 600px) {
-    .MuiTable-root {
-        font-size: 0.875rem; /* Adjust font size for smaller screens */
+    .bar-table-title {
+        font-size: 6vw; /* Bigger font on smaller screens */
     }
 
-    .bar-select {
-        width: 100%; /* Ensure select takes full width on smaller screens */
+    .bar-table-select {
+        width: 100%;
     }
 
-    /* Stack table rows vertically on small screens */
-    .MuiTable-root {
+    .bar-table {
         display: block;
         overflow-x: auto;
         white-space: nowrap;
     }
 
-    .MuiTable-head, .MuiTable-body {
-        display: block;
-    }
-
-    .MuiTable-row {
+    .bar-table-row {
         display: flex;
         flex-direction: column;
         margin-bottom: 1em;
     }
 
-    .MuiTableCell {
+    .bar-table-cell {
         display: block;
         text-align: right;
         position: relative;
         padding: 8px;
     }
 
-    .MuiTableCell::before {
+    .bar-table-cell::before {
         content: attr(data-label);
         position: absolute;
         left: 0;
-        width: 100px;
         padding-right: 10px;
-        white-space: nowrap;
         font-weight: bold;
     }
-
-    .MuiTableCell:last-child {
-        border-bottom: none;
-    }
-}
-
-.MuiButton-containedSecondary {
-    background-color: red;
-}
-
-.MuiButton-containedPrimary {
-    background-color: green;
 }

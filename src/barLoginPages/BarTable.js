@@ -4,7 +4,7 @@ import { fetchLiveGames, fetchLiveGamesFromSameBar, updateLiveGame, deleteLiveGa
 import { fetchBars } from '../store/actions/barsActions';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Button, Paper, CircularProgress, Typography, Alert, Select, MenuItem } from '@mui/material';
 import axios from 'axios';
-import './BarTable.css'; // Import the CSS file
+import './BarTable.css'; // Import the custom CSS
 
 const BASE_URL = 'https://getloose-server.onrender.com';
 
@@ -70,7 +70,6 @@ const BarTable = () => {
         });
     }, [liveGames]);
 
-    // Handle delete all live games
     const handleDeleteAllGames = () => {
         dispatch(deleteLiveGames());
     };
@@ -80,7 +79,7 @@ const BarTable = () => {
             {loading && <CircularProgress />}
             {error && <Alert severity="error">{error}</Alert>}
             
-            <Typography variant="h4" gutterBottom className="title">
+            <Typography variant="h4" gutterBottom className="bar-table-title">
                 Live Games for the Selected Bar
             </Typography>
 
@@ -88,7 +87,7 @@ const BarTable = () => {
                 value={selectedBarId}
                 onChange={handleBarChange}
                 displayEmpty
-                className="bar-select"
+                className="bar-table-select"
             >
                 <MenuItem value="" disabled>Select a Bar</MenuItem>
                 {barsData.map(bar => (
@@ -99,28 +98,26 @@ const BarTable = () => {
             </Select>
 
             <TableContainer component={Paper}>
-                <Table>
+                <Table className="bar-table">
                     <TableHead>
                         <TableRow>
                             <TableCell>Package Name</TableCell>
-                            <TableCell>Game Type</TableCell>
                             <TableCell>Table Name</TableCell>
-                            <TableCell>Table Number</TableCell>
-                            <TableCell>Waiter Approved</TableCell>
                             <TableCell>Actions</TableCell>
+                            <TableCell>Waiter Approved</TableCell>
+                            <TableCell>Game Type</TableCell>
+                            <TableCell>Table Number</TableCell>
+                            
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {liveGames.map(game => (
-                            <TableRow key={game._id}>
-                                <TableCell>
+                            <TableRow key={game._id} className="bar-table-row">
+                                <TableCell className="bar-table-cell" data-label="Package Name">
                                     {packageData[game.package]?.packagesContant || 'Loading...'}
                                 </TableCell>
-                                <TableCell>{game.gameType}</TableCell>
-                                <TableCell>{game.tableName}</TableCell>
-                                <TableCell>{game.tableNumber}</TableCell>
-                                <TableCell>{game.waiterApprove ? 'true' : 'false'}</TableCell>
-                                <TableCell>
+                                <TableCell className="bar-table-cell" data-label="Table Name">{game.tableName}</TableCell>
+                                <TableCell className="bar-table-cell" data-label="Actions">
                                     <Button
                                         variant="contained"
                                         color={game.waiterApprove ? 'secondary' : 'primary'}
@@ -129,16 +126,19 @@ const BarTable = () => {
                                         {game.waiterApprove ? 'Revoke Approval' : 'Approve'}
                                     </Button>
                                 </TableCell>
+                                <TableCell className="bar-table-cell" data-label="Waiter Approved">{game.waiterApprove ? 'true' : 'false'}</TableCell>
+                                <TableCell className="bar-table-cell" data-label="Game Type">{game.gameType}</TableCell>
+                                <TableCell className="bar-table-cell" data-label="Table Number">{game.tableNumber}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
+
             <Button
                 variant="contained"
-                color="secondary"
+                className="bar-table-button"
                 onClick={handleDeleteAllGames}
-                style={{ margin: '20px 0' }}
             >
                 Delete All Live Games
             </Button>
