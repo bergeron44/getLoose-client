@@ -31,7 +31,7 @@ import DateUpdateQuestions from './pages/DataBaseUiConection/DateUpdateQuestions
 import TestFeedback from './pages/TestFeedBack';
 import DynamicPage from './barLoginPages/DynamicPage'; 
 import NewHomePage from './pages/NewHomePage';
-
+import InstructionGuess from './pages/InstructionGuess';
 
 function App() {
   return (
@@ -58,6 +58,7 @@ function App() {
             <Route path="/AddBar" element={<AddBar />} />
             <Route path="/AddPackage" element={<AddPackage />} />
             <Route path="/Instruction" element={<Instruction />} />
+            <Route path="/InstructionGuess" element={<InstructionGuess />} />
             <Route path="/GuessWhatIAm" element={<GuessWhatIAm />} />
             <Route path="/TestFeedback" element={<TestFeedback />} />
             <Route path="/NewHomePage" element={<NewHomePage />} />

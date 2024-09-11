@@ -9,7 +9,7 @@ const GuessWhatIAm = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(null);
   const [userGuess, setUserGuess] = useState('');
   const [timer, setTimer] = useState(10);
-  const [lives, setLives] = useState(5);
+  const [lives, setLives] = useState(2);
   const [message, setMessage] = useState('');
   const [gameOver, setGameOver] = useState(false);
   const [showAnswerInput, setShowAnswerInput] = useState(false);
@@ -68,7 +68,7 @@ const GuessWhatIAm = () => {
       setWrongAttempts(0);
       setTimeout(() => selectNextQuestion(), 3000); // Wait 2 seconds before loading next question
     } else {
-      setMessage(`טעות  ${wrongAttempts >= 4 ? `התשובה הנכונה היא: ${currentQuestion.question}.הורד  ${currentQuestion.punishment} ` : 'ותנסה שוב'}`);
+      setMessage(`טעות  ${wrongAttempts >= 1 ? `התשובה הנכונה היא: ${currentQuestion.question}.הורד  ${currentQuestion.punishment} ` : 'ותנסה שוב'}`);
       setLives(prev => prev - 1);
       setWrongAttempts(prev => prev + 1);
       if (lives <= 0) {
@@ -98,7 +98,7 @@ const GuessWhatIAm = () => {
       setMessage('');
     } else {
       setDifficulty(null);
-      setLives(5);
+      setLives(2);
       setGameOver(false);
       setCurrentQuestionIndex(null);
       setUsedQuestions(new Set());

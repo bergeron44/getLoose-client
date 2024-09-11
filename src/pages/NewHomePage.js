@@ -18,7 +18,7 @@ const images = [
   {
     url: '/images/guessp2.webp',
     title: 'Guess What I Am',
-    link: '/GuessWhatIAm',
+    link: '/InstructionGuess',
   },
 ];
 
