@@ -35,7 +35,7 @@ const StyledButton = styled(ButtonBase)(({ theme }) => ({
   '&:last-child': {
     marginBottom: 0,
   },
-  '& .caption': {
+  '& .caption-newHomePage': {
     position: 'absolute',
     bottom: '10%',
     left: '10%',
@@ -59,10 +59,10 @@ export default function NewHomePage() {
 
   return (
     <Box className="new-home-page">
-      <Typography variant="h2" align="center" className="title">
+      <Typography variant="h2" align="center" className="title-newHomePage">
         המשחקים
       </Typography>
-      <Box className="button-container">
+      <Box className="button-container-newHomePage">
         {images.map((image) => (
           <StyledButton
             key={image.title}

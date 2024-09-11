@@ -65,7 +65,7 @@ const TestFeedback = () => {
   
   return (
     <div className="test-feedback">
-      <h1 className="game-title"> :המשחק<br/>"{gameName|| 'Loading...'}"<br/><br/>מה אתם חושבים על השאלה הבאה</h1>
+      <h1 className="game-title">נשמח לדקה מזמנכם לדרג את השאלות<br/><br/> :המשחק<br/>"{gameName|| 'Loading...'}"<br/><br/>מה אתם חושבים על השאלה הבאה</h1>
       {currentQuestion ? (
         <>
           <Feedback

@@ -10,7 +10,7 @@ const Close = ({ gameId }) => {
     try {
       // Delete the game from the database
       await axios.delete(`https://getloose-server.onrender.com/api/livegame/${gameId}`);
-      alert("נשמח לעזרתכם לדרג את חלק מהשאלות שלנו")
+      // alert("נשמח לעזרתכם לדרג את חלק מהשאלות שלנו")
       // Navigate to the /TestFeedback page
       navigate('/TestFeedback');
     } catch (error) {
