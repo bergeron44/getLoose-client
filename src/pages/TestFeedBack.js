@@ -31,10 +31,14 @@ const TestFeedback = () => {
 
   const handleRate = (rating) => {
     const currentQuestion = questions[currentQuestionIndex];
+    console.log("this is the current question before update: ");
     console.log(currentQuestion);
+    console.log("this is the the man  rating :");
     console.log(rating);
+    console.log("this is the the question score overall: :");
     console.log(currentQuestion.appearance*currentQuestion.rate);
     var newRating=(rating+currentQuestion.appearance*currentQuestion.rate)/(currentQuestion.appearance+1);
+    console.log("this is the new avg rating :");
     console.log(newRating);
     if(currentQuestion.appearance===0||currentQuestion.appearance==null||5<currentQuestion.rate)
       {
