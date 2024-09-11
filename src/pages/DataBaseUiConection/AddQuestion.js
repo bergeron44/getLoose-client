@@ -83,6 +83,7 @@ const AddQuestion = () => {
                     <option value="politics">politics</option>
                     <option value="literature">literature</option>
                     <option value="technology">technology</option>
+                    <option value="cartoon">cartoon</option>
                     {/* Add more categories as needed */}
                 </select>
                 
