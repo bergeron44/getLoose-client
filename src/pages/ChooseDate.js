@@ -4,7 +4,7 @@ import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActio
 import { TextField, Button, Box, Typography, Card, CardContent, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './DateGame.css'; // Import the CSS file
+import './ChooseDate.css'; // Updated CSS file import
 import { setPackage } from '../store/actions/packagesActions';
 
 const ChooseDate = () => {
@@ -95,15 +95,15 @@ const ChooseDate = () => {
     };
 
     return (
-        <div className="choose-container">
+        <div className="choose-date-container-special">
             {error && <Alert severity="error">{error}</Alert>}
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
             
             {!currentBar?._id ? (
                 <Typography>No bar selected or data unavailable</Typography>
             ) : (
-                <Box className="choose-content">
-                    <Typography variant="h4" className="title">
+                <Box className="choose-date-content-special">
+                    <Typography variant="h4" className="choose-date-title-special">
                         שם השולחן
                     </Typography>
                      <br/>
@@ -119,19 +119,19 @@ const ChooseDate = () => {
                         }}
                     />
 
-                    <Box className="package-list">
+                    <Box className="choose-date-package-list-special">
                         {fullPackages.length > 0 ? (
-                            <Box className="package-list">
+                            <Box className="choose-date-package-list-special">
                                 <Typography variant="h6" gutterBottom>
                                     בחר חבילה
                                 </Typography>
                                 {fullPackages.map(pkg => (
                                     <Card
                                         key={pkg._id}
-                                        className={`package-card ${selectedPackage && selectedPackage._id === pkg._id ? 'selected' : ''}`}
+                                        className={`choose-date-package-card-special ${selectedPackage && selectedPackage._id === pkg._id ? 'choose-date-selected-special' : ''}`}
                                         onClick={() => handlePackageChange(pkg)}
                                     >
-                                        <CardContent className="package-card-content">
+                                        <CardContent className="choose-date-package-card-content-special">
                                             <Typography variant="h6" component="div" gutterBottom>
                                                 ש״ח {pkg.price}
                                             </Typography>
@@ -147,7 +147,7 @@ const ChooseDate = () => {
                         )}
                     </Box>
 
-                    <Box className="create-game-button">
+                    <Box className="choose-date-create-game-button-special">
                         <Button
                             variant="contained"
                             color="primary"

@@ -80,7 +80,7 @@ const BarTable = () => {
             {error && <Alert severity="error">{error}</Alert>}
             
             <Typography variant="h4" gutterBottom className="bar-table-title">
-                Live Games for the Selected Bar
+                    כל המשחקים הפעילים
             </Typography>
 
             <Select
@@ -101,12 +101,12 @@ const BarTable = () => {
                 <Table className="bar-table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Package Name</TableCell>
-                            <TableCell>Table Name</TableCell>
-                            <TableCell>Actions</TableCell>
-                            <TableCell>Waiter Approved</TableCell>
-                            <TableCell>Game Type</TableCell>
-                            <TableCell>Table Number</TableCell>
+                            <TableCell>החבילה</TableCell>
+                            <TableCell>כינוי השולחן</TableCell>
+                            <TableCell>אישור</TableCell>
+                            <TableCell>אישור מלצר</TableCell>
+                            <TableCell>סוג המשחק</TableCell>
+                            <TableCell>מספר שולחן</TableCell>
                             
                         </TableRow>
                     </TableHead>
@@ -134,7 +134,7 @@ const BarTable = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-
+             <br/>
             <Button
                 variant="contained"
                 className="bar-table-button"

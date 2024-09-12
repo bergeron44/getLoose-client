@@ -4,8 +4,8 @@ import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActio
 import { TextField, Button, Box, Typography, Card, CardContent, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './DateGame.css'; // Import the CSS file
 import { setPackage } from '../store/actions/packagesActions';
+//import './ChooseFriends.css'; // Import the CSS file
 
 const ChooseDate = () => {
     const dispatch = useDispatch();

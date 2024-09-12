@@ -7,48 +7,48 @@ html, body {
 }
 
 /* Container for the whole page */
-.choose-container {
+.choose-date-container-special {
     display: flex;
     flex-direction: column;
     height: 100vh; /* Use full viewport height */
-    padding: 20px; /* Increase padding */
+    padding: 20px;
     background-color: #f0f0f0;
-    overflow: hidden; /* Prevent overflow */
+    overflow: hidden;
 }
 
 /* Content section */
-.choose-content {
+.choose-date-content-special {
     display: flex;
     flex-direction: column;
-    gap: 24px; /* Increase gap between components */
+    gap: 24px;
     align-items: center;
-    flex: 1; /* Allow this section to grow and take available space */
-    overflow-y: auto; /* Scrollable content if needed */
-    max-width: 800px; /* Limit the width of content */
-    margin: 0 auto; /* Center align content */
+    flex: 1;
+    overflow-y: auto;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 /* Title styling */
-.choose-content .title {
-    font-size: 1.5rem; /* Smaller title font size */
-    font-weight: 700; /* Bold title */
-    color: #333; /* Darker color for better visibility */
-    text-align: center; /* Center align title text */
-    margin-bottom: 16px; /* Space below title */
+.choose-date-title-special {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 16px;
 }
 
 /* Package list to fit in the available space */
-.package-list {
+.choose-date-package-list-special {
     display: flex;
-    flex-direction: column; /* Stack cards vertically on smaller screens */
+    flex-direction: column;
     gap: 16px;
-    overflow-y: auto; /* Scrollable if content overflows */
-    width: 100%; /* Ensure list takes full width */
+    overflow-y: auto;
+    width: 100%;
 }
 
 /* Package card styling */
-.package-card {
-    width: 100%; /* Ensure cards take full width */
+.choose-date-package-card-special {
+    width: 100%;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -57,55 +57,49 @@ html, body {
     padding: 16px;
     background-color: #fff;
     position: relative;
-    text-align: center; /* Center align text in card */
+    text-align: center;
 }
 
 /* Highlight selected package */
-.package-card.selected {
+.choose-date-selected-special {
     border: 2px solid #1976d2;
 }
 
 /* Package card content */
-.package-card-content {
+.choose-date-package-card-content-special {
     flex: 1;
 }
 
-/* Bold package name */
-.package-card-content h6 {
-    margin-bottom: 8px;
-    font-weight: bold; /* Bold package name */
-}
-
 /* Create game button styling */
-.create-game-button {
+.choose-date-create-game-button-special {
     margin-top: 24px;
     display: flex;
     justify-content: center;
-    width: 100%; /* Make button full width */
+    width: 100%;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .choose-container {
-        padding: 10px; /* Adjust padding on smaller screens */
+    .choose-date-container-special {
+        padding: 10px;
     }
 
-    .choose-content {
-        gap: 16px; /* Adjust gap between elements */
+    .choose-date-content-special {
+        gap: 16px;
     }
 
-    .package-list {
-        flex-direction: column; /* Stack cards vertically on smaller screens */
-        align-items: center; /* Center items */
-        overflow-y: auto; /* Allow scroll on small screens */
+    .choose-date-package-list-special {
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
     }
 
-    .package-card {
-        max-width: 90%; /* Allow cards to be nearly full-width on smaller screens */
-        margin-bottom: 16px; /* Space between stacked cards */
+    .choose-date-package-card-special {
+        max-width: 90%;
+        margin-bottom: 16px;
     }
 
-    .create-game-button {
-        margin-top: 16px; /* Adjust margin for smaller screens */
+    .choose-date-create-game-button-special {
+        margin-top: 16px;
     }
 }
