@@ -77,18 +77,18 @@ const BackToGame = () => {
       <button
         onClick={handleBackToGame}
         style={{
-          padding: '10px 20px',
+          padding: '8px 8px',
           fontSize: '16px',
           fontWeight: 'bold',
           color: '#fff',
-          backgroundColor: '#007BFF',
+          backgroundColor: 'black',
           border: 'none',
-          borderRadius: '5px',
+          borderRadius: '1px',
           boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
           cursor: 'pointer',
         }}
       >
-        Come Back to the Game
+        חזור למשחק
       </button>
     </div>
   );

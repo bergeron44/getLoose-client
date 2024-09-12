@@ -3,6 +3,7 @@ import { Box, ButtonBase, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import './NewHomePage.css'; // Import the CSS file
+import BackToGame from '../components/BackToGame';
 
 const images = [
   {
@@ -59,9 +60,12 @@ export default function NewHomePage() {
 
   return (
     <Box className="new-home-page">
-      <Typography variant="h2" align="center" className="title-newHomePage">
-        המשחקים
-      </Typography>
+      <Box className="header-newHomePage">
+        <Typography variant="h2" className="title-newHomePage">
+          - - -Game's 
+        </Typography>
+        <BackToGame className="back-button" />
+      </Box>
       <Box className="button-container-newHomePage">
         {images.map((image) => (
           <StyledButton
