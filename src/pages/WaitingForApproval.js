@@ -44,7 +44,7 @@ const WaitingForApproval = () => {
     return (
         <div className="waiting-container">
             <h2 className="waiting-title">
-                Waiting for the waiter to approve you
+            🍺 מחכה לאישור המלצר 🍺
             </h2>
             {/* AnimatedLogo component */}
             <div className="parent-container">
