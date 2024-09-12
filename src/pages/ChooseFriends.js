@@ -4,7 +4,7 @@ import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActio
 import { TextField, Button, Box, Typography, Card, CardContent, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './ChooseFriends.css'; // Import the CSS file
+import './DateGame.css'; // Import the CSS file
 import { setPackage } from '../store/actions/packagesActions';
 
 const ChooseDate = () => {
@@ -96,18 +96,18 @@ const ChooseDate = () => {
     };
 
     return (
-        <div className="choose-friends-container">
+        <div className="choose-container">
             {error && <Alert severity="error">{error}</Alert>}
             {successMessage && <Alert severity="success">{successMessage}</Alert>}
             
             {!currentBar?._id ? (
                 <Typography>No bar selected or data unavailable</Typography>
             ) : (
-                <Box className="choose-friends-content">
+                <Box className="choose-content">
                     <Typography variant="h4" className="title">
                         שם שולחן
                     </Typography>
-
+                     <br/>
                     <TextField
                         label="Table Name"
                         value={tableName || ''}  // Ensure value is always a string
@@ -123,8 +123,8 @@ const ChooseDate = () => {
                     <Box className="package-list">
                         {fullPackages.length > 0 ? (
                             <Box className="package-list">
-                                <Typography variant="h6" gutterBottom>
-                                    Select a Package
+                                <Typography variant="h6" gutterBottom align='center'>
+                                    בחר חבילה
                                 </Typography>
                                 {fullPackages.map(pkg => (
                                     <Card
@@ -141,10 +141,10 @@ const ChooseDate = () => {
                                     >
                                         <CardContent className="package-card-content">
                                             <Typography variant="h6" component="div" gutterBottom>
-                                                ${pkg.price}
+                                               ש״ח {pkg.price}
                                             </Typography>
                                             <Typography variant="body2" color="text.secondary">
-                                                {pkg.packagesContant}
+                                               מה אתה מקבל : {pkg.packagesContant}
                                             </Typography>
                                         </CardContent>
                                     </Card>
