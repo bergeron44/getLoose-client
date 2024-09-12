@@ -75,7 +75,7 @@ const AddQuestion = () => {
                     <option value="Tell-Me-A-Secret">Tell-Me-A-Secret</option>
                     <option value="Truth">Truth</option>
                     <option value="Dare">Dare</option>
-                    <option value="Competitive">Competitive</option>
+                    <option value="books">books</option>
                     <option value="movie">movie</option>
                     <option value="music">music</option>
                     <option value="sports">sports</option>
