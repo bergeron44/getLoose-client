@@ -11,20 +11,19 @@ const Instruction = () => {
 
   // Define instructions for different game types
   const dateInstructions = [
-    "הוראות למשחק הדייטים",
-    "הכניסו שם ובחרו את הרעל שלכם",
-    "חכו שהמלצר יביא לכם את השתייה ויאשר אותכם",
-    "החליקו ימינה אם עניתם ",
-    "החליקו שמאלה אם לא רוצים לענות ותקבלו עונש"
+    "🥰הוראות למשחק הדייטים🥰",
+    "😉בחרו מה בא לכן לשתות😉",
+    "🤓חכו שהמלצר יביא לכם את השתייה ויאשר אותכם🤓",
+    "💪 החליקו ימינה אם אתם אמיצים 💪",
+    "👻 הפחדנים? החליקו שמאלה אם לא רוצים לענות ותקבלו עונש 👻 "
   ];
 
   const friendsInstructions = [
-    "הוראות למשחק השתייה לאמיצים בלבד",
-    "בחרו מה הרעל שלכם והכניסו את שמכם",
-    "חכו שהמלצר יאשר אותכם ויביא לכם את השתייה",
-    "על הכרטיסיות מופיעות משימות לביצוע",
-    "החליקו ימינה לביצוע המשימה או שמאלה אם אתם מפחדים",
-    "אם החלקתם ימינה העבירו את הטלפון לחבר, אחרת בצעו את העונש שמופיע על הכרטיס"
+    "🍺 do Or Drink 🍺",
+    "😉בחרו מה בא לכן לשתות😉",
+    "🤓חכו שהמלצר יביא לכם את השתייה ויאשר אותכם🤓",
+    "💪 בצעו את המשימה והחליקו ימינה    💪",
+    "😈 החליקו שמאלה וקבלו עונש 😈",
   ];
 
   // Determine which instruction list to use based on the game type
@@ -52,7 +51,7 @@ const Instruction = () => {
   return (
     <div className="instruction-container">
       <div className="instruction-card">
-        <h1 className="graffiti-caption">Push Don't Be Shy</h1>
+        <h1 className="graffiti-caption">תלחץ,על תתבייאש</h1>
         <div className="bubble" onClick={handleBubbleClick}>
           {instructions[currentInstruction]}
         </div>
