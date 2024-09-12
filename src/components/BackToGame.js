@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchLiveGames } from '../store/actions/liveGameActions';
+import { fetchLiveGames, setCurrentGameId } from '../store/actions/liveGameActions';
 import { 
   setGameType, 
   setWaiterApprove, 
@@ -47,6 +47,7 @@ const BackToGame = () => {
 
     if (matchingGame) {
       // Update all the relevant properties in the store
+      dispatch(setCurrentGameId(matchingGame._id));
       dispatch(setGameType(matchingGame.gameType));
       dispatch(setWaiterApprove(matchingGame.waiterApprove));
       dispatch(setBar(matchingGame.bar));
@@ -56,18 +57,23 @@ const BackToGame = () => {
       dispatch(setPlayersNames(matchingGame.playersNames));
 
       // Redirect to the game page with the game ID
-      if(matchingGame.gameType==='Date')
+      if(matchingGame.waiterApprove)
         {
-          navigate(`/DateGame`);
+          if(matchingGame.gameType==='Date')
+            {
+              navigate(`/DateGame`);
+            }
+          else
+          {
+            navigate(`/FrindesGame`);
+          }
         }
-      else
-      {
-        navigate(`/FrindesGame`);
-      }
+      alert('מחכה לאישור של מלצר');
+      navigate(`/WaitingForApproval`);
    
       //פה צריך להתאים לאיפה נירצה להחזיר אותו בהתאם למשחק שלו
     } else {
-      alert('You are not registered for any game.');
+      alert('אתם לא רשומים למשחק');
       navigate(`/NewHomePage`);
     }
   };
