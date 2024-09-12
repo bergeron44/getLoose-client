@@ -51,7 +51,7 @@ const Instruction = () => {
   return (
     <div className="instruction-container">
       <div className="instruction-card">
-        <h1 className="graffiti-caption">תלחץ<br/> אל תתבייאש 😉</h1>
+        <h1 className="graffiti-caption"> 😉 תלחץ<br/> אל תתבייאש </h1>
         <div className="bubble" onClick={handleBubbleClick}>
           {instructions[currentInstruction]}
         </div>
