@@ -11,12 +11,13 @@ const DateUpdateQuestions = () => {
   const [newQuestion, setNewQuestion] = useState('');
   //const [gameType] = useState('Date'); // Fixed game type for this component
   const [gameType] = useState('Friends');
+
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
         const response = await axios.get('https://getloose-server.onrender.com/api/questions');
         setQuestions(response.data);
-        filterQuestions(response.data, gameType);
+        filterAndShuffleQuestions(response.data, gameType);
       } catch (error) {
         console.error('Failed to fetch questions:', error);
         setError(error.message || 'An error occurred');
@@ -28,16 +29,22 @@ const DateUpdateQuestions = () => {
     fetchQuestions();
   }, [gameType]);
 
-  const filterQuestions = (allQuestions, type) => {
+  const filterAndShuffleQuestions = (allQuestions, type) => {
     const filtered = allQuestions.filter(q => q.game === type);
-    setFilteredQuestions(filtered);
+    const shuffled = shuffleArray(filtered);
+    setFilteredQuestions(shuffled);
+  };
+
+  // Function to shuffle the array
+  const shuffleArray = (array) => {
+    return array.sort(() => Math.random() - 0.5);
   };
 
   const handleUpdateQuestion = async () => {
     const currentQuestion = filteredQuestions[currentQuestionIndex];
     try {
-        console.log(currentQuestion._id);
-      const p =await axios.put(`https://getloose-server.onrender.com/api/questions/update/${currentQuestion._id}`, {
+      console.log(currentQuestion._id);
+      const p=await axios.put(`https://getloose-server.onrender.com/api/questions/update/${currentQuestion._id}`, {
         question: newQuestion
       });
       console.log(p);

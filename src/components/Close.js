@@ -9,12 +9,14 @@ const Close = ({ gameId }) => {
   const handleClose = async () => {
     try {
       // Delete the game from the database
-      await axios.delete(`https://getloose-server.onrender.com/api/livegame/${gameId}`);
+      const p=await axios.delete(`https://getloose-server.onrender.com/api/livegame/${gameId}`);
+      console.log(p);
       // alert("נשמח לעזרתכם לדרג את חלק מהשאלות שלנו")
       // Navigate to the /TestFeedback page
       navigate('/TestFeedback');
     } catch (error) {
       console.error('Failed to close the game:', error);
+      navigate('/TestFeedback');
     }
   };
 
