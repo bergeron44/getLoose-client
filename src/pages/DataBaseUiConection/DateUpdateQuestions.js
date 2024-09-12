@@ -9,8 +9,8 @@ const DateUpdateQuestions = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [newQuestion, setNewQuestion] = useState('');
-  //const [gameType] = useState('Date'); // Fixed game type for this component
-  const [gameType] = useState('Friends');
+  const [gameType] = useState('Date'); // Fixed game type for this component
+  //const [gameType] = useState('Friends');
 
   useEffect(() => {
     const fetchQuestions = async () => {
