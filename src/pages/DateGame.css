@@ -58,21 +58,21 @@ html, body {
 
 /* Styled card with stripes */
 .styled-card {
-  width: 90%; /* Adjust width for better fitting */
-  height: 80vh; /* Ensure it occupies most of the viewport */
-  max-height: calc(100vh - 150px); /* Ensure it doesn't overlap with the buttons */
-  background: linear-gradient(45deg, pink, black, red); /* Striped background */
+  width: 95vw; /* Adjust to nearly full screen width */
+  height: 95vh; /* Nearly full screen height */
+  max-height: calc(100vh - 20px); /* Ensure it fits the screen without overlapping with elements */
+  background: linear-gradient(45deg, pink, black, red); /* Your background color */
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  transition: transform 0.2s ease-in-out; /* Faster swipe movement */
   text-align: center;
-  color: #fff; /* White text color for better contrast */
+  color: #fff; /* White text for contrast */
+  transition: transform 0.2s ease-in-out; /* Smooth transitions */
 }
 
 /* Typography styles */

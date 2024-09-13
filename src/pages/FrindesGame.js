@@ -104,19 +104,31 @@ const FrindesGame = () => {
             {shuffledQuestions.length > 0 && currentIndex < shuffledQuestions.length ? (
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'relative', width: '100%', height: 'calc(100vh - 100px)' }}>
                     {showPunishment ? (
-                        <StyledCard>
-                            <Typography variant="h2" sx={{ marginBottom: '20px', fontWeight: 'bold', fontFamily: 'Cursive', color: 'red' }}>
-                                Loser
-                            </Typography>
-                            <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial', color: '#fff' }}>
-                                    {shuffledQuestions[currentIndex].punishment}
-                                </Typography>
-                            </Box>
-                            <Button variant="contained" color="primary" onClick={handlePunishmentDone} sx={{ mt: 4, backgroundColor: '#ff5722', color: '#fff' }}>
-                                I Have Done It
-                            </Button>
-                        </StyledCard>
+                        <StyledCard
+                        sx={{
+                          width: '80vw',  // 80% of the viewport width
+                          height: '80vh',  // 80% of the viewport height
+                          backgroundColor: '#f5f5f5',  // Matching color from previous card
+                          display: 'flex', 
+                          flexDirection: 'column', 
+                          justifyContent: 'center', 
+                          alignItems: 'center',
+                          borderRadius: '8px',
+                          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',  // Optional styling for consistency
+                        }}
+                      >
+                        <Typography variant="h2" sx={{ marginBottom: '20px', fontWeight: 'bold', fontFamily: 'Cursive', color: 'red' }}>
+                          Loser
+                        </Typography>
+                        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <Typography variant="h5" sx={{ fontWeight: 'bold', fontFamily: 'Arial', color: '#fff' }}>
+                            {shuffledQuestions[currentIndex].punishment}
+                          </Typography>
+                        </Box>
+                        <Button variant="contained" color="primary" onClick={handlePunishmentDone} sx={{ mt: 4, backgroundColor: '#ff5722', color: '#fff' }}>
+                          🍺 עשיתי 🍺
+                        </Button>
+                      </StyledCard>
                     ) : (
                         <TinderCard
                             key={shuffledQuestions[currentIndex].question}
@@ -131,10 +143,11 @@ const FrindesGame = () => {
                                 </Typography>
                             </StyledCard>
                         </TinderCard>
-                    )}
-                    <SwipeEmoji>👈  👉</SwipeEmoji>
-                    {!showPunishment && (
+                        
+                    )}  
+                    {!showPunishment && (    
                         <SwipeButtons>
+                            <SwipeEmoji>👈   👉</SwipeEmoji>
                             <IconButton color="error" onClick={() => swiped('left', shuffledQuestions[currentIndex].question)}>
                                 <ThumbDown fontSize="large" />
                             </IconButton>

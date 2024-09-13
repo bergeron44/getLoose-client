@@ -108,7 +108,7 @@ const DateGame = () => {
                                 </Typography>
                             </Box>
                             <Button className="button" variant="contained" onClick={handlePunishmentDone}>
-                                I Have Done It
+                            🍺 🍺 🍺 עשיתי 🍺 🍺 🍺
                             </Button>
                         </StyledCard>
                     ) : (
@@ -117,6 +117,7 @@ const DateGame = () => {
                             onSwipe={(dir) => swiped(dir, shuffledQuestions[currentIndex].question)}
                             preventSwipe={['up', 'down']}
                             className="swipe"
+                            swipeThreshold={2} 
                         >
                             <StyledCard>
                                 <Typography className="typography-category">
@@ -131,7 +132,7 @@ const DateGame = () => {
                     )}
                     {!showPunishment && (
                         <SwipeButtons className="swipe-buttons">
-                            <Typography sx={{ marginBottom: '10px' }}>👈 👉 </Typography>
+                            <Typography sx={{ marginBottom: '10px' }}>👈$-$-swipe-$-$👉 </Typography>
                             <Box>
                                 <IconButton color="error" onClick={() => swiped('left', shuffledQuestions[currentIndex].question)}>
                                     <ThumbDown fontSize="large" />
