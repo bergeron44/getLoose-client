@@ -12,7 +12,7 @@ const InstructionGuess = () => {
     return (
         <div className="landing-page">
             <div className="landing-content">
-                <h1 className="landing-title">🍺 חוקי המשחק 🍺</h1>
+                <h2 className="landing-title">🍺חוקי המשחק🍺</h2>
                 <p className="landing-subtitle">סובב את הטלפון ל 10 שניות </p>
                 <p className="landing-subtitle">שאל/י את המשתתפים 10 שאלות של כן ולא </p>
                 <p className="landing-subtitle">אחרי 10 שאלות תכתוב ניחוש </p>
