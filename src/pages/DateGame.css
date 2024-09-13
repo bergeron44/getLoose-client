@@ -16,7 +16,15 @@ html, body {
   position: relative;
   padding: 10px;
 }
-
+.swipe {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 100px); /* Adjust height to fit the screen */
+  display:contents;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease-in-out; /* Faster swipe movement */
+}
 /* Progress bar container */
 .progress-container {
   width: 100%;
@@ -45,23 +53,25 @@ html, body {
 }
 
 /* Card container */
+/* Card container */
 .card-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: calc(100vh - 120px); /* Adjust height to fit header and footer */
-  padding: 20px;
+  height: 100vh; /* Full screen height */
+  padding: 0 10%; /* Add padding to the sides for spacing */
+  box-sizing: border-box; /* Ensure padding is included in the width */
   position: relative;
   justify-content: center; /* Center the card vertically */
 }
 
 /* Styled card with stripes */
 .styled-card {
-  width: 95vw; /* Adjust to nearly full screen width */
-  height: 95vh; /* Nearly full screen height */
-  max-height: calc(100vh - 20px); /* Ensure it fits the screen without overlapping with elements */
-  background: linear-gradient(45deg, pink, black, red); /* Your background color */
+  width: 80vw; /* Adjust width to fit within the container */
+  height: 80vh; /* Adjust height to fit within the container */
+  max-height: calc(100vh - 40px); /* Ensure it fits within the screen */
+  background: linear-gradient(45deg, pink, black, red); /* Background color */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
   border-radius: 10px;
@@ -73,6 +83,16 @@ html, body {
   text-align: center;
   color: #fff; /* White text for contrast */
   transition: transform 0.2s ease-in-out; /* Smooth transitions */
+  overflow: auto; /* Handle overflow for content */
+}
+
+/* Ensure the buttons are positioned correctly */
+.swipe-buttons {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 /* Typography styles */
@@ -87,17 +107,6 @@ html, body {
 }
 
 /* Swipe buttons container */
-.swipe-buttons {
-  display: flex;
-  justify-content: space-around;
-  width: 80%; /* Adjust width for better fitting */
-  max-width: 300px;
-  position: absolute;
-  bottom: 20px; /* Position buttons near the bottom */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
-}
 
 /* Swipe emojis */
 .swipe-emojis {

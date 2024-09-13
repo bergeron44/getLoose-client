@@ -19,8 +19,9 @@ const shuffleArray = (array) => {
 
 // Styled component for the card with pink, black, and red stripes
 const StyledCard = styled(Box)(({ theme }) => ({
-    width: '100%',
-    height: 'calc(100vh - 120px)', // Adjust height to fit header and buttons
+    width: '90vw',
+    height: '90vh',
+    maxHeight: 'calc(100vh - 40px)',
     background: 'linear-gradient(45deg, pink, black, red)',
     padding: '20px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
@@ -30,14 +31,15 @@ const StyledCard = styled(Box)(({ theme }) => ({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
-    transition: 'transform 0.4s ease-in-out', // Faster swipe movement
     textAlign: 'center',
     color: '#fff',
+    overflow: 'auto', // Handle overflow for content
+    transition: 'transform 0.2s ease-in-out',
 }));
 
 const SwipeButtons = styled(Box)(({ theme }) => ({
     display: 'flex',
-    flexDirection: 'column', // Arrange emojis and buttons vertically
+    flexDirection: 'column',
     alignItems: 'center',
     marginTop: '20px',
     width: '80%',
@@ -59,7 +61,6 @@ const DateGame = () => {
         dispatch(fetchDateQuestions());
     }, [dispatch]);
 
-    // Shuffle questions only when they are initially fetched
     useEffect(() => {
         if (dateQuestions.length) {
             const shuffledQuestions = shuffleArray(dateQuestions);
@@ -108,7 +109,7 @@ const DateGame = () => {
                                 </Typography>
                             </Box>
                             <Button className="button" variant="contained" onClick={handlePunishmentDone}>
-                            🍺 🍺 🍺 עשיתי 🍺 🍺 🍺
+                                🍺 🍺 🍺 עשיתי 🍺 🍺 🍺
                             </Button>
                         </StyledCard>
                     ) : (
@@ -132,7 +133,7 @@ const DateGame = () => {
                     )}
                     {!showPunishment && (
                         <SwipeButtons className="swipe-buttons">
-                            <Typography sx={{ marginBottom: '10px' }}>👈$-$-swipe-$-$👉 </Typography>
+                            <Typography sx={{ marginBottom: '10px' }}>👈 $ swipe $ 👉 </Typography>
                             <Box>
                                 <IconButton color="error" onClick={() => swiped('left', shuffledQuestions[currentIndex].question)}>
                                     <ThumbDown fontSize="large" />
