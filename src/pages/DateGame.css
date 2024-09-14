@@ -16,15 +16,19 @@ html, body {
   position: relative;
   padding: 10px;
 }
+
+/* Swipe container */
 .swipe {
-  position: relative;
-  width: 100%;
+  width: 100%; /* Make sure it takes full width */
   height: calc(100vh - 100px); /* Adjust height to fit the screen */
-  display:contents;
+  display: flex; /* Ensure it's flexible for swipe gestures */
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease-in-out; /* Faster swipe movement */
+  transition: transform 0.5s ease; /* Smooth swipe animation */
+  border-radius: 20px; /* Adjust as needed */
+  overflow: hidden; /* Ensure content respects border-radius */
 }
+
 /* Progress bar container */
 .progress-container {
   width: 100%;
@@ -53,7 +57,6 @@ html, body {
 }
 
 /* Card container */
-/* Card container */
 .card-container {
   display: flex;
   flex-direction: column;
@@ -64,6 +67,7 @@ html, body {
   box-sizing: border-box; /* Ensure padding is included in the width */
   position: relative;
   justify-content: center; /* Center the card vertically */
+  overflow: hidden; /* Prevent scrollbars and ensure swipes can happen */
 }
 
 /* Styled card with stripes */
@@ -74,7 +78,7 @@ html, body {
   background: linear-gradient(45deg, pink, black, red); /* Background color */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Soft shadow effect */
-  border-radius: 10px;
+  border-radius: 20px; /* Increase this value to make the edges rounder */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -95,18 +99,16 @@ html, body {
   z-index: 10;
 }
 
-/* Typography styles */
 .typography-category {
   color: yellow;
   font-weight: bold;
+  font-size: 2.5rem; /* Ensure this is larger */
 }
 
 .typography-question {
   font-weight: bold;
-  font-size: 1.5rem; /* Adjust the font size for better visibility */
+  font-size: 3rem; /* Ensure this is larger */
 }
-
-/* Swipe buttons container */
 
 /* Swipe emojis */
 .swipe-emojis {
@@ -123,8 +125,17 @@ html, body {
 /* Button styles */
 .button {
   margin-top: 20px;
-  background-color: #ff5722;
-  color: #fff;
+  padding: 10px 20px; /* Add padding for better spacing */
+  background-color: #ff5722; /* Bright color for contrast */
+  color: #fff; /* White text for readability */
+  border: none; /* Remove borders */
+  border-radius: 5px; /* Slight rounding of the button */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.button:hover {
+  background-color: #e64a19; /* Darken button on hover */
 }
 
 /* No more questions container */
@@ -136,19 +147,21 @@ html, body {
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .logo-headline {
-      font-size: 1.5rem; /* Adjust font size for smaller screens */
+    font-size: 1.5rem; /* Adjust font size for smaller screens */
   }
 
   .card-container {
-      height: calc(100vh - 100px); /* Adjust card height for smaller screens */
+    height: calc(100vh - 80px); /* Adjust card height for smaller screens */
   }
 
   .styled-card {
-      height: calc(100vh - 100px); /* Adjust card height */
+    height: 70vh; /* Adjust card height for better fit */
+    width: 90vw; /* Increase width slightly for better screen coverage */
+    border-radius: 15px; /* Smaller rounding for mobile screens */
   }
 
   .swipe-buttons {
-      width: 90%; /* Adjust button container width for smaller screens */
-      bottom: 10px; /* Adjust position for smaller screens */
+    width: 90%; /* Ensure button container width fits mobile screens */
+    bottom: 10px; /* Adjust bottom margin */
   }
 }

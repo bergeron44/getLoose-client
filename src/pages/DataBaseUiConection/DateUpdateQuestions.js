@@ -8,7 +8,7 @@ const DateUpdateQuestions = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [newQuestion, setNewQuestion] = useState('');
+  const [newPunishment, setNewPunishment] = useState('');
   const [gameType] = useState('Date'); // Fixed game type for this component
   //const [gameType] = useState('Friends');
 
@@ -45,13 +45,13 @@ const DateUpdateQuestions = () => {
     try {
       console.log(currentQuestion._id);
       const p=await axios.put(`https://getloose-server.onrender.com/api/questions/update/${currentQuestion._id}`, {
-        question: newQuestion
+        punishment: newPunishment
       });
       console.log(p);
       const updatedQuestions = [...filteredQuestions];
-      updatedQuestions[currentQuestionIndex].question = newQuestion;
+      updatedQuestions[currentQuestionIndex].punishment = newPunishment;
       setFilteredQuestions(updatedQuestions);
-      setNewQuestion('');
+      setNewPunishment('');
     } catch (error) {
       console.error('Failed to update question:', error);
       setError(error.message || 'An error occurred while updating the question');
@@ -77,14 +77,15 @@ const DateUpdateQuestions = () => {
       </h1>
       {currentQuestion ? (
         <>
-          <div className="question-section">
-            <p>"{currentQuestion.question}"</p>
+          <div className="punishment-section">
+          <p>"{currentQuestion.question}"</p>
+            <p>"{currentQuestion.punishment}"</p>
             <div className="update-section">
               <input
                 type="text"
-                value={newQuestion}
-                onChange={(e) => setNewQuestion(e.target.value)}
-                placeholder="Enter new question"
+                value={newPunishment}
+                onChange={(e) => setNewPunishment(e.target.value)}
+                placeholder="Enter new punishment"
               /><br/> <br/>
               <button onClick={handleUpdateQuestion}>Update Question</button>
             </div>

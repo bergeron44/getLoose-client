@@ -114,22 +114,24 @@ const DateGame = () => {
                         </StyledCard>
                     ) : (
                         <TinderCard
-                            key={shuffledQuestions[currentIndex].question}
-                            onSwipe={(dir) => swiped(dir, shuffledQuestions[currentIndex].question)}
-                            preventSwipe={['up', 'down']}
-                            className="swipe"
-                            swipeThreshold={2} 
-                        >
-                            <StyledCard>
-                                <Typography className="typography-category">
-                                    {shuffledQuestions[currentIndex].category}
-                                </Typography>
-                                <br />
-                                <Typography className="typography-question">
-                                    {shuffledQuestions[currentIndex].question}
-                                </Typography>
-                            </StyledCard>
-                        </TinderCard>
+                        key={shuffledQuestions[currentIndex].question}
+                        onSwipe={(dir) => swiped(dir, shuffledQuestions[currentIndex].question)}
+                        onCardLeftScreen={() => setCurrentIndex(currentIndex + 1)}
+                        preventSwipe={['up', 'down']} // Prevent swiping up and down
+                        swipeRequirementType="position" // Detect swipes based on the card's position
+                        swipeThreshold={50} // Set a lower threshold for easier swipes
+                        className="swipe"
+                    >
+                        <StyledCard>
+                           <Typography className="typography-category">
+                                  {shuffledQuestions[currentIndex].category}
+                            </Typography>
+                              <br />
+                            <Typography className="typography-question">
+                                {shuffledQuestions[currentIndex].question}
+                            </Typography>
+                        </StyledCard>
+                    </TinderCard>
                     )}
                     {!showPunishment && (
                         <SwipeButtons className="swipe-buttons">
