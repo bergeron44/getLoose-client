@@ -16,7 +16,8 @@ import {
     UPDATE_LIVEGAME_FAILURE,
     DELETE_LIVE_GAMES,
     DELETE_LIVE_GAMES_SUCCESS,
-    DELETE_LIVE_GAMES_FAILURE
+    DELETE_LIVE_GAMES_FAILURE,
+    SET_DAILY_STATISTIC,
 } from '../actionTypes';
 
 // Define the base URL
@@ -216,5 +217,31 @@ export const deleteLiveGames = () => async (dispatch, getState) => {
 
     } catch (error) {
         dispatch({ type: DELETE_LIVE_GAMES_FAILURE, payload: error.message });
+    }
+};
+
+export const createDailyStatistic = (newDailyStatistic) => async (dispatch) => {
+    try {
+        console.log("create daily statistic for:");
+        const response = await fetch(`${BASE_URL}/api/daily-statistics`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newDailyStatistic),
+        });
+        console.log(response.data);
+        // Handle the response
+        const data = await handleResponse(response);
+
+        // Dispatch the success action
+        dispatch({ type: SET_DAILY_STATISTIC, payload: data });
+
+        return data; // Return data for further processing
+
+    } catch (error) {
+        console.error('Failed to create daily statistic:', error);
+
+        throw error;
     }
 };

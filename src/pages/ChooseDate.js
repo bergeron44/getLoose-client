@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createLiveGame, setCurrentGameId } from '../store/actions/liveGameActions';
+import { createLiveGame, setCurrentGameId ,createDailyStatistic} from '../store/actions/liveGameActions';
 import { TextField, Button, Box, Typography, Card, CardContent, Alert } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -78,8 +78,20 @@ const ChooseDate = () => {
 
                     if (newGameId) {
                         dispatch(setCurrentGameId(newGameId));
-                        setSuccessMessage('Live game created successfully!');
-                        navigate('/WaitingForApproval');
+                          // Create a daily statistic
+                    const dailyStatistic = {
+                        day: new Date().toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase(),
+                        bar: currentBar._id,
+                        package: selectedPackage._id,
+                        date: new Date(),
+                        quantity: 0, // Set default quantity
+                        rebuy: 0,   // Set default rebuy
+                    };
+
+                     dispatch(createDailyStatistic(dailyStatistic));
+
+                    setSuccessMessage('Live game and daily statistic created successfully!');
+                    navigate('/WaitingForApproval');
                     } else {
                         setError('Unexpected response format.');
                         console.error('Unexpected response format:', liveGameResponse);
