@@ -12,7 +12,7 @@ html, body {
     flex-direction: column;
     height: 100vh; /* Use full viewport height */
     padding: 10px;
-    background-color: #f0f0f0;
+    background-color: linear-gradient(135deg, #ff6f61, #ffd700);
     overflow: hidden; /* Prevent overflow */
 }
 

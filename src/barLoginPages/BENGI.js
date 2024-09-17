@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { setCurrentBar, setBarName } from '../store/actions/barsActions';
-import { setCurrentGameId, setBar, setPlayersNames } from '../store/actions/liveGameActions';
+import { setCurrentGameId, setBar, setPlayersNames, createDailyStatistic } from '../store/actions/liveGameActions';
 import axios from 'axios';
 
 const BENGI = () => {
@@ -53,7 +53,15 @@ const BENGI = () => {
                 dispatch(setBar(barInfo.barName));
                 dispatch(setPlayersNames([deviceId]));
                 dispatch(setCurrentGameId(null)); // If you want to set a new game ID, fetch it from the backend or generate it
-
+                const dailyStatistic = {
+                    day: new Date().toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase(),
+                    bar: barInfo._id,
+                    package: barInfo.barPackages[0]._id,
+                    date: new Date(),
+                    quantity: 0, // Set default quantity
+                    rebuy: 0,   // Set default rebuy
+                };
+                 dispatch(createDailyStatistic(dailyStatistic));
                 console.log('Dispatched live game to store:', liveGame);
 
                 // Redirect to the first page for choosing between Date or Friends

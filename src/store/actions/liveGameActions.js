@@ -223,6 +223,7 @@ export const deleteLiveGames = () => async (dispatch, getState) => {
 export const createDailyStatistic = (newDailyStatistic) => async (dispatch) => {
     try {
         console.log("create daily statistic for:");
+        console.log(newDailyStatistic.bar);
         const response = await fetch(`${BASE_URL}/api/daily-statistics`, {
             method: 'POST',
             headers: {
