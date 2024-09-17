@@ -13,19 +13,21 @@ const InstructionStupid = () => {
         
         if (gameType === 'Date') {
             setInstructions([
-                { text: '🍷 הולך טו עם 2 כוסות יין ב50 ש״ח 🍷', className: 'highlight-red-stupid' },
+                { text: '🍷 הולך מדהים עם 2 כוסות יין ב50 ש״ח 🍷', className: 'highlight-red-stupid' },
                 { text: '👉🏼 החליקו ימינה אם אתם רוצים לשתף או אם עשיתם את מה שכתוב בכרטיס 👉🏼', className: 'highlight-black-stupid' },
+                { text: 'או', className: 'highlight-red-stupid' },
                 { text: '👈🏻 אחרת החליקו שמאלה 👈🏻', className: 'highlight-black-stupid' },
-                { text: 'בצעו את העונש  🍺', className: 'highlight-red-stupid' },
+                { text: '🍺 בצעו את העונש  🍺', className: 'highlight-red-stupid' },
                 { text: 'חזרו חלילה🍻', className: 'highlight-black-stupid' }
             ]);
         } else {
             setInstructions([
-                { text: '🥃מומלץ מאוד לקחת 10 שוטים לפחות🥃', className: 'highlight-red-stupid' },
-                { text: '👉🏼 החלק ימינה ועשה את מה שכתוב 👉🏼', className: 'highlight-black-stupid' },
-                { text: '👈🏻 החלק שמאלה ותעשה את העונש שקיבלת 👈🏻', className: 'highlight-black-stupid' },
-                { text: 'העבר את הטלפון לחבר הבא 🍺', className: 'highlight-red-stupid' },
-                { text: 'Have fun with your friends! 🎉', className: 'highlight-black-stupid' }
+                { text: ' 😵 מומלץ מאוד לקחת  🥃 10 שוטים ב- 50 ש״ח בלבד', className: 'highlight-red-stupid' },
+                { text: '👉🏼 אמיצים ? החליקו ימינה ועשו את מה שכתוב 👉🏼', className: 'highlight-black-stupid' },
+                { text: 'או', className: 'highlight-red-stupid' },
+                { text: '👈🏻פחדנים ? החליקו שמאלה ועשו את העונש👈🏻', className: 'highlight-black-stupid' },
+                { text: '🍺 העבירו את הטלפון לחבר הבא 🍺', className: 'highlight-red-stupid' },
+                { text: '🎉 יאללללה להשתכרררר 🎉', className: 'highlight-black-stupid' }
             ]);
         }
     }, [gameType]);
