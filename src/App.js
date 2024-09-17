@@ -21,6 +21,7 @@ import NotInBar from './barLoginPages/NotInBar';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
 import Admin from './barLoginPages/Admin';
 import NavigatePage from './barLoginPages/NavigatePage';
+import BENGI from './barLoginPages/BENGI';
 
 // Add to database pages
 import AddQuestion from './pages/DataBaseUiConection/AddQuestion';
@@ -32,6 +33,8 @@ import TestFeedback from './pages/TestFeedBack';
 import DynamicPage from './barLoginPages/DynamicPage'; 
 import NewHomePage from './pages/NewHomePage';
 import InstructionGuess from './pages/InstructionGuess';
+import InstructionStupid from './pages/InstructionStupid';
+import { ImportContacts } from '@mui/icons-material';
 
 function App() {
   return (
@@ -45,6 +48,9 @@ function App() {
             <Route path="/BarTable" element={<BarTable />} />
             <Route path="/NotInBar" element={<NotInBar />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
+            <Route path="/BENGI" element={<BENGI />} />
+
+
             <Route path="/LogoPage" element={<AnimatedLogo />} />
             <Route path="/BackToGame" element={<BackToGame />} />
             <Route path="/HomePageForDates" element={<HomePageForDates />} />
@@ -63,6 +69,7 @@ function App() {
             <Route path="/TestFeedback" element={<TestFeedback />} />
             <Route path="/NewHomePage" element={<NewHomePage />} />
             <Route path="/DateUpdateQuestions" element={<DateUpdateQuestions />} />
+            <Route path="/InstructionStupid" element={<InstructionStupid />} />
             {/* Catch-all route for dynamic paths */}
             <Route path="*" element={<DynamicPage />} />
           </Routes>

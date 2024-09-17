@@ -1,0 +1,95 @@
+/* Main container */
+.stupid-landing-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f9f9;
+  padding: 20px;
+}
+
+.stupid-landing-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* Limits width for readability */
+  width: 100%;
+  text-align: center;
+}
+
+/* Title styles */
+.stupid-landing-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+}
+
+/* Highlighted instruction text styles */
+.highlight-red-stupid {
+  font-size: 1.5rem;
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.highlight-black-stupid {
+  font-size: 1.5rem;
+  color: #000;
+  margin-bottom: 15px;
+}
+
+/* Start button */
+.stupid-start-button {
+  background-color: #ffcc00;
+  color: #000;
+  padding: 15px 30px;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.stupid-start-button:hover {
+  background-color: #e6b800;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+  .stupid-landing-title {
+      font-size: 2rem;
+  }
+
+  .highlight-red-stupid,
+  .highlight-black-stupid {
+      font-size: 1.3rem;
+  }
+
+  .stupid-start-button {
+      font-size: 1.2rem;
+      padding: 12px 24px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .stupid-landing-title {
+      font-size: 1.8rem;
+  }
+
+  .highlight-red-stupid,
+  .highlight-black-stupid {
+      font-size: 1.1rem;
+  }
+
+  .stupid-start-button {
+      font-size: 1.1rem;
+      padding: 10px 20px;
+  }
+}

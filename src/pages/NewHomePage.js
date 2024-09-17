@@ -4,22 +4,27 @@ import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import './NewHomePage.css'; // Import the CSS file
 import BackToGame from '../components/BackToGame';
+import { useDispatch, useSelector } from 'react-redux';
+import { setGameType } from '../store/actions/liveGameActions';
 
 const images = [
   {
     url: '/images/p24.webp',
     title: ' Do Or Drink',
     link: '/HomePageForFriends',
+    gameType: 'Friends',
   },
   {
     url: '/images/p26.jpg',
     title: 'Tell Me Your Secrets',
     link: '/HomePageForDates',
+    gameType: 'Date',
   },
   {
     url: '/images/guessp2.webp',
     title: 'Guess What I Am',
     link: '/InstructionGuess',
+    gameType: 'GuessWhatIAm',
   },
 ];
 
@@ -52,9 +57,18 @@ const StyledButton = styled(ButtonBase)(({ theme }) => ({
 
 // Main Component
 export default function NewHomePage() {
+  const dispatch= useDispatch();
   const navigate = useNavigate();
+  const currentBar = useSelector(state => state.bars.currentBar);
 
-  const handleClick = (link) => {
+  const handleClick = (link,gameType) => {
+    console.log(currentBar.barName)
+    console.log(gameType)
+    if(currentBar.barName==='BENGI' && link!=='/InstructionGuess')
+      {
+        dispatch(setGameType(gameType));
+        link='/InstructionStupid';
+      }
     navigate(link);
   };
 
@@ -71,7 +85,7 @@ export default function NewHomePage() {
           <StyledButton
             key={image.title}
             style={{ backgroundImage: `url(${image.url})` }}
-            onClick={() => handleClick(image.link)}
+            onClick={() => handleClick(image.link,image.gameType)}
           >
             <Typography className="caption">{image.title}</Typography>
           </StyledButton>
