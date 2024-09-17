@@ -1,0 +1,29 @@
+.daily-statistics-table-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.daily-statistics-table-title {
+    margin-bottom: 20px;
+}
+
+.daily-statistics-table-select {
+    margin-bottom: 20px;
+    width: 200px;
+}
+
+.daily-statistics-table {
+    min-width: 650px;
+    margin-top: 20px;
+}
+
+.daily-statistics-table-cell {
+    padding: 12px;
+    font-size: 1rem;
+}
+
+.daily-statistics-table-button {
+    margin-top: 20px;
+    background-color: #ff0000;
+    color: #fff;
+}

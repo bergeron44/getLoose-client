@@ -16,6 +16,7 @@ import './App.css';
 import GuessWhatIAm from './pages/Games/GuessWhatIAm';
 
 // Bar pages
+import DailyStatisticsTable from './barLoginPages/DailyStatisticsTable';
 import BarTable from './barLoginPages/BarTable';
 import NotInBar from './barLoginPages/NotInBar';
 import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
@@ -46,6 +47,7 @@ function App() {
             <Route path="/FirstPageDateOrFrinde" element={<FirstPageDateOrFrinde />} />
             <Route path="/Admin" element={<Admin />} />
             <Route path="/BarTable" element={<BarTable />} />
+            <Route path="/DailyStatisticsTable" element={<DailyStatisticsTable />} />
             <Route path="/NotInBar" element={<NotInBar />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
             <Route path="/BENGI" element={<BENGI />} />
