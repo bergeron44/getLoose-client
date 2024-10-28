@@ -23,6 +23,7 @@ import TheRustyAnchor from './barLoginPages/The_Rusty_Anchor';
 import Admin from './barLoginPages/Admin';
 import NavigatePage from './barLoginPages/NavigatePage';
 import BENGI from './barLoginPages/BENGI';
+import SassonBar from './barLoginPages/SassonBar'
 
 // Add to database pages
 import AddQuestion from './pages/DataBaseUiConection/AddQuestion';
@@ -51,7 +52,7 @@ function App() {
             <Route path="/NotInBar" element={<NotInBar />} />
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
             <Route path="/BENGI" element={<BENGI />} />
-
+            <Route path="/SassonBar" element={<SassonBar />} />
 
             <Route path="/LogoPage" element={<AnimatedLogo />} />
             <Route path="/BackToGame" element={<BackToGame />} />
