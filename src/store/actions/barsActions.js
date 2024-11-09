@@ -69,14 +69,14 @@ export const createBar = (newBar) => async (dispatch) => {
 export const updateBar = (id, updatedBar) => async (dispatch) => {
     dispatch(setLoading(true));
     try {
-        const response = await fetch(`${BASE_URL}/api/bars/${id}`, {
-            method: 'PUT',
+        const response = await fetch(`${BASE_URL}/api/bar/${id}/game-stats/${updatedBar.gameType}`, {
+            method: 'POST',  // Assuming you want to use POST for updating game stats
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedBar),
+            body: JSON.stringify(updatedBar),  // Send the whole payload (game stats) to the backend
         });
-        if (!response.ok) throw new Error('Failed to update bar');
+        if (!response.ok) throw new Error('Failed to update game stats');
         const data = await response.json();
-        dispatch({ type: UPDATE_BAR, payload: data });
+        dispatch({ type: 'UPDATE_BAR_STATS', payload: data });
     } catch (error) {
         dispatch(setError(error.message));
     } finally {

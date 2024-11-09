@@ -69,7 +69,7 @@ export default function NewHomePage() {
         dispatch(setGameType(gameType));
         link='/InstructionStupid';
       }
-      if(currentBar.barName==='SassonBar' && link!=='/InstructionGuess')
+    else if(currentBar.barName==='SassonBar' && link!=='/InstructionGuess')
         {
           dispatch(setGameType(gameType));
           link='/InstructionStupid';
