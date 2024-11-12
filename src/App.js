@@ -24,6 +24,7 @@ import Admin from './barLoginPages/Admin';
 import NavigatePage from './barLoginPages/NavigatePage';
 import BENGI from './barLoginPages/BENGI';
 import SassonBar from './barLoginPages/SassonBar'
+import Mileva from './barLoginPages/Mileva';
 
 // Add to database pages
 import AddQuestion from './pages/DataBaseUiConection/AddQuestion';
@@ -37,6 +38,7 @@ import NewHomePage from './pages/NewHomePage';
 import InstructionGuess from './pages/InstructionGuess';
 import InstructionStupid from './pages/InstructionStupid';
 import { ImportContacts } from '@mui/icons-material';
+
 
 function App() {
   return (
@@ -53,6 +55,7 @@ function App() {
             <Route path="/TheRustyAnchor" element={<TheRustyAnchor />} />
             <Route path="/BENGI" element={<BENGI />} />
             <Route path="/SassonBar" element={<SassonBar />} />
+            <Route path="/Mileva" element={<Mileva />} />
 
             <Route path="/LogoPage" element={<AnimatedLogo />} />
             <Route path="/BackToGame" element={<BackToGame />} />

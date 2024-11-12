@@ -64,7 +64,7 @@ export default function NewHomePage() {
   const handleClick = (link,gameType) => {
     console.log(currentBar.barName)
     console.log(gameType)
-    if(currentBar.barName==='BENGI' && link!=='/InstructionGuess')
+    if((currentBar.barName==='BENGI'||currentBar.barName==='Mileva') && link!=='/InstructionGuess')
       {
         dispatch(setGameType(gameType));
         link='/InstructionStupid';
