@@ -16,6 +16,7 @@ const InstructionStupid = () => {
         if (gameType === 'Date') {
             if (currentBar.barName === 'SassonBar') {
                 setInstructions([
+                    { text: 'ששון בר', className: 'highlight-red-stupid' },
                     { text: '🍷 הולך מדהים עם 2 כוסות יין ב70 ש״ח  🍷', className: 'highlight-red-stupid' },
                     { text: '👉🏼 החליקו ימינה אם עשיתם את מה שכתוב בכרטיס 👉🏼', className: 'highlight-black-stupid' },
                     { text: 'או', className: 'highlight-red-stupid' },
@@ -23,7 +24,32 @@ const InstructionStupid = () => {
                     { text: '🍺 בצעו את העונש 🍺', className: 'highlight-red-stupid' },
                     { text: 'חזרו חלילה🍻', className: 'highlight-black-stupid' }
                 ]);
-            } else {
+            } 
+            else if(currentBar.barName === 'Mileva')
+            {
+                setInstructions([
+                    { text: 'מילבה', className: 'highlight-red-stupid' },
+                    { text: '🍷 הולך מדהים עם 2 כוסות יין ב70 ש״ח  🍷', className: 'highlight-red-stupid' },
+                    { text: '👉🏼 החליקו ימינה אם עשיתם את מה שכתוב בכרטיס 👉🏼', className: 'highlight-black-stupid' },
+                    { text: 'או', className: 'highlight-red-stupid' },
+                    { text: '👈🏻 אחרת החליקו שמאלה 👈🏻', className: 'highlight-black-stupid' },
+                    { text: '🍺 בצעו את העונש 🍺', className: 'highlight-red-stupid' },
+                    { text: 'חזרו חלילה🍻', className: 'highlight-black-stupid' }
+                ]);
+            }
+            else if(currentBar.barName === 'BarGiora')
+                {
+                    setInstructions([
+                        { text: 'בר גיורא', className: 'highlight-red-stupid' },
+                        { text: '🍷 הולך מדהים עם 2 כוסות יין ב70 ש״ח  🍷', className: 'highlight-red-stupid' },
+                        { text: '👉🏼 החליקו ימינה אם עשיתם את מה שכתוב בכרטיס 👉🏼', className: 'highlight-black-stupid' },
+                        { text: 'או', className: 'highlight-red-stupid' },
+                        { text: '👈🏻 אחרת החליקו שמאלה 👈🏻', className: 'highlight-black-stupid' },
+                        { text: '🍺 בצעו את העונש 🍺', className: 'highlight-red-stupid' },
+                        { text: 'חזרו חלילה🍻', className: 'highlight-black-stupid' }
+                    ]);
+                }
+             else {
                 setInstructions([
                     { text: '🍷 מבצע מיוחד עם המשחק 2 כוסות יין ב 50 ש״ח🍷', className: 'highlight-red-stupid' },
                     { text: '👉🏼 החליקו ימינה אם אתם רוצים לשתף או אם עשיתם את מה שכתוב בכרטיס 👉🏼', className: 'highlight-black-stupid' },
@@ -36,6 +62,7 @@ const InstructionStupid = () => {
         } else {
             if (currentBar.barName === 'SassonBar') {
                 setInstructions([
+                    { text: 'ששון בר', className: 'highlight-red-stupid' },
                     { text: '🍾 מבצע מיוחד של המשחק:שוט שלישי חינם 🍾', className: 'highlight-red-stupid' },
                     { text: '👉🏼 אמיצים ? החליקו ימינה ועשו את מה שכתוב 👉🏼', className: 'highlight-black-stupid' },
                     { text: 'או', className: 'highlight-red-stupid' },
@@ -43,7 +70,30 @@ const InstructionStupid = () => {
                     { text: '🍺 העבירו את הטלפון לחבר הבא 🍺', className: 'highlight-red-stupid' },
                     { text: '🎉 יאללללה להשתכרררר 🎉', className: 'highlight-black-stupid' }
                 ]);
-            } else {
+            } 
+            else if (currentBar.barName === 'Mileva') {
+                setInstructions([
+                    { text: 'מילבה', className: 'highlight-red-stupid' },
+                    { text: '🍾 מבצע מיוחד של המשחק:שוט שלישי חינם 🍾', className: 'highlight-red-stupid' },
+                    { text: '👉🏼 אמיצים ? החליקו ימינה ועשו את מה שכתוב 👉🏼', className: 'highlight-black-stupid' },
+                    { text: 'או', className: 'highlight-red-stupid' },
+                    { text: '👈🏻 פחדנים ? החליקו שמאלה ועשו את העונש 👈🏻', className: 'highlight-black-stupid' },
+                    { text: '🍺 העבירו את הטלפון לחבר הבא 🍺', className: 'highlight-red-stupid' },
+                    { text: '🎉 יאללללה להשתכרררר 🎉', className: 'highlight-black-stupid' }
+                ]);
+            } 
+            else if (currentBar.barName === 'BarGiora') {
+                setInstructions([
+                    { text: 'בר גיורא', className: 'highlight-red-stupid' },
+                    { text: '🍾 מבצע מיוחד של המשחק:שוט שלישי חינם 🍾', className: 'highlight-red-stupid' },
+                    { text: '👉🏼 אמיצים ? החליקו ימינה ועשו את מה שכתוב 👉🏼', className: 'highlight-black-stupid' },
+                    { text: 'או', className: 'highlight-red-stupid' },
+                    { text: '👈🏻 פחדנים ? החליקו שמאלה ועשו את העונש 👈🏻', className: 'highlight-black-stupid' },
+                    { text: '🍺 העבירו את הטלפון לחבר הבא 🍺', className: 'highlight-red-stupid' },
+                    { text: '🎉 יאללללה להשתכרררר 🎉', className: 'highlight-black-stupid' }
+                ]);
+            } 
+            else {
                 setInstructions([
                     { text: '😵 מומלץ מאוד לקחת  🥃 10 שוטים ב- 50 ש״ח בלבד', className: 'highlight-red-stupid' },
                     { text: '👉🏼 אמיצים ? החליקו ימינה ועשו את מה שכתוב 👉🏼', className: 'highlight-black-stupid' },
