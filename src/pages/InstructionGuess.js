@@ -13,10 +13,11 @@ const InstructionGuess = () => {
         <div className="landing-page">
             <div className="landing-content">
                 <h2 className="landing-title">🍺חוקי המשחק🍺</h2>
+                <p className="landing-subtitle"> המשחק 20 שאלות גירסת השתיה </p>
                 <p className="landing-subtitle">סובב את הטלפון ל 10 שניות </p>
                 <p className="landing-subtitle">שאל/י את המשתתפים 10 שאלות של כן ולא </p>
                 <p className="landing-subtitle">אחרי 10 שאלות תכתוב ניחוש </p>
-                <p className="landing-subtitle"> טעית אחרי 2 ניחושים (לוזר) תוריד שוט</p>
+                <p className="landing-subtitle">  טעית?? תוריד שוט ותנסה עוד 10 שאלות</p>
                 <p className="landing-subtitle">🍺 בהצלחה 🍺</p>
                 <button className="start-button" onClick={handleStartPlaying}>Start Playing</button>
             </div>
