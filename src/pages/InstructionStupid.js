@@ -59,7 +59,9 @@ const InstructionStupid = () => {
                     { text: 'חזרו חלילה🍻', className: 'highlight-black-stupid' }
                 ]);
             }
-        } else {
+        } 
+        else 
+        {
             if (currentBar.barName === 'SassonBar') {
                 setInstructions([
                     { text: 'ששון בר', className: 'highlight-red-stupid' },
@@ -128,10 +130,10 @@ const InstructionStupid = () => {
         } catch (error) {
             console.error('Error updating game stats:', error);
         }
-    
+        console.log(gameType);
         // Navigate based on the game type
         if (gameType === 'Friends') {
-            navigate('/FriendsGame');
+            navigate('/FrindesGame');
         } else {
             navigate('/DateGame');
         }
