@@ -64,16 +64,11 @@ export default function NewHomePage() {
   const handleClick = (link,gameType) => {
     console.log(currentBar.barName)
     console.log(gameType)
-    if((currentBar.barName==='BENGI'||currentBar.barName==='Mileva'||currentBar.barName==='BarBaSaba') && link!=='/InstructionGuess')
+    if((currentBar.barName==='BENGI'||currentBar.barName==='Mileva'||currentBar.barName==='BarBaSaba'||currentBar.barName==='SassonBar') && link!=='/InstructionGuess')
       {
-        dispatch(setGameType(gameType));
         link='/InstructionStupid';
       }
-    else if(currentBar.barName==='SassonBar' && link!=='/InstructionGuess')
-        {
-          dispatch(setGameType(gameType));
-          link='/InstructionStupid';
-        }
+    dispatch(setGameType(gameType));
     navigate(link);
   };
 

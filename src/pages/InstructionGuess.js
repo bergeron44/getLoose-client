@@ -1,12 +1,49 @@
-import React from 'react';
-import {  useNavigate } from 'react-router-dom'; // If using React Router for navigation
-import './InstructionGuess.css'; // Import custom CSS
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './InstructionGuess.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBar } from '../store/actions/barsActions';
 
 const InstructionGuess = () => {
     const navigate = useNavigate(); // Hook to navigate programmatically
+    const dispatch = useDispatch(); // Redux dispatch
+    const gameType = useSelector((state) => state.liveGames.gameType); // Get game type from Redux
+    const currentBar = useSelector(state => state.bars.currentBar); // Get the current bar data from Redux
 
-    const handleStartPlaying = () => {
-      navigate('/GuessWhatIAm'); // Replace '/game' with the path to your game page
+    useEffect(() => {
+        if (!currentBar) {
+            console.error('Current bar data is not available');
+        }
+    }, [currentBar]); // Re-run this when currentBar changes
+
+    const handleStartPlaying = async () => {
+        if (!currentBar) {
+            console.error('No current bar data found!');
+            return;
+        }
+
+        try {
+            // Determine the game type key based on the gameType from Redux
+            const gameTypeKey = gameType === 'Date' ? 'datingGame' :
+                                 gameType === 'Friends' ? 'friendsGame' :
+                                 'partyGame';
+    
+            // Create the update payload to increment the game type count
+            const updatePayload = {
+                gameType: gameTypeKey,  // Pass the game type as part of the payload
+                gameStats: {
+                    [gameTypeKey]: (currentBar.gameStats[gameTypeKey] || 0) + 1,  // Increment the game count
+                }
+            };
+    
+            // Dispatch the updateBar function to update the game stats
+            await dispatch(updateBar(currentBar._id, updatePayload));
+        } catch (error) {
+            console.error('Error updating game stats:', error);
+        }
+
+        // Navigate to the next page after starting the game
+        navigate('/GuessWhatIAm');  // Update the route accordingly
     };
 
     return (
