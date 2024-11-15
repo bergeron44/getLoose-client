@@ -10,13 +10,13 @@ import { setGameType } from '../store/actions/liveGameActions';
 const images = [
   {
     url: '/images/p24.webp',
-    title: ' Do Or Drink',
+    title: ' החטא ועונשו',
     link: '/HomePageForFriends',
     gameType: 'Friends',
   },
   {
     url: '/images/p26.jpg',
-    title: 'Tell Me Your Secrets',
+    title: 'לשבור את הקרח',
     link: '/HomePageForDates',
     gameType: 'Date',
   },
