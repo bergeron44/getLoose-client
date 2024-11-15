@@ -25,6 +25,7 @@ import NavigatePage from './barLoginPages/NavigatePage';
 import BENGI from './barLoginPages/BENGI';
 import SassonBar from './barLoginPages/SassonBar'
 import Mileva from './barLoginPages/Mileva';
+import BarBaSaba from './barLoginPages/BarBaSaba';
 
 // Add to database pages
 import AddQuestion from './pages/DataBaseUiConection/AddQuestion';
@@ -56,6 +57,7 @@ function App() {
             <Route path="/BENGI" element={<BENGI />} />
             <Route path="/SassonBar" element={<SassonBar />} />
             <Route path="/Mileva" element={<Mileva />} />
+            <Route path='/BarBaSaba' element={<BarBaSaba/>}/>
 
             <Route path="/LogoPage" element={<AnimatedLogo />} />
             <Route path="/BackToGame" element={<BackToGame />} />

@@ -67,19 +67,31 @@ export const createBar = (newBar) => async (dispatch) => {
 
 // Update an existing bar by ID
 export const updateBar = (id, updatedBar) => async (dispatch) => {
-    dispatch(setLoading(true));
+    dispatch(setLoading(true)); // Set loading state to true
     try {
+        // Make a POST request to update game stats
         const response = await fetch(`${BASE_URL}/api/bar/${id}/game-stats/${updatedBar.gameType}`, {
-            method: 'POST',  // Assuming you want to use POST for updating game stats
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(updatedBar),  // Send the whole payload (game stats) to the backend
+            body: JSON.stringify({ gameType: updatedBar.gameType }) // Sending only gameType in the body
         });
-        if (!response.ok) throw new Error('Failed to update game stats');
+
+        // Check if the response is successful
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Failed to update game stats');
+        }
+
+        // Parse the response data
         const data = await response.json();
+
+        // Dispatch success action with updated data
         dispatch({ type: 'UPDATE_BAR_STATS', payload: data });
     } catch (error) {
+        // Dispatch error action with error message
         dispatch(setError(error.message));
     } finally {
+        // Reset loading state
         dispatch(setLoading(false));
     }
 };
